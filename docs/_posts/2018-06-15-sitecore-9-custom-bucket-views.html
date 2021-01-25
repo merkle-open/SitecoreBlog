@@ -1,0 +1,45 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore 9 - Custom Bucket Views
+author:
+  display_name: iiric
+  login: iiric
+  email: igor.iric@namics.com
+  url: ''
+author_login: iiric
+author_email: igor.iric@namics.com
+wordpress_id: 4668
+wordpress_url: https://sitecore.namics.com/?p=4668
+date: '2018-06-15 13:45:26 +0200'
+date_gmt: '2018-06-15 11:45:26 +0200'
+categories:
+- Suche
+- Tipps
+- Sitecore 9
+tags:
+- Sitecore 9
+- Bucket View
+comments: []
+redirect_from:
+  - /2018/06/15/sitecore-9-custom-bucket-views/
+---
+<p style="text-align: center;"><a class="fancybox" href="/files/2018/06/BucketView1.png"><img class="alignnone wp-image-4776 size-medium" src="/files/2018/06/BucketView1-300x213.png" alt="BucketView" width="300" height="213" /></a></p>
+<p>Probably most of you want to have some custom views for&nbsp;displaying your items in a bucket folder.</p>
+<p>In order to have your own bucket template views you have to override the Sitecore 9 implementation of "Sitecore.Buckets.Pipelines.UI.FillItem.FillItemProcessor".<!--more--><br />
+<script src="https://gist.github.com/error505/4434bda88ab213c46f241645b30d8743.js"></script><br />
+ After you have written the&nbsp;the code for creating your own bucket view you have to create a config pipeline processor patch that will connect your code with Sitecore.<br />
+<script src="https://gist.github.com/error505/660d0f0582e6d35e14561c676721f524.js"></script><br />
+After build and publish processes have been completed&nbsp;you have to create your own bucket view that will be displayed and configure your bucket folder to have that newly created bucket view template.</p>
+<p>Create your new template in "/sitecore/system/Settings/Buckets/Views/"</p>
+<figure id="attachment_4669"><a class="fancybox" href="/files/2018/06/contact-view-location.png"><img class="alignnone size-full wp-image-4669" src="/files/2018/06/contact-view-location.png" alt="Custom Bucket View location" width="276" height="527" /></a> Custom Bucket View location</figure>
+<p>Than you have to fill in the view details section with your own HTML for Header Template,&nbsp;Item Template and&nbsp;Footer Template. Header Template template should contain only an opening
+<div> tag and Footer Template a closing </div>
+<p> tag. In&nbsp;Item Template you have to add your custom .html add .js code like this:<br />
+<script src="https://gist.github.com/error505/cf24bc22512bc5d93ac4a3ac08e5dd23.js"></script><br />
+<a class="fancybox" href="/files/2018/06/html-code.png"><img class="alignnone size-full wp-image-4672" src="/files/2018/06/html-code.png" alt="Sitecore 9 Custom bucket view html code" width="1275" height="693" /></a> Sitecore 9 Custom bucket view html code</p>
+<p>Than you have to add your view to the bucket folder where you want to use it.</p>
+<figure id="attachment_4670"><a class="fancybox" href="/files/2018/06/bucket-select-view.png"><img class="alignnone wp-image-4670 size-full" src="/files/2018/06/bucket-select-view.png" alt="bucket select view" width="798" height="419" /></a> bucket select view</figure>
+<p>After you select your view and save it, you should be able to view your own custom view in a bucket folder.</p>
+<figure id="attachment_4671"><a class="fancybox" href="/files/2018/06/BucketView.png"><img class="alignnone wp-image-4671 size-full" src="/files/2018/06/BucketView.png" alt="Sitecore 9 Custom Bucket View" width="1231" height="657" /></a> Sitecore 9 Custom Bucket View</figure>

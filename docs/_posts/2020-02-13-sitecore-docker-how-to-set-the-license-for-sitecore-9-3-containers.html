@@ -1,0 +1,240 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore Docker - How to Set the License for Sitecore 9.3 containers?
+author:
+  display_name: pnazarov
+  login: pnazarov
+  email: ''
+  url: ''
+author_login: pnazarov
+wordpress_id: 5994
+wordpress_url: https://sitecore.namics.com/?p=5994
+date: '2020-02-13 19:50:26 +0100'
+date_gmt: '2020-02-13 18:50:26 +0100'
+categories:
+- Allgemein
+- Sitecore 9
+- Docker
+tags:
+- Docker
+- Sitecore 9
+- License
+- Licence
+- base64
+- Base-64
+- File path
+- Environment Variable
+- 9.2.0
+- 9.3.0
+- '9.2'
+- '9.3'
+- XM
+- XP
+- XC
+- ".env"
+comments:
+- id: 156863
+  author: Michael West
+  author_email: michaellwest@gmail.com
+  author_url: https://michaellwest.blogspot.com
+  date: '2020-02-13 20:11:53 +0100'
+  date_gmt: '2020-02-13 19:11:53 +0100'
+  content: Danke!
+- id: 159409
+  author: Tobias Studer
+  author_email: tobias.studer@unic.com
+  author_url: https://www.studert.com/
+  date: '2020-11-19 08:10:03 +0100'
+  date_gmt: '2020-11-19 07:10:03 +0100'
+  content: "Hi Peter,\r\n\r\nThank you for post. The link to the PowerShell script
+    has changed. You can find the script here now: https://github.com/Sitecore/docker-images/blob/master/build/Set-LicenseEnvironmentVariable.ps1"
+redirect_from:
+  - /2020/02/13/sitecore-docker-how-to-set-the-license-for-sitecore-9-3-containers/
+---
+<p><!-- wp:paragraph --></p>
+<p>Nowadays, we can run Sitecore in Docker containers so that we don't need to use Sitecore SIF anymore - jus run <strong>docker-compose</strong>! Thanks to <a href="https://github.com/Sitecore/docker-images">Sitecore Docker GitHub</a> which made this possible! Nevertheless, you still need a Sitecore license to run Sitecore in Docker containers.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p>If you are reading this article because you are getting  Sitecore license error - jump straight to "<strong>Setting Sitecore Licence for Sitecore 9.3.0 Docker Containers</strong>" section.</p>
+</blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:more --><br />
+<!--more--><br />
+<!-- /wp:more --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>New Sitecore Licence Related Features in 9.3.0</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>In Sitecore 9.3 there were few changes made to the way how you can tell Sitecore where to read the license file content from. These oncoming changes were mentioned by <a href="https://twitter.com/stephenpope">Stephen Pope</a> in his "The containerized mind - Working with Sitecore Containers" presentation at Sitecore Symposium 2019 back in November 2019 in Orlando.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5996} --></p>
+<figure class="wp-block-image"><img src="/files/2020/02/IMG_20191106_103025-1024x576.jpg" alt="" class="wp-image-5996"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:image {"id":5997} --></p>
+<figure class="wp-block-image"><img src="/files/2020/02/IMG_20191106_110818-1024x576.jpg" alt="" class="wp-image-5997"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>In Sitecore 9.3 the license can be set using  <strong>SITECORE_LICENSE_LOCATION</strong> or <strong>SITECORE_LICENSE</strong> environment variables which provide two new ways of supplying the licence to a Sitecore instance:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol>
+<li> <strong>SITECORE_LICENSE_LOCATION</strong> environment variable allows overriding the <strong>path to license.xml </strong>file.</li>
+<li> <strong>SITECORE_LICENSE</strong> environment variable allows setting the license value. This environment variable should be set with the <strong>content of license.xm</strong>l. However, this content should be GZipped and converted to Base-64 string (as per slide above).  The corresponding PowerShell code example can be found here: <a href="https://github.com/Sitecore/docker-images/blob/master/Set-LicenseEnvironmentVariable.ps1">Set-LicenseEnvironmentVariable.ps1</a></li>
+</ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>Setting Sitecore Licence for Sitecore 9.2.0 Docker Containers </h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>To set the license for Sitecore 9.2.0 Docker container you just need to mount a local workstation directory to the licence file to the docker container. This can be done using a <strong>docker-compose</strong> file where you mound the directory in <strong>volumes</strong> section. For example: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><code>   cm:
+      image: ${REGISTRY}sitecore-xm-cm:${SITECORE_VERSION}-windowsservercore-${WINDOWSSERVERCORE_VERSION}
+      entrypoint: powershell.exe -NoLogo -NoProfile -File C:\tools\entrypoints\iis\Development.ps1
+      environment:
+        - "ENTRYPOINT_STDOUT_IIS_ACCESS_LOG_ENABLED=false"
+        - "ENTRYPOINT_STDOUT_IIS_ERROR_LOG_ENABLED=false"
+        - "ENTRYPOINT_STDOUT_SITECORE_LOG_ENABLED=true"
+      volumes:
+        - ${LICENSE_PATH}:C:\license
+      ports:
+        - "44001:80"
+      links:
+        - sql
+        - solr</code></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>Full docker-compose file example: <a href="https://github.com/Sitecore/docker-images/blob/master/windows/tests/9.2.x/docker-compose.xm.yml#L44">docker-compose.xm.yml</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>In the <strong>volumes</strong> mounts  <strong>${LICENSE_PATH}:C:\license</strong> expression in the docker-compose file example,  the last part <strong>C:\license</strong>  represents the directory path on the <strong>cm </strong>container file system where your local workstation directory is mounted into. The first part is the actual directory path where the <strong>license.xml</strong> resides on your local workstation. However, in the example above it has <strong>${LICENSE_PATH}</strong> value. This is expression refers to <strong>LICENSE_PATH</strong> environment variable, which you must set to your local workstation <strong>license.xml</strong> contained directory path.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>There two ways to set the environment variable value which then can be used in the docker-compose file:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:html --></p>
+<ul>
+<li>Using Windows Environment Variables on your local workstation:<br><img class="wp-image-6015" style="width: 500px;" src="/files/2020/02/screenshot-sitecore.namics.com-2020.02.13-16_31_53.png" alt=""><br><br>You can use this method on development workstations so that all your Sitecore Docker environments use the same development license file.<br>
+<pre class="wp-block-preformatted"></li></ul>
+<!-- /wp:html -->
+
+<!-- wp:list -->
+<ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Using </font></font><strong><a href="https://github.com/Sitecore/docker-images/blob/0bce7f6b4375930a7950701eaad0282c148557c6/windows/tests/9.2.x/.env#L5"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.env</font></font></a></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> file which is usually placed in the directory where your docker-compose YML files reside:</font></font><br><pre><code>
+  REGISTRY=
+  WINDOWSSERVERCORE_VERSION=1909
+  NANOSERVER_VERSION=1909
+  SITECORE_VERSION=9.2.0
+  LICENSE_PATH=C:\Sitecore\lic</code></pre>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">You can use this method to set different license files for Sitecore Docker environments which are created using a different set of </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">docker-compose</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> files located in separate directories or local Git repositories. </font></font><br><br><b><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Considerations:</font></font></b><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> It is usual that </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.env</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> file and </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">docker-compose</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> files are </font></font><a href="https://github.com/Sitecore/docker-images/tree/master/windows/tests/9.2.x"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">located in the same directory</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> and represent a Sitecore Docker environment for a specific project, therefore, </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.env</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> file and </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">docker-compose</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> files may need to be committed to the version control, In this case, you should consider setting </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">LICENSE_PATH</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> in </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.env</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">file only when you are sure that the license directory path will be the same on all development workstations of your team.</font></font></li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>Setting Sitecore Licence for Sitecore 9.3.0 Docker Containers</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>The default approach to set the license for Sitecore 9.3.0 Docker containers would be to run <a href="https://github.com/Sitecore/docker-images/blob/master/Set-LicenseEnvironmentVariable.ps1">Set-LicenseEnvironmentVariable.ps1</a>. For example:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><code>.\Set-LicenseEnvironmentVariable.ps1` -PersistForCurrentUser -Path "C:\Sitecore\lic\license.xml"</code></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>The PowerShell call above will take the <strong>license.xml</strong> file's content, GZip it, convert to Base-64 string, and store the result in the current user's <strong>SITECORE_LICENSE</strong> environment variable. The idea is that once it is done you can just run <strong>docker-compose</strong> and get Sitecore environment up and running.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p>You may <a href="https://github.com/Sitecore/docker-images/issues/149#issuecomment-573385536">run into issues</a> with this approach. The Sitecore container is not getting Base-64 string in full from your local  <strong>SITECORE_LICENSE</strong> environment variable - it gets the truncated value. Therefore you are getting the corresponding licence loading error when Sitecore container runs.</p>
+</blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>Workaround/Alternative</strong>: <strong>Set SITECORE_LICENSE&nbsp;in&nbsp;.env File&nbsp; </strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>You can set  <strong>SITECORE_LICENSE</strong> value in <strong>.env</strong> file which does not have issues with long environment variable values. </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">After you already executed </font></font><a href="https://github.com/Sitecore/docker-images/blob/master/Set-LicenseEnvironmentVariable.ps1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Set-LicenseEnvironmentVariable.ps1</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, run the following command in PowerShell to get proper Base-64 string license value in full:</font></font></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><code>Write-Host $([Environment]::GetEnvironmentVariable("SITECORE_LICENSE", "User"))</code></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>The PowerShell console will print Base-64 string license so you can copy and paste it to <strong>.env</strong> file where you set it as <strong>SITECORE_LICENSE</strong>  environment variable value.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Then it would be recommended to remove the current user's <strong>SITECORE_LICENSE</strong> environment variable value, which can be done with the following PowerShell command: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><code>[Environment]::SetEnvironmentVariable("SITECORE_LICENSE", $null, "User")</code></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>Now you can run <strong>docker-compose</strong> and get Sitecore environment up and running.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>Good Old Way Alternative - <strong>use 9.2.0 physical license file path approach for 9.3.0</strong></h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you are more familiar with the <strong>license file path</strong> approach for Sitecore 9.2.0 Docker containers and you love it then there is some good news for you: you can still use the file path approach! </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>However, for 9.3.0 you will need to use  <strong>SITECORE_LICENSE_LOCATION</strong> environment variable which should be set inside the container. This is not a problem - you can set in in <strong>environment</strong> section of the <strong>docker-compose</strong> file.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>IMPORTANT!</strong><br>Before we can get started with the license file path approach walkthrough, lets set a pre-requisite assumption that you already set <strong>LICENSE_PATH</strong> environment variable on your local workstation in Windows Environment Variables or in <strong>.env</strong> file to your local workstation <strong>license.xml</strong> contained directory path (as described earlier in this article).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Let's assume that you cloned <a href="https://github.com/Sitecore/docker-images">Sitecore Docker repository</a> and built all images. Now you would like to start XM instance with JSS module enabled from <a href="https://github.com/Sitecore/docker-images/tree/master/windows/tests/9.3.x">/windows/tests/9.3.x/</a> directory by running: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><strong><code>docker-compose -f "docker-compose.xm.jss.yml" up</code></strong></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">You will need to update the original </font></font><a href="https://github.com/Sitecore/docker-images/blob/master/windows/tests/9.3.x/docker-compose.xm.jss.yml"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">docker-compose.xm.jss.yml</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> file so that it instructs Sitecore container to use </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SITECORE_LICENSE_LOCATION</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> instead of </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SITECORE_LICENSE</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">For </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">cm</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> and </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">cd</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Sitecore container's </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">environment</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> section, you need to replace </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SITECORE_LICENSE: $ {SITECORE_LICENSE}</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> with </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SITECORE_LICENSE_LOCATION: C: \ license \ license.xml</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. This will tell Sitecore where the license file is located inside the container.  </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">C: \ license \ license.xml</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> is a container's file system path!</font></font></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>In addition, for <strong>cm</strong> and <strong>cd</strong> Sitecore container's <strong>volumes</strong>&nbsp;section, you need to mount your local workstation <strong>license.xml</strong> contained directory in the same way you did it for 9.2.0:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:html --></p>
+<pre><code>
+   volumes:    
+     - ${LICENSE_PATH}:C:\license:ro </code></pre>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p>As a result of your changes would get a modified version of the <strong>docker-compose.xm.jss.yml</strong> file which you can commit to you version control repository and share with your development team members. As long as your team members have <strong>LICENSE_PATH</strong> environment variable set they can just run <strong>docker-compose.xm.jss.yml</strong> file without taking any extra actions to set the license for Sitecore 9.3.0 containers.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:html --><br />
+The modified version of the <b>docker-compose.xm.jss.yml</b> may look as follows:</p>
+<p><script src="https://gist.github.com/peter-nazarov-namics-com/a4156688c2fdcade1501120f49cb4747.js"></script></p>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>WARNING!</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>cm</strong> and <strong>cd</strong> Sitecore containers expect that <strong>SITECORE_LICENSE_LOCATION</strong> is set to the full path of the <strong>license.xml</strong> file on the container's file system:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><strong><code>SITECORE_LICENSE_LOCATION:&nbsp;C:\license\license.xml</code></strong></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>All other Sitecore containers like, for example, <strong>xconnect-indexworker</strong> expect that <strong>SITECORE_LICENSE_LOCATION</strong> is set to the full path of the <strong>directory </strong>where <strong>license.xml</strong> resides on the container's file system:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre class="wp-block-preformatted"><strong><code>SITECORE_LICENSE_LOCATION:&nbsp;C:\license</code></strong></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p><em><strong>Please mind this aspect when you run Sitecore XP or XC topologies!</strong></em></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:html --><br />
+Sitecore XP Example: the modified version of the <b>docker-compose.xp.jss.yml</b> may look as follows:</p>
+<p><script src="https://gist.github.com/peter-nazarov-namics-com/1b89d12e1e4085d89be180d4ffa7bfc9.js"></script></p>
+<p><!-- /wp:html --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>

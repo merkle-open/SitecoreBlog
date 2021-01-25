@@ -1,0 +1,88 @@
+---
+layout: post
+status: publish
+published: true
+title: Analysis of an issue with Sitecore AccessResultCache running full and being
+  cleared continuously despite large cache size
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+wordpress_id: 5421
+wordpress_url: https://sitecore.namics.com/?p=5421
+date: '2019-05-09 08:00:14 +0200'
+date_gmt: '2019-05-09 06:00:14 +0200'
+categories:
+- Development in Sitecore
+- Sitecore Experience CMS
+- Caching
+- Sitecore 8
+- CMS-Usability
+- Tipps
+- Logging
+tags:
+- cache sizing
+- performance
+- item query
+comments: []
+redirect_from:
+  - /2019/05/09/sitecore-caches-accessresultcache-full-and-cleared-parmanently/
+---
+<h4><strong>We recently had a&nbsp;situation, where we quickly had to grab&nbsp;a virtual&nbsp;whip in order to tame the Sitecore&nbsp;AccessResultCache from going crazy &ndash; in terms of reaching it's allocated size within seconds and thus being constantly cleared by Sitecore.Caching.Generics.Cache</strong></h4>
+<p><!--more--></p>
+<h3>What symptoms where we seeing?</h3>
+<p>Well, the&nbsp;ball started rolling with an incident reported by a client&nbsp;stating</p>
+<blockquote style="padding-bottom: 10px;"><p>&laquo;the Sitecore backend is extremely slow&raquo;</p></blockquote>
+<p>Upon investigation we indeed observed &ndash; not permanent, but quite regular &ndash; long loading times as soon as clicking / viewing items in the Sitecore backend. Or when doing item operations such as switching an&nbsp;item's version / language.</p>
+<p>Checking the Sitecore log for any irregular events, we quickly found the following log entry &ndash; which was easy, as&nbsp;such where basically <em>spamming</em> the Sitecore log since hours:</p>
+<pre style="margin-bottom: 15px; white-space: pre-wrap;">AccessResultCache cache is cleared by Sitecore.Caching.Generics.Cache strategy.
+Cache running size was 9 MB.</pre>
+<p>Turns out, that this message showed up &ndash; due to the particular cache&nbsp;being cleared&nbsp;&ndash; <strong>over 60-80 thousand times</strong> within&nbsp;certain hours!&nbsp;<img class="alignnone wp-image-5716" src="/files/2019/05/exploding-head-emoji.png" alt="exploding-head emoji" width="16" height="15" /><br />
+And yes, this is not a mistake, see the following excerpt from the log of the affected period:</p>
+<p><a class="fancybox" href="/files/2019/05/Sitecore-AccessResultCache-going-crazy-log-events-being-cleared-continuously.png" target="_blank"><img class="alignnone wp-image-5711" src="/files/2019/05/Sitecore-AccessResultCache-going-crazy-log-events-being-cleared-continuously-1024x244.png" alt="Screenshot of the Sitecore log showing the AccessResultCache being cleared continuously" width="550" height="131" /></a></p>
+<h3>Soooo&hellip; what was going on behind the scene?</h3>
+<p>The&nbsp;explanation&nbsp;causing&nbsp;all the&nbsp;continuous log entries is quite easy:</p>
+<p>Our caching strategy and cache sizing configuration allocated 9&nbsp;megabyte as the maximal cache size for the&nbsp;AccessResultCache. It is common&nbsp;standard behaviour, that once a cache reaches it's allocated size,&nbsp;it&nbsp;will be cleared &ndash; and rebuilt.</p>
+<p>This is what happened here as well.&nbsp;Except, that it's not the idea that a cache reaches its max within seconds and therefore will basically immediately be&nbsp;cleared.&nbsp;<img class="alignnone wp-image-5717" src="/files/2019/05/see-no-evil-monkey-emoji.png" alt="see-no-evil-monkey emoji" width="16" height="16" /></p>
+<h3>What is the&nbsp;AccessResultCache &amp; how is it being used in Sitecore?</h3>
+<p>First, of course, we wanted to understand why Sitecore needs this cache at all, in order to elaborate what might cause it to literally "explode" in terms of over allocating the small size we assigned it. Have to mention, that this happened without&nbsp;any changes for quite a period of time.</p>
+<p>We also wanted to understand, why 9&nbsp;MB is suddenly not enough size anymore?!</p>
+<p>The purpose of the AccessResultCache is described as follows,&nbsp;from a neat <a href="https://sitecore.stackexchange.com/a/8829/1083" target="_blank">answer on Sitecore Stackexchange</a>:</p>
+<blockquote style="padding-bottom: 10px;"><p><em>Every time when anybody accesses any item in Sitecore, result of resolved security right is put to AccessResultCache.<br />
+It is not related to content editing, but to content accessing.</em></p></blockquote>
+<p>Okay, got it. But we&nbsp;did not&nbsp;see an excessive increase in users accessing or working in the Sitecore backend&hellip;</p>
+<p>While researching, we also learned that the AccessResultCache can be disabled on Sitecore Contend Delivery environments (meaning your webservers where visitors browse your site) based on a <a href="https://sitecoresaga.wordpress.com/2017/04/30/sitecore-8-2-increase-in-accessresultscache/" target="_blank">blog post on sitecore saga</a> by Deepak Bhat.</p>
+<p>However, we were facing no issues with the&nbsp;AccessResultCache on the CD environments, we were affected on the Content Management instance. So this seemed a dead end, too.</p>
+<h3>Mitigating too many and too quick cache clearings of AccessResultCache</h3>
+<p>One of the first steps we took was to try to make our AccessResultCache &ndash; and thus the Sitecore instance &ndash; more healthy again.</p>
+<p>This was done by&nbsp;patching the cache size of the access result cache and allocating (much!) more space.</p>
+<ol>
+<li>We <strong>increased</strong> the&nbsp;<em>Caching.AccessResultCacheSize</em> from 9 MB to&nbsp;<strong>100&nbsp;MB</strong>.<br />
+<span style="text-decoration: underline;">Result</span>: <strong>no impact</strong> &ndash; still a continuously cleared cache.</li>
+<li><strong>Okay, again</strong>. now we increased the Caching.AccessResultCacheSize from&nbsp;100 MB <strong>to&nbsp;512 MB</strong>.<br />
+<span style="text-decoration: underline;">Result</span>: we <strong>still&nbsp;had&nbsp;regular cleared cache</strong>, but it went down to like once per minute. However, this is still far from "healthy".</li>
+<li><strong>Going full throttle</strong>: we checked with the infrastructure guys, how much resources&nbsp;we still&nbsp;had available for cache size tuning. And after getting a green light, we increased the Caching.AccessResultCacheSize from&nbsp;512 MB <strong>to&nbsp;2048&nbsp;MB (2 GB)</strong>.<br />
+<span style="text-decoration: underline;">Result</span>:&nbsp;<strong>now we got something!</strong> The AccessResultCache stayed for much longer without being cleared. Is&nbsp;this the solution?&nbsp;<img class="alignnone wp-image-5720" src="/files/2019/05/thinking-face-emoji.png" alt="thinking-face emoji" width="15" height="15" /></li>
+</ol>
+<p>Even with 2 GB to allocate, it increased in size excessively with every (first) click on an item in the Sitecore backend. Meaning, between 5-10 MB per item click. It was not impacting the performance so badly anymore &ndash; at least on items that at least 1 user had&nbsp;already visited once &ndash; but it still felt like not being the solution.</p>
+<p><strong>Something must be wrong somewhere,&nbsp;causing those interferences with&nbsp;our AccessResultCache.</strong></p>
+<p><img class="alignnone wp-image-5721" src="/files/2019/05/i-will-find-you-and-fix-you-meme.jpg" alt="I will find you, and I will fix you Meme from the Taken movie" width="550" height="400" /></p>
+<h3>Root cause for the&nbsp;AccessResultCache on a Content Management environment being cleared excessively</h3>
+<p>Due to our confusion with the unexpected behaviour and impact on the CM and the Sitecore users, we already opened a support ticket with Sitecore very early. And once again, we we're very happy we did so &ndash; because they pointed us&nbsp;in the right direction for&nbsp;the root cause:</p>
+<p>The actual root cause for our&nbsp;AccessResultCache filling up so quickly and excessively, requiring a disproportional amount of resources to mitigate, came down to the fact that <strong>accessing items in the backend also had to load a whole tree of hundreds of other items</strong>.</p>
+<p>Now it suddenly made sense: the purpose of the AccessResultCache was doing what it should do: it stored access permissions for items.<br />
+But because Sitecore needed to&nbsp;read a lot of items, this exceeded the healthy capacity of the cache (and in the end was also not&nbsp;giving an advantage feature wise).</p>
+<p>We figured that we recently added a new DropLink item field, which was inherited to&nbsp;many content items&nbsp;via a shared section.</p>
+<p>But the&nbsp;problem causing&nbsp;piece&nbsp;of this new DropLink field was it's <strong>datasource</strong>:<br />
+it contained a <strong>Sitecore query to dynamically grab a list of items from the content tree</strong> based on a specified template.</p>
+<p>The issue with&nbsp;this was however, that in order to produce these DropLink field entries&nbsp;<strong>Sitecore actually had to iterate through a content tree with hundreds of containers and thousands of (sub-)items</strong>.</p>
+<h3>The fix how we finally tamed the out-of-control&nbsp;AccessResultCache size</h3>
+<p>We verified&nbsp;for what feature we introduced that field&nbsp;and the mechanics it had. It was just, so a user could select an existing element, which then would be displayed as a headline on the page. We checked back with the client &amp; agreed that a simple "Single-line text" for manually typing the desired value, will offer the same benefits and&nbsp;was just as easy for the content managers to edit.</p>
+<p><strong>Byebye DropLink field,&nbsp; byebye expensive&nbsp;datasource&nbsp;query!</strong></p>
+<p>As a learning, keep in mind: don't use Sitecore item queries in fields' datasources, if this query will iterate over a huge amount of items.<br />
+Or be aware what the consequences &ndash; and unexpected side effects &ndash; could occur.</p>
+<p><img class="alignnone wp-image-5723" src="/files/2019/05/Expensive-item-query-impact-on-AccessResultCache-Meme.jpg" alt="Disaster girl meme adapted for explaining impact of expensive Sitecore item query on AccessResultCache" width="550" height="413" /></p>

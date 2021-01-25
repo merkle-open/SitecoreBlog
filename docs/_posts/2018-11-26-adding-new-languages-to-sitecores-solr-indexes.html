@@ -1,0 +1,132 @@
+---
+layout: post
+status: publish
+published: true
+title: Adding new languages to Sitecore's Solr indexes
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+wordpress_id: 4875
+wordpress_url: https://sitecore.namics.com/?p=4875
+date: '2018-11-26 19:18:07 +0100'
+date_gmt: '2018-11-26 18:18:07 +0100'
+categories:
+- Suche
+- Development in Sitecore
+- Sitecore 8
+- Sitecore 9
+- Solr
+tags:
+- multi-language
+- search
+comments:
+- id: 154475
+  author: eswaran
+  author_email: eswaranm90@hotmail.com
+  author_url: ''
+  date: '2019-04-30 10:49:15 +0200'
+  date_gmt: '2019-04-30 08:49:15 +0200'
+  content: "Thank you for the nice post !!:)\n\nI have added below config directly
+    on my manageschema.xml file in solr. after this when I trigger full index from
+    sitecore, all error related to zh language gone:). But when I triggered \"populate
+    solr manage scema\" in sitecore control panel, \"DynamicField\" from below config
+    overwritten in solr manage schema. \n\nCould you please advise."
+- id: 154476
+  author: eswaran
+  author_email: eswaranm90@hotmail.com
+  author_url: ''
+  date: '2019-04-30 10:53:30 +0200'
+  date_gmt: '2019-04-30 08:53:30 +0200'
+  content: "Adding missing config\r\n<code>\r\n<fieldType name=\"text_zh\" class=\"solr.TextField\"
+    positionIncrementGap=\"100\">\r\n    <analyzer>\r\n        <tokenizer class=\"org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory\"
+    />\r\n        <filter class=\"solr.StopFilterFactory\" ignoreCase=\"true\" words=\"lang/stopwords_zh.txt\"
+    />\r\n        <filter class=\"solr.PorterStemFilterFactory\"/> \r\n    </analyzer>\r\n</fieldType>\r\n\r\n<dynamicField
+    name=\"*_t_zh\" type=\"text_zh\" indexed=\"true\" stored=\"true\"/>\r\n</code>"
+- id: 154480
+  author: Fabian Geiger
+  author_email: fabian.geiger@namics.com
+  author_url: ''
+  date: '2019-04-30 17:14:33 +0200'
+  date_gmt: '2019-04-30 15:14:33 +0200'
+  content: "Hi eswaran,\r\n\r\nThe \"Populate Solr Managed Schema\" dialog basically
+    resets the managed-schema.xml to it's original state. You need to ensure that
+    Sitecore knows about your customizations. There are multiple options to solve
+    this issue:\r\n\r\n- Replace the \"PopulateFields\" processor in pipeline \"contentSearch.PopulateSolrSchema\"
+    with your own implementation. This is probably the simplest and least flexible
+    approach.\r\n\r\n- Use Mark Lowe's method to define your customizations in config
+    files: https://sitecoreblog.marklowe.ch/2018/10/customize-solr-managed-schema/\r\n\r\n-
+    Don't use the \"Populate Solr Managed Schema\" dialog at all (this is what we
+    are doing)\r\n-> Use <a href=\"https://lucene.apache.org/solr/guide/6_6/config-sets.html\"
+    rel=\"nofollow\">Config Sets</a> to simplify management of your Solr cores. For
+    standard Sitecore you only need two Config Sets: xdb and the rest.\r\n-> Implement
+    an automated way to update your config sets during deployment\r\n-> Optional:
+    <a href=\"https://lucene.apache.org/solr/guide/6_6/schema-factory-definition-in-solrconfig.html#SchemaFactoryDefinitioninSolrConfig-SwitchingfromManagedSchematoManuallyEditedschema.xml\"
+    rel=\"nofollow\">Switch from Managed Schema to Classic Schema</a>"
+redirect_from:
+  - /2018/11/26/adding-new-languages-to-sitecores-solr-indexes/
+---
+<p>Sitecore's Solr indexes come with a rich set of preconfigured languages. This means you normally don't need to bother about Solr when introducing a new language to Sitecore. However, some languages are missing in the managed schema which means you have to take actions in case you want to use those in Sitecore.</p>
+<p><!--more--></p>
+<p>Mark Lowe wrote a nice <a href="https://sitecoreblog.marklowe.ch/2018/10/customize-solr-managed-schema/">blog post</a> on how you can apply changes to the managed schema in general. Alternatively, there is also the possibility to use <a href="https://lucene.apache.org/solr/guide/6_6/config-sets.html">config sets</a> for managing the schema files and use those for multiple of your Solr cores.</p>
+<h3>Missing languages</h3>
+<p>The following list shows configurations of languages that are missing in the managed schema provided by Sitecore 9. Just put them inside the root <schema> element. Please keep in mind that this list is far from complete. There are many other languages which could potentially be added. The <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html">Solr documentation</a> offers you a comprehensive guide of the available options.<br />
+The samples below contain configurations which worked for us so far. That being said, there are probably even better configurations out there. If you have some suggestions for improvement, then please let me know in the comments.</p>
+<p><strong>Chinese</strong></p>
+<p><code><br />
+<fieldType name="text_zh" class="solr.TextField" positionIncrementGap="100"><br />
+	<analyzer><br />
+		<tokenizer class="org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory" /><br />
+		<filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_zh.txt" /><br />
+		<filter class="solr.PorterStemFilterFactory"/><br />
+	</analyzer><br />
+</fieldType></p>
+<p><dynamicField name="*_t_zh" type="text_zh" indexed="true" stored="true"/><br />
+</code></p>
+<p>For chinese we used the <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html#LanguageAnalysis-HMMChineseTokenizer">HMMChineseTokenizerFactory</a>. If you apply this configuration to the schema you will probably end up with the following error message when restarting the Solr service:</p>
+<p><em>org.apache.solr.common.SolrException:org.apache.solr.common.SolrException: Could not load conf for core sitecore_master_index: Can't load schema C:\...\managed-schema: Plugin init failure for [schema.xml] fieldType "text_zh": Plugin init failure for [schema.xml] analyzer/tokenizer: Error loading class 'solr.HMMChineseTokenizerFactory'</em></p>
+<p>In Solr 6+ this tokenizer is not enabled by default. Therefore you need to add the following line to the solrconfig.xml for all of the cores you want to use this tokenizer.</p>
+<p><code></p>
+<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex=".*\.jar" />
+</code></p>
+<p><strong>Korean</strong></p>
+<p><code><br />
+<fieldType name="text_ko" class="solr.TextField" positionIncrementGap="100"><br />
+	<analyzer><br />
+		<tokenizer class="solr.StandardTokenizerFactory" /><br />
+		<filter class="solr.CJKWidthFilterFactory" /><br />
+		<filter class="solr.LowerCaseFilterFactory" /><br />
+		<filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ko.txt" /><br />
+		<filter class="solr.CJKBigramFilterFactory" /><br />
+	</analyzer><br />
+</fieldType><br />
+</code></p>
+<p>For Korean we used the <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html#LanguageAnalysis-CJKBigramFilter">CJKBigramFilterFactory</a>. Keep in mind that Lucene 7.4 introduced a specific Korean tokenizer called <a href="https://lucene.apache.org/core/7_4_0/analyzers-nori/org/apache/lucene/analysis/ko/KoreanTokenizerFactory.html">KoreanTokenizerFactory</a> which has been adapted by Solr 7.5. Looks like we are going to use this in a future version of Sitecore.</p>
+<p><strong>Polish</strong></p>
+<p><code><br />
+<fieldType name="text_pl" class="solr.TextField" positionIncrementGap="100"><br />
+	<analyzer><br />
+		<tokenizer class="solr.StandardTokenizerFactory"/><br />
+		<filter class="solr.LowerCaseFilterFactory"/><br />
+		<filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_pl.txt" /><br />
+		<filter class="org.apache.lucene.analysis.stempel.StempelPolishStemFilterFactory"/><br />
+	</analyzer><br />
+</fieldType></p>
+<p><dynamicField name="*_t_pl" type="text_pl" indexed="true" stored="true"/><br />
+</code></p>
+<p>The <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html#LanguageAnalysis-Polish">StempelPolishStemFilterFactory</a> is also not enabled out-of-the-box in Solr 6+. The trick we used for Chinese also enables this tokenizer.</p>
+<h3>Misconfigured languages</h3>
+<p>There are two languages which aren't properly configured in the managed schema of Sitecore 9. In order for these languages to work you need to change the language suffix of the dynamicField element's <em>name</em> attribute.</p>
+<p><strong>Czech</strong></p>
+<p><code><br />
+old: <dynamicField name="*_t_cz" type="text_cz" indexed="true" stored="true"/><br />
+new: <dynamicField name="*_t_cs" type="text_cz" indexed="true" stored="true"/><br />
+</code></p>
+<p><strong>Norwegian</strong></p>
+<p><code><br />
+old: <dynamicField name="*_t_no" type="text_no" indexed="true" stored="true"/><br />
+new: <dynamicField name="*_t_nb" type="text_no" indexed="true" stored="true"/><br />
+</code></p>

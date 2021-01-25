@@ -1,0 +1,57 @@
+---
+layout: post
+status: publish
+published: true
+title: Upgrading to Sitecore 9.0 Update-2 and later versions might change the order
+  of renderings
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+excerpt: After running the Update Installation Wizard for a Sitecore solution from
+  Sitecore 8.1 Update-1 to Sitecore 9.0 Update-2 we discovered that the order of most
+  of the renderings on page items had changed. Beforehand we already tested an upgrade
+  with Sitecore 9.0 Update-1 for this solution and it worked perfectly fine. This
+  implied that something must have changed between Sitecore 9 Update-1 and Update-2.
+wordpress_id: 5363
+wordpress_url: https://sitecore.namics.com/?p=5363
+date: '2019-01-21 13:24:45 +0100'
+date_gmt: '2019-01-21 12:24:45 +0100'
+categories:
+- Sitecore 8
+- Sitecore 7
+- Update
+- Sitecore 9
+tags:
+- Template
+- update
+- Rendering
+- Upgrade
+comments: []
+redirect_from:
+  - /2019/01/21/upgrading-to-sitecore-9-0-update-2-and-later-versions-might-change-the-order-of-renderings/
+---
+<p>I am currently in the process of upgrading one of our customer's solutions from Sitecore 8.1 Update-1 to Sitecore 9.0 Update-2. After running the Update Installation Wizard I discovered that the order of most of the renderings on page items had changed in comparison to Sitecore 8.1. Beforehand we already tested an upgrade with Sitecore 9.0 Update-1 for this solution and it worked perfectly fine there. This implied that something must have changed between Sitecore 9 Update-1 and Update-2. After some time I found <a href="https://kb.sitecore.net/articles/672981">this helpful article</a> in the Sitecore knowledge base which explains this behaviour (previously only covered Sitecore 8.2 Update-7). Turns out that Sitecore has changed the parsing logic of the layout information.</p>
+<p><!--more--></p>
+<p>I checked the release dates of all the previous Sitecore versions and I think that you will run into this problem if you want to upgrade from one of the following versions:</p>
+<ul>
+<li>All versions prior to Sitecore 8.1</li>
+<li>Sitecore 8.1 Initial Release</li>
+<li>Sitecore 8.1 Update-1</li>
+</ul>
+<p>In order to fix this problem you have to perform the following steps:</p>
+<blockquote><p><strong>Update 15.02.2019:</strong> The gist has been updated due to a bug. The script automatically created an item version in the context language (most likely "en") when the shared layout field was modified.</p></blockquote>
+<ol>
+<li>Backup the affected database(s)</li>
+<li>Install a clean instance of Sitecore 8.1 Update-2.<br />
+The easiest way to do this is to use <a href="http://dl.sitecore.net/updater/sim/">SIM</a>.</li>
+<li>Change the connection strings of your clean solution to point to the affected database(s).</li>
+<li>Copy the admin page below to your clean solution</li>
+<li>Change the setting <em>Query.MaxItems</em> to a high value which should be higher than the amount of page items you need to migrate (e.g. 10000)</li>
+<li>Run the script with the according parameters<br />
+(e.g. /sitecore/admin/MigrateLayouts.aspx?database=master&itemId={0DE95AE4-41AB-4D01-9EB0-67441B7C2450}&enableRecursion=true)</li>
+</ol>
+<p><script src="https://gist.github.com/NaibafCH/46bd33b087e146226eac4d9419493bc6.js"></script></p>

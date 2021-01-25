@@ -1,0 +1,158 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore Forms - FAQ
+author:
+  display_name: tnguyen
+  login: tnguyen
+  email: ''
+  url: ''
+author_login: tnguyen
+wordpress_id: 5964
+wordpress_url: https://sitecore.namics.com/?p=5964
+date: '2020-01-02 12:41:06 +0100'
+date_gmt: '2020-01-02 11:41:06 +0100'
+categories:
+- Allgemein
+tags:
+- sitecore forms
+comments: []
+redirect_from:
+  - /2020/01/02/sitecore-forms-faq/
+---
+<p><!-- wp:heading {"level":3} --></p>
+<h3>Foreword</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>Sitecore Forms has been released with Sitecore 9. Since the release, we have applied Sitecore Forms in multiple projects and extend a lot of functions of Sitecore Forms for serving the requirements of the customers.<br>The official documentation of the Sitecore Form can be found <a href="https://doc.sitecore.com/developers/90/sitecore-experience-manager/en/sitecore-forms.html">here</a>. In this blog post, I would like to summarize the most FAQs when we start to work with Sitecore Forms<br></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:more --><br />
+<!--more--><br />
+<!-- /wp:more --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>1. Why I don't see any form in Form Builder? I'm sure that there are some forms.</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>After syncing the items by TDS or Unicorn the index may be outdated. If you don't see any form in Form Builder and you're sure that there must be some forms. Then take a look</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>If the Solr server is running. If not, then fix Solr server</li>
+<li>Go to Control Panel --> Index Manager --> Rebuild the sitecore_core_index, sitecore_master_index and sitecore_web_index</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:image {"id":5966} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-1.png" alt="" class="wp-image-5966"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>2. I would like to add a new custom element to Form Designer. Where could I start?</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>In the Form Designer, on the right hand of the designer, we can find the list of available elements for Sitecore Forms. </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5965} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image.png" alt="" class="wp-image-5965"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you want to add a new custom element to this list, you can start at the following path<br><em> /sitecore/system/Settings/Forms <br></em>Under this path, you can find all of the available elements that are already categorized. Just duplicating one element for testing, the new element will be shown then later in Form Designer </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5967} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-2.png" alt="" class="wp-image-5967"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>3. How can I change the HTML layout of an element?</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>You can change the HTML layout of any element, even that is a default one from Sitecore. For example, if you would like to have a different layout for Single Line Text (<em>/sitecore/system/Settings/Forms/Field Types/Basic/Single-Line Text</em>), just browse to the element in Content Editor</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5968} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-3-1024x300.png" alt="" class="wp-image-5968"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Note the value of "View Path" property. Go to your code solution, check if there is any SingleLineText.cshtml already exists under the path <br><em>~/Views/FormBuilder/FieldTemplates/SingleLineText.cshtml<br></em>If not, create a new one or you can edit the existing one with your custom HTLM code. Be sure that this SingleLineText.cshtml file must be copied to the wwwroot folder keeping that path. If not, the view can't be found by Sitecore. For example, a custom SingleLineText.cshtml looks like following</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5969} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-4.png" alt="" class="wp-image-5969"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>4. How can I extend the element with a new property?</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>You can extend the element with as many properties as you want. For example, we would like to extend the SingleLineText with a new property IsOnlyNumber to say that when this property is true the SingleLineText input has the type of number.<br><br>First, we create a new C# class that inherits the StringInputViewModel and use it in the settings of the SingleLineText element.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5970} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-5-1024x134.png" alt="" class="wp-image-5970"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>In that model class, we extend it with the new properties and override 2 functions: InitItemProperties and UpdateItemFields. The InitItemProperties will read the value from the item and show it in Form Designer. The UpdateItemFields will read the value from the designer and save it to the item. Consider using these functions correctly so that you should only save the settings but not the value of the element into your item.<br>The model is for transferring data from Sitecore Item to view .cshtml </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5971} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-6.png" alt="" class="wp-image-5971"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Second, we create a Sitecore Template for storing the value of IsOnlyNumber into Sitecore Item.<br></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5972} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-7-1024x156.png" alt="" class="wp-image-5972"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>This new template must, of course, inherit the "Input" template of default Sitecore (<em>/sitecore/templates/System/Forms/Fields/Input</em>) so that we can use all of the default properties.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5973} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-8.png" alt="" class="wp-image-5973"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>5. How can I extend the property editor in the Form Designer?</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>After adding the new property to an element. We would like to allow the author to edit this property in the Form Designer. For example, we would like to create a Checkbox in Form Designer for "Is Only Number" property which we defined above.<br>First, we need to switch to the core database in Sitecore.<br>Second, we create an editor for this property by creating an "FormCheckBox parameters" under the path <br><em>/sitecore/client/Applications/FormsBuilder/Components/Layouts/PropertyGridForm/PageSettings/Common/Details/Is Only Number</em></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5974} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-9-1024x196.png" alt="" class="wp-image-5974"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>We have to set the binding property which tells where the "IsChecked" value should be written to. In this case, that is "Is Only Number" property of the model (not the template. If you use different names for template and model, the property of the model must stand here).<br>Please note that the binding doesn't allow blank and the first character must be in lower case. The other characters have to be as same as written in the property of the model.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5975} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-10.png" alt="" class="wp-image-5975"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Now, go to<br><em>/sitecore/client/Applications/FormsBuilder/Components/Layouts/PropertyGridForm/PageSettings/Settings/</em><br>Duplicate the "SingeLineText" editor and extend the new one with the new property editor "Is Only Number" that we created before.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5976} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-11-1024x299.png" alt="" class="wp-image-5976"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Now go back to the settings of SingleLineText element and change the default editor to the new editor we created above<br></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5978} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-13.png" alt="" class="wp-image-5978"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>The new property editor for "Is Only Number" will appear then in Form Designer for all SingleLineText components.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5979} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-14-1024x224.png" alt="" class="wp-image-5979"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>6. How can I change the validator's error message as well as UI?</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>Sitecore Forms uses ASP.NET MVC and jquery validator for validating the values of the elements. If we would like to localize the messages or changing the way of the error shown. We have to override the default javascript function of jquery as well as the HTML code of generating ASP.NET MVC. For example, the following javascript code overwrites the date validator and error messages as well as error placement jquery.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5980} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-15.png" alt="" class="wp-image-5980"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>The date validator will now accept "__.__.____" as a "valid date" or the error message of email validation should be "Geben Sie bitte maximal {0} Zeichen ein." in German.<br>When validation fails, the errorPlacement ist extended for adding some custom CSS classes to the elements and remove them when validation successes.<br>In case, if you want to change the error message created by ASP.NET MVC, you have to extend the HTML Layout so that data-val-xxx is filled by your custom message before calling GenerateUnobtrusiveValidationAttributes. For example, a custom validation message for the Date element has been added as follows. <br>Note: Always call  GenerateUnobtrusiveValidationAttributes at the end of HTML code.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5981} --></p>
+<figure class="wp-block-image"><img src="/files/2020/01/image-16.png" alt="" class="wp-image-5981"/></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>Conclusion</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>Sitecore Forms is great to use and extend. We can customize everything that we want. Most of the requirements can be finished inside Sitecore Editor.  However, to get the best customer experience, we also have to build the javascript code to fulfill some requirements by the customer, such as, prefill the elements or posting form data to the server from the client-side.<br></p>
+<p><!-- /wp:paragraph --></p>

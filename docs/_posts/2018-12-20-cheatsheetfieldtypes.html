@@ -1,0 +1,281 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore field types - a visual cheat sheet
+author:
+  display_name: Hauke Lüneburg
+  login: hlueneburg
+  email: hauke.lueneburg@namics.com
+  url: ''
+author_login: hlueneburg
+author_email: hauke.lueneburg@namics.com
+excerpt: There is no actual *visual* documentation of the currently available field
+  types in Sitecore. In this post we are filling that gap and provide you with actual
+  screenshots in addition to the existing documentations.
+wordpress_id: 4918
+wordpress_url: https://sitecore.namics.com/?p=4918
+date: '2018-12-20 10:00:43 +0100'
+date_gmt: '2018-12-20 09:00:43 +0100'
+categories:
+- Development in Sitecore
+- Sitecore Experience CMS
+- Sitecore 8
+- Hands on Sitecore 8
+- Sitecore 7
+- nutzerfreundlich
+- Sitecore 9
+tags:
+- sitecore
+- Image Processing
+- Rich Text Editor
+- Field Types
+comments: []
+redirect_from:
+  - /2018/12/20/cheatsheetfieldtypes/
+---
+<p>There is no actual, complete documentation of the currently available field types&nbsp;for Sitecore 8 and 9 &ndash;&nbsp;at least no visual preview of them. This&nbsp;post tries to close this gap and provides actual screenshots, in addition to the existing documentation, for all the field types.</p>
+<h3 style="text-align: left;"><strong>Analytics fields</strong></h3>
+<p>The Analytics field types are for internal use by Sitecore.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Analytics field types.</li>
+</ul>
+<h4><strong>Profile Card Value</strong></h4>
+<p><a class="fancybox" href="/files/2018/12/analytics-ProfileCardValue.png" target="_blank"><img class="alignnone wp-image-5183 size-medium" src="/files/2018/12/analytics-ProfileCardValue-300x61.png" alt="Analytics - Profile Card Value" width="300" height="61" /></a></p>
+<h4><strong>Profile Cards</strong></h4>
+<p><a class="fancybox" href="/files/2018/12/analytics-ProfileCards.png" target="_blank"><img class="alignnone wp-image-5182 size-medium" src="/files/2018/12/analytics-ProfileCards-300x63.png" alt="Analytics - Profile Cards" width="300" height="63" /></a></p>
+<h4><strong>Tracking</strong></h4>
+<p><a class="fancybox" href="/files/2018/12/analytics-Tracking.png" target="_blank"><img class="alignnone wp-image-5184 size-medium" src="/files/2018/12/analytics-Tracking-300x71.png" alt="Analytics - Tracking" width="300" height="71" /></a></p>
+<h3 style="text-align: left;"><strong>Simple Types</strong></h3>
+<p>The Simple field types represent and individual value. An individual value may have multiple properties, such as the attributes in an Image field or the images and links in a Rich Text field. Sitecore provides the Simple field types described in the following sections.</p>
+<h4><strong>Checkbox</strong></h4>
+<p>This field type displays a toggle button. If the user selects the checkbox, Sitecore stores the value 1 (the number one). If the user does not select the checkbox, Sitecore stores a blank value.</p>
+<p><strong>Tip</strong> Check for the literal value 1 in a checkbox field, or use a property such as<br />
+Sitecore.Data.Fields.CheckboxField.Checked. Do not compare the value of a Checkbox<br />
+field against NULL, String.Empty, 0 (the number zero), or any value other than 1.</p>
+<p><img class="alignnone wp-image-5217 size-medium" src="/files/2018/12/simple-Checkbox-300x13.png" alt="Simple - Checkbox" width="300" height="13" /></p>
+<h4><strong>Date and Datetime</strong></h4>
+<p>The Date field type providers a user interface allowing a user interface to select or enter a date using manually. The Datetime field type adds a user interface to select or enter a time manually. Sitecore stores the content as a text string with the format yyyymmddThhmmss. If the user does not enter a time, Sitecore stores the value 000000 (midnight). The value stored represents local time for the Web server.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-Date.png" target="_blank"><img class="alignnone wp-image-5218 size-medium" src="/files/2018/12/simple-Date-300x32.png" alt="Simple - Date" width="300" height="32" /></a></p>
+<p><a class="fancybox" href="/files/2018/12/simple-Datetime.png" target="_blank"><img class="alignnone size-medium wp-image-5219" src="/files/2018/12/simple-Datetime.png" alt="Simple - Datetime" width="300" /></a></p>
+<h4><strong>File</strong></h4>
+<p>The File field type allows the user to select an item in the media library. Users can click Open file to open the Media Browser and select the desired file from the media library. You can use the Source property of a File field to control the media folder selected when the user opens the Media Browser, or to specify the root item for this selection interface. If the Source property of a File field specifies an item, the Media Browser cannot navigate above that item. The user cannot navigate above the specified media folder. The default Source for File field is the root item in the Media Library (/Sitecore/Media Library). If the Source property of a File field starts with a tilde character (~/Sitecore/Media Library/Files), the Media Browser will show the entire Media Library content tree with the specified media folder selected, allowing the user to navigate above that media folder.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-File.png" target="_blank"><img class="alignnone wp-image-5220 size-medium" src="/files/2018/12/simple-File-300x33.png" alt="Simple - File" width="300" height="33" /></a></p>
+<h4><strong>Image</strong></h4>
+<p>The Image field type allows the user to select an image from the media library and specify image properties. Users can click Open file to open the Media Browser and select the desired file from the media library. The Source property of an Image field controls the selected item in the Media Browser. For more information about the Source property, see the section File Field Type.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-Image.png" target="_blank"><img class="alignnone wp-image-5221 size-medium" src="/files/2018/12/simple-Image-300x92.png" alt="Simple - Image" width="300" height="92" /></a></p>
+<h4><strong>Integer</strong></h4>
+<p>This field type store a single line of text. With a validation for integer values.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-Integer.png" target="_blank"><img class="alignnone wp-image-5222 size-medium" src="/files/2018/12/simple-Integer-300x23.png" alt="Simple - Integer" width="300" height="23" /></a></p>
+<h4><strong>Multi-Line Text</strong></h4>
+<p>Use the Multi-line field type for simple text values spanning multiple lines. This field has no validation and there is no Rich Text support for fields of this type.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-MultiLineText.png" target="_blank"><img class="alignnone wp-image-5223 size-medium" src="/files/2018/12/simple-MultiLineText-300x38.png" alt="Simple - Multi-Line Text" width="300" height="38" /></a></p>
+<h4><strong>Number</strong></h4>
+<p>This field type store a single line of text. With a validation for number values.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-Number.png" target="_blank"><img class="alignnone wp-image-5224 size-medium" src="/files/2018/12/simple-Number-300x25.png" alt="Simple - Number" width="300" height="25" /></a></p>
+<h4><strong>Password</strong></h4>
+<p>This field type store a single line of text. With a mask for password values.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-Password.png" target="_blank"><img class="alignnone wp-image-5225 size-medium" src="/files/2018/12/simple-Password-300x24.png" alt="Simple - Password" width="300" height="24" /></a></p>
+<h4><strong>Rich Text</strong></h4>
+<p>This field type stores HTML text. The field displays the contents as a browser would display the source HTML, although the field actually stores character encoded HTML. The Show Editor button provides access to a Rich Text Editor, while the Edit Html button provides access to the stored HTML. For further information about Rich Text fields, see the Content Reference manual.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-RichText.png" target="_blank"><img class="alignnone wp-image-5226 size-medium" src="/files/2018/12/simple-RichText-300x70.png" alt="Simple - Rich Text" width="300" height="70" /></a></p>
+<h4><strong>Single-Line Text</strong></h4>
+<p>This field type store a single line of text.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-SingleLineText.png" target="_blank"><img class="alignnone wp-image-5227 size-medium" src="/files/2018/12/simple-SingleLineText-300x25.png" alt="Simple - Single-Line Text" width="300" height="25" /></a></p>
+<h4><strong>Word Document</strong></h4>
+<p>The Word Document field type allows the user to edit HTML using Microsoft Word embedded in the browser.</p>
+<p><a class="fancybox" href="/files/2018/12/simple-WordDocument.png" target="_blank"><img class="alignnone wp-image-5228 size-medium" src="/files/2018/12/simple-WordDocument-300x70.png" alt="Simple - Word Document" width="300" height="70" /></a></p>
+<h3 style="text-align: left;"><strong>List-Types</strong></h3>
+<p>Each list field types allow the user to select zero or more items using different user interfaces providing different features. The Source property of the field specifies the options in the list.</p>
+<h4><strong>Checklist</strong></h4>
+<p>The Checklist field type allows the user to select one or more checkboxes representing the children of the item specified by the Source property of the field. The user cannot order their selection.</p>
+<p><a class="fancybox" href="/files/2018/12/list-Checklist.png" target="_blank"><img class="alignnone wp-image-5207 size-medium" src="/files/2018/12/list-Checklist-300x71.png" alt="List - Checklist" width="300" height="71" /></a></p>
+<h4><strong>Droplist</strong></h4>
+<p>The Droplist field type allows the user to select a single item from the list specified by the Source property of the field.</p>
+<p><strong>Important</strong> The Droplist field type stores the name of the selected item. The Droplink field type stores its ID. For more information about the Droplink field type, see the section Use this field to search for and create a link to an item that is stored anywhere in the content tree.</p>
+<p><a class="fancybox" href="/files/2018/12/list-Droplist.png" target="_blank"><img class="alignnone wp-image-5208 size-medium" src="/files/2018/12/list-Droplist-300x24.png" alt="List - Droplist" width="300" height="24" /></a></p>
+<h4><strong>Grouped Droplink</strong></h4>
+<p>The Grouped Droplink field type allows the user to select a single grandchild of the item specified by the Source property of the field. The Grouped Droplink field type stores the GUID of the selected item.</p>
+<p><a class="fancybox" href="/files/2018/12/list-GroupedDroplink.png" target="_blank"><img class="alignnone wp-image-5209 size-medium" src="/files/2018/12/list-GroupedDroplink-300x23.png" alt="List - Grouped Droplink" width="300" height="23" /></a></p>
+<h4><strong>Grouped Droplist</strong></h4>
+<p>The Grouped Droplist field type allows the user to select a single grandchild of the item specified by the Source property of the field. The Grouped Droplist field type stores the name of the selected item.</p>
+<p><a class="fancybox" href="/files/2018/12/list-GroupedDroplist.png" target="_blank"><img class="alignnone wp-image-5210 size-medium" src="/files/2018/12/list-GroupedDroplist-300x24.png" alt="List - Grouped Droplist" width="300" height="24" /></a></p>
+<h4><strong>Multilist</strong></h4>
+<p>The Multilist field type allows the user to select zero or more items from the list specified by the Source property of the field. The user can sort the selected items.</p>
+<p><a class="fancybox" href="/files/2018/12/list-Multilist.png" target="_blank"><img class="alignnone wp-image-5211 size-medium" src="/files/2018/12/list-Multilist-300x103.png" alt="List - Multilist" width="300" height="103" /></a></p>
+<h4><strong>Multilist with Search</strong></h4>
+<p>A mulitilist with search field has no limitation and can scale to thousands of items. We recommend that you use this field type when referring to very large lists of items not just items that are in item buckets. Use this field to attach a search query to a multi-list field and display the search results as selectable items. For example, if you want a multi-list of all product items, you can set the source field of the field to TemplateFilter=&rdquo;Product ID&rdquo; and this returns the items in the list.</p>
+<p><a class="fancybox" href="/files/2018/12/list-MultilistWithSearch.png" target="_blank"><img class="alignnone wp-image-5212 size-medium" src="/files/2018/12/list-MultilistWithSearch-300x104.png" alt="List - Multilist with Search" width="300" height="104" /></a></p>
+<h4>Name Lookup Value List</h4>
+<p>This field type is an extended version of Name Value List type having many of the similar features. The only difference here is &ndash; Name Lookup Value List uses a Dropdown list to choose the value against a key. The editor is still required to type the key name, the dropdown is only for Value field. This field cannot be rendered.</p>
+<p><a class="fancybox" href="/files/2018/12/list-NameLookupValueList.png" target="_blank"><img class="alignnone size-medium wp-image-5213" src="/files/2018/12/list-NameLookupValueList.png" alt="List - Name Lookup Value List" width="300" /></a></p>
+<h4><strong>Name Value List</strong></h4>
+<p>The Name Value List field type allows the user to enter values for zero or more arbitrary keys. Sitecore stores the values entered as a list of key=value pairs separated by ampersands (&ldquo;&amp;&rdquo;). Sitecore uses the Name Value List field type for rendering parameters. For more information about rendering parameters, see the Presentation Component Reference.</p>
+<p><a class="fancybox" href="/files/2018/12/list-NameValueList.png" target="_blank"><img class="alignnone size-medium wp-image-5214" src="/files/2018/12/list-NameValueList.png" alt="List - Name Value List" width="300" /></a></p>
+<h4><strong>Treelist</strong></h4>
+<p>The Treelist field type allows the user to select zero or more descendants of the item specified by the Source property of the field. The user can sort the selected items.</p>
+<p>Tip Use the Treelist field type for fields that users edit frequently.</p>
+<p><a class="fancybox" href="/files/2018/12/list-Treelist.png" target="_blank"><img class="alignnone size-medium wp-image-5215" src="/files/2018/12/list-Treelist.png" alt="List - Treelist" width="300" /></a></p>
+<h4><strong>TreelistEx</strong></h4>
+<p>The TreelistEx field provides the same functionality as the Treelist field, but only displays the selected items until the user elects to edit the list, which opens a new browser window. The Content Editor loads TreelistEx fields more quickly than Treelist fields.</p>
+<p><strong>Tip</strong> Use the TeelistEx field type for fields that users edit less frequently.</p>
+<p><a class="fancybox" href="/files/2018/12/list-TreelistEx.png" target="_blank"><img class="alignnone size-medium wp-image-5216" src="/files/2018/12/list-TreelistEx.png" alt="List - TreelistEx" width="300" /></a></p>
+<h4><strong>Link Types</strong></h4>
+<p>Link field types allow the user to enter links to items, external URLs, anchors, email addresses, and JavaScript functions.</p>
+<h4><strong>Droplink</strong></h4>
+<p>The Droplink field type allows the user to select a single item from the list specified by the Source property of the field using a drop-down list.</p>
+<p><a class="fancybox" href="/files/2018/12/link-Droplink.png" target="_blank"><img class="alignnone size-medium wp-image-5201" src="/files/2018/12/link-Droplink.png" alt="Link - Droplink" width="300" /></a></p>
+<h4><strong>Droptree</strong></h4>
+<p>The Droptree field type allows the user to select a descendant of the item specified by the Source property of the field.</p>
+<p><a class="fancybox" href="/files/2018/12/link-Droptree.png" target="_blank"><img class="alignnone size-medium wp-image-5202" src="/files/2018/12/link-Droptree.png" alt="Link - Droptree" width="300" /></a></p>
+<h4><strong>General Link</strong></h4>
+<p>The General Link field type allows the user to link to an item, an URL, an anchor, an email address, or a JavaScript function.</p>
+<p><a class="fancybox" href="/files/2018/12/link-GeneralLink.png" target="_blank"><img class="alignnone size-medium wp-image-5203" src="/files/2018/12/link-GeneralLink.png" alt="Link - General Link" width="300" /></a></p>
+<h4><strong>General Link with Search</strong></h4>
+<p>Use this field to search for and create a link to an item that is stored anywhere in the content tree.</p>
+<p><a class="fancybox" href="/files/2018/12/link-GeneralLinkWithSearch.png" target="_blank"><img class="alignnone size-medium wp-image-5204" src="/files/2018/12/link-GeneralLinkWithSearch.png" alt="Link - General Link with Search" width="300" /></a></p>
+<h4><strong>Version Identity</strong></h4>
+<p>This field type is for Sitecore internal use only.</p>
+<p><a class="fancybox" href="/files/2018/12/link-VersionIdentity.png" target="_blank"><img class="alignnone size-medium wp-image-5205" src="/files/2018/12/link-VersionIdentity.png" alt="Link - Version Identity" width="300" /></a></p>
+<h4><strong>Version Link</strong></h4>
+<p>This field type is for Sitecore internal use only.</p>
+<p><a class="fancybox" href="/files/2018/12/link-VersionLink.png" target="_blank"><img class="alignnone size-medium wp-image-5206" src="/files/2018/12/link-VersionLink.png" alt="Link - Version Link" width="300" /></a></p>
+<h3>Developer Types</h3>
+<p>The developer field types primarily control the appearance of items in the Content Editor. Typical Web site developers do not use the Developer field types for end user data.</p>
+<h4><strong>Icon</strong></h4>
+<p>The Icon field type associates a themed icon with each item.</p>
+<p><a class="fancybox" href="/files/2018/12/developer-Icon.png" target="_blank"><img class="alignnone size-medium wp-image-5196" src="/files/2018/12/developer-Icon.png" alt="Developer - Icon" width="300" /></a></p>
+<h4><strong>IFrame</strong></h4>
+<p>The IFrame field type display a Web page within a field. The Source property of the field species the URL to display. The following image shows an example of an external Web page.</p>
+<p><a class="fancybox" href="/files/2018/12/developer-IFrame.png" target="_blank"><img class="alignnone size-medium wp-image-5197" src="/files/2018/12/developer-IFrame.png" alt="Developer - IFrame" width="300" /></a></p>
+<h4><strong>JSON</strong></h4>
+<p>No documentation provided.</p>
+<p><a class="fancybox" href="/files/2018/12/developer-JSON.png" target="_blank"><img class="alignnone size-medium wp-image-5198" src="/files/2018/12/developer-JSON.png" alt="Developer - JSON" width="300" /></a></p>
+<h4><strong>Tristate</strong></h4>
+<p>The Tristate field type allows the user to select one of three options: Default, Yes, and No. If the user selects Default, the value of the field is an empty string. If the user selects Yes, the value of the field is the number 1. If the user selects No, the value of the field is the number 0.</p>
+<p><a class="fancybox" href="/files/2018/12/developer-Tristate.png" target="_blank"><img class="alignnone size-medium wp-image-5200" src="/files/2018/12/developer-Tristate.png" alt="Developer - Tristate" width="300" /></a></p>
+<h4><strong>Sitecore User</strong></h4>
+<p>No documentation provided.</p>
+<p><a class="fancybox" href="/files/2018/12/developer-SitecoreUser.png" target="_blank"><img class="alignnone size-medium wp-image-5199" src="/files/2018/12/developer-SitecoreUser.png" alt="Developer - Sitecore User" width="300" /></a></p>
+<h3>System Types</h3>
+<p>The system field types provide advanced features to meet specific requirements. Typical Web site developers do not use the System field types for end user data.</p>
+<h4><strong>Attachment</strong></h4>
+<p>Sitecore 5.3.1:<br />
+Fields of the type Attachment are reserved to be used internally by the Sitecore client. You should not use fields of this type in your API code.</p>
+<p>Sitecore 7.2:<br />
+Database media items use the Attachment field type to store binary data.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Attachment field type in your data templates.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/12/system-Attachment.png" target="_blank"><img class="alignnone size-medium wp-image-5229" src="/files/2018/12/system-Attachment.png" alt="System - Attachment" width="300" /></a></p>
+<h4><strong>Custom</strong></h4>
+<p>To prevent including irrelevant entries in the list of field types, Sitecore provides the Custom field type for infrequently used custom fields. For example, Sitecore uses the Custom field type for the CachingField, ExperienceTunerField, and TestLaboratoryField field types used in layout details.</p>
+<p><a class="fancybox" href="/files/2018/12/system-Custom.png" target="_blank"><img class="alignnone size-medium wp-image-5230" src="/files/2018/12/system-Custom.png" alt="System - Custom" width="300" /></a></p>
+<h4><strong>Datasource</strong></h4>
+<p>No documentation provided.</p>
+<p><a class="fancybox" href="/files/2018/12/system-Datasource.png" target="_blank"><img class="alignnone size-medium wp-image-5231" src="/files/2018/12/system-Datasource.png" alt="System - Datasource" width="300" /></a></p>
+<h4><strong>File Drop Area</strong></h4>
+<p>The File Drop Area (FDA) field type allows the user to manage files using the WebDAV protocol. For more information see the WebDAV Configuration reference. The value of a File Drop Area field references a media library folder containing corresponding media items. The Source property has no impact on File Drop Area fields.</p>
+<p><a class="fancybox" href="/files/2018/12/system-FileDropArea.png" target="_blank"><img class="alignnone size-medium wp-image-5232" src="/files/2018/12/system-FileDropArea.png" alt="System - File Drop Area" width="300" /></a></p>
+<h4><strong>Internal Link</strong></h4>
+<p>The Internal Link field type allows the user to select a descendant of the item specified by the Source property of the field.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Internal Link field type in your data templates. It is a Sitecore System field type which is appropriate only for Sitecore internal use and customizations. It is not suited for end user data because it points to a path and item name. This link can easily be broken by end users if they rename an item. Use Droplink, Droptree or General Link instead.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/12/system-InternalLink.png" target="_blank"><img class="alignnone size-medium wp-image-5233" src="/files/2018/12/system-InternalLink.png" alt="System - Internal Link" width="300" /></a></p>
+<h4><strong>Layout</strong></h4>
+<p>The Layout field type allows the user to manipulate layout details for each item.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Layout field type in your data templates</li>
+</ul>
+<h4><strong>Page Preview</strong></h4>
+<p>No documentation provided.</p>
+<p><a class="fancybox" href="/files/2018/12/system-PagePreview.png" target="_blank"><img class="alignnone size-medium wp-image-5234" src="/files/2018/12/system-PagePreview.png" alt="System - Page Preview" width="300" /></a></p>
+<h4><strong>Query Builder</strong></h4>
+<p>No documentation provided.</p>
+<p><a class="fancybox" href="/files/2018/12/system-QueryBuilder.png" target="_blank"><img class="alignnone size-medium wp-image-5235" src="/files/2018/12/system-QueryBuilder.png" alt="System - Query Builder" width="300" /></a></p>
+<h4><strong>Query Datasource</strong></h4>
+<p>You can set the datasource for a presentation component using the Sitecore presentation layer. Setting a datasource enables you to create an internal link to specific content. You can select content to use as a datasource from the content tree or by specifying a search query. The search query is then passed to the code in your solution. For example you could search for items based off a particular template and have its results act as the datasource for a presentation component.</p>
+<p><a class="fancybox" href="/files/2018/12/system-QueryDatasource.png" target="_blank"><img class="alignnone size-medium wp-image-5236" src="/files/2018/12/system-QueryDatasource.png" alt="System - Query Datasource" width="300" /></a></p>
+<h4><strong>Rendering Datasource</strong></h4>
+<p>No documentation provided.</p>
+<p><a class="fancybox" href="/files/2018/12/system-RenderingDatasource.png" target="_blank"><img class="alignnone size-medium wp-image-5237" src="/files/2018/12/system-RenderingDatasource.png" alt="System - Rendering Datasource" width="300" /></a></p>
+<h4><strong>Rules</strong></h4>
+<p>The Rules field type allows configuration of conditional renderings.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Rules field type in your data templates.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/12/system-Rules.png" target="_blank"><img class="alignnone size-medium wp-image-5238" src="/files/2018/12/system-Rules.png" alt="System - Rules" width="300" /></a></p>
+<h4><strong>Security</strong></h4>
+<p>The Security field type allows manipulation of security settings for each item.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Security field type in your data templates.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/12/system-Security.png" target="_blank"><img class="alignnone size-medium wp-image-5239" src="/files/2018/12/system-Security.png" alt="System - Security" width="300" /></a></p>
+<h4><strong>Template Field Source</strong></h4>
+<p>The Template Field Source field type allows the user to select the Source property in a template field definition item.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Template Field Source field type in your data templates.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/12/system-TemplateFieldSource.png" target="_blank"><img class="alignnone size-medium wp-image-5240" src="/files/2018/12/system-TemplateFieldSource.png" alt="System - Template Field Source" width="300" /></a></p>
+<h4><strong>Thumbnail</strong></h4>
+<p>The Thumbnail field type allows the user to select a thumbnail image from the Media Library.</p>
+<ul>
+<li><strong>Attention</strong><br />
+Do not use the Thumbnail Field field type in your data templates.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/12/system-Thumbnail.png" target="_blank"><img class="alignnone size-medium wp-image-5241" src="/files/2018/12/system-Thumbnail.png" alt="System - Thumbnail" width="300" /></a></p>
+<h3>Deprecated Types</h3>
+<p>As the title indicates it already: these types are deprecated. Not sure when they will be replaced or eliminated, but it could be possible anytime.</p>
+<p>Recording to a blog-post they can nearly all be easily replaced by standard types (<a href="https://markstiles.net/blog/2012/6/8/deprecated-sitecore-field-conversions/">https://markstiles.net/blog/2012/6/8/deprecated-sitecore-field-conversions/</a>).</p>
+<h4><strong>html</strong></h4>
+<p>Replace it with Rich Text.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-html.png" target="_blank"><img class="alignnone size-medium wp-image-5185" src="/files/2018/12/deprecated-html.png" alt="Deprecated - html" width="300" /></a></p>
+<h4><strong>link</strong></h4>
+<p>Replace it with General Link.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-link.png" target="_blank"><img class="alignnone size-medium wp-image-5186" src="/files/2018/12/deprecated-link.png" alt="Deprecated - link" width="300" /></a></p>
+<h4><strong>lookup</strong></h4>
+<p>Replace it with Droplink.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-lookup.png" target="_blank"><img class="alignnone size-medium wp-image-5187" src="/files/2018/12/deprecated-lookup.png" alt="Deprecated - lookup" width="300" /></a></p>
+<h4><strong>memo</strong></h4>
+<p>Replace it with Multi-Line Text.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-memo.png" target="_blank"><img class="alignnone size-medium wp-image-5188" src="/files/2018/12/deprecated-memo.png" alt="Deprecated - memo" width="300" /></a></p>
+<h4><strong>reference</strong></h4>
+<p>Replace it with Droptree.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-reference.png" target="_blank"><img class="alignnone size-medium wp-image-5189" src="/files/2018/12/deprecated-reference.png" alt="Deprecated - reference" width="300" /></a></p>
+<h4><strong>server file</strong></h4>
+<p>A field of "Server File" type holds a link to a file located in the root folder of the web site on the server. The link is stored as plane text.</p>
+<p>Note: this field type is intended for internal use. You should use Link and Image types instead.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-serverfile.png" target="_blank"><img class="alignnone size-medium wp-image-5190" src="/files/2018/12/deprecated-serverfile.png" alt="Deprecated - serverfile" width="300" /></a></p>
+<h4><strong>text</strong></h4>
+<p>Replace it with Single-Line Text.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-text.png" target="_blank"><img class="alignnone size-medium wp-image-5191" src="/files/2018/12/deprecated-text.png" alt="Deprecated - text" width="300" /></a></p>
+<h4><strong>tree</strong></h4>
+<p>Replace it with Droptree.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-tree.png" target="_blank"><img class="alignnone size-medium wp-image-5192" src="/files/2018/12/deprecated-tree.png" alt="Deprecated - tree" width="300" /></a></p>
+<h4><strong>tree list</strong></h4>
+<p>Replace it with Treelist.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-treelist.png" target="_blank"><img class="alignnone size-medium wp-image-5193" src="/files/2018/12/deprecated-treelist.png" alt="Deprecated - treelist" width="300" /></a></p>
+<h4><strong>Treelist with Search</strong></h4>
+<p>The treelist with search field allows you to reference items in much the same way as a multi-list field. However, you can also enter a GUID to determine the start location of the search. This overrides the default filter that has been set on the template. You can use the search box to find the items in this field and search adheres to any filters applied.</p>
+<p>According to the release notes of Sitecore 7.2 this type is no longer supported:<br />
+The "Treelist with Search" field type has been deprecated in favor of the "Multilist with Search" field because the functionality and UI is almost identical to the "Multilist with Search" field. The definition item for the field type has been moved to the "Deprecated Field Types" folder in the content tree. (402428)</p>
+<p>Replace it with Multilist with Search.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-TreelistWithSearch.png" target="_blank"><img class="alignnone size-medium wp-image-5194" src="/files/2018/12/deprecated-TreelistWithSearch.png" alt="Deprecated - Treelist with Search" width="300" /></a></p>
+<h4><strong>valuelookup</strong></h4>
+<p>Replace it with Droplist.</p>
+<p><a class="fancybox" href="/files/2018/12/deprecated-valuelookup.png" target="_blank"><img class="alignnone size-medium wp-image-5195" src="/files/2018/12/deprecated-valuelookup.png" alt="Deprecated - valuelookup" width="300" /></a></p>
+<h3>Sources used for this article</h3>
+<ul>
+<li>Sitecore Developer Network - API Fields documentation:&nbsp;<a href="https://sdn.sitecore.net/Articles/API/Fields.aspx">https://sdn.sitecore.net/Articles/API/Fields.aspx</a></li>
+<li>Sitecore 7.2 Data Definition Reference (legacy):&nbsp;<a href="https://doc.sitecore.com/legacy-docs/SC75/data-definition-reference-sc70-a4.pdf">https://doc.sitecore.com/legacy-docs/SC75/data-definition-reference-sc70-a4.pdf</a></li>
+<li>Sitecore TRICKS Blogpost "Name lookup value list":&nbsp;<a href="https://sitecoretricks.com/tag/name-lookup-value-list/">https://sitecoretricks.com/tag/name-lookup-value-list/</a></li>
+</ul>
+<p>&nbsp;</p>

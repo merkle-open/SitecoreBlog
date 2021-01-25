@@ -1,0 +1,125 @@
+---
+layout: post
+status: publish
+published: true
+title: How to Create a Rule in Sitecore to automatically fill an empty field with
+  existing content
+author:
+  display_name: Katharina Luger
+  login: kluger
+  email: katharina.luger@namics.com
+  url: ''
+author_login: kluger
+author_email: katharina.luger@namics.com
+excerpt: 'Using the Sitecore Rule engine for solving a use case for automatically
+  filling a field in Sitecore, when saving a page item: an empty Page Description
+  field should inherit the content of an existing Introduction field.'
+wordpress_id: 5379
+wordpress_url: https://sitecore.namics.com/?p=5379
+date: '2019-07-19 12:25:16 +0200'
+date_gmt: '2019-07-19 10:25:16 +0200'
+categories:
+- Web Content Management
+- Development in Sitecore
+- Sitecore Experience CMS
+- Sitecore 8
+- CMS-Usability
+- nutzerfreundlich
+tags:
+- Automatisieren
+- Rules
+- Rules Engine
+- Sitecore Rules
+- Automation
+comments:
+- id: 156807
+  author: isha
+  author_email: shukla.ishi@gmail.com
+  author_url: ''
+  date: '2020-02-05 11:13:53 +0100'
+  date_gmt: '2020-02-05 10:13:53 +0100'
+  content: "Hello,\r\nI have the similar requirement.\r\nI tried this, but its not
+    working for me. I am not able to debug the class as well.\r\nI would really appreciate
+    your help.\r\n\r\nThanks,\r\nIsha"
+- id: 156809
+  author: Katharina Luger
+  author_email: katharina.luger@namics.com
+  author_url: ''
+  date: '2020-02-05 11:32:08 +0100'
+  date_gmt: '2020-02-05 10:32:08 +0100'
+  content: |-
+    Hi Isha,
+    can you describe what is not working exactly?
+    I would like to help, but I need a bit more information.
+
+    greetings,
+    Katharina
+- id: 156812
+  author: isha
+  author_email: shukla.ishi@gmail.com
+  author_url: ''
+  date: '2020-02-05 17:44:51 +0100'
+  date_gmt: '2020-02-05 16:44:51 +0100'
+  content: "Hi Katharina,\r\nThanks for responding!\r\nI have followed all the above
+    mentioned steps, but the description field is still empty, I was wondering if
+    i need to add handler at the end of <event name=\"item:saved\"> in the <events>
+    of  web.config file?\r\nI am not able to debug the CopyFieldToField class as well.\r\n\r\n--Isha"
+- id: 156824
+  author: Katharina Luger
+  author_email: katharina.luger@namics.com
+  author_url: ''
+  date: '2020-02-07 11:41:17 +0100'
+  date_gmt: '2020-02-07 10:41:17 +0100'
+  content: "Hi Isha,\r\nif you created your rule in the folder /Sitecore/System/Settings/Rules/Item
+    Saved/Rules you should not need to add a config entry. \r\nThen Sitecore should
+    call the class (if it is correctly referenced in the rules item) on the Item Saved
+    event.\r\n\r\nI will go through the instructions again and test if it still works
+    with Sitecore 9. maybe that is the problem.. which Sitecore Version are you using?"
+- id: 156843
+  author: Isha
+  author_email: shukla.ishi@gmail.com
+  author_url: ''
+  date: '2020-02-10 04:41:36 +0100'
+  date_gmt: '2020-02-10 03:41:36 +0100'
+  content: "Hi Katharina,\r\n\r\nThanks  for your help. It worked.  :)\r\n\r\n--Isha"
+- id: 156850
+  author: Katharina Luger
+  author_email: katharina.luger@namics.com
+  author_url: ''
+  date: '2020-02-11 13:34:05 +0100'
+  date_gmt: '2020-02-11 12:34:05 +0100'
+  content: "Hi, \nI'm glad to hear that, great!\nHappy coding ?"
+redirect_from:
+  - /2019/07/19/sitecore-rule-automatically-filling-empty-fields-with-existing-content/
+---
+<h3>Use case</h3>
+<p><span style="font-weight: 400;">Recently I had to build a functionality to automatically fill a field in Sitecore when saving a specific item. The use case was as follows: Every time the editor saves an Article Content Page, with an empty Page Description field, the content of the Introduction field should be copied and saved to the Page Description field.</span><br />
+<!--more--></p>
+<h2><strong>Solution: Sitecore Rules!</strong></h2>
+<p>After a bit of research, I (re)discovered Sitecore Rules and it was quite easy to implement a solution for my problem.</p>
+<h3>How to solve the given use case</h3>
+<h4 style="text-decoration: underline;">Sitecore backend item configurations</h4>
+<p><span style="font-weight: 400;">First, you create a new Element Folder in Sitecore/System/Settings/Rules/Definitions/Elements and name it according to &nbsp;your project (in this article I will use the company name TAC as an example). Within this folder, you create a new Action called &ldquo;Copy Field to Field&rdquo;.</span></p>
+<p><a class="fancybox" href="/files/2019/01/img1.png"><img class="alignnone size-full wp-image-5380" src="/files/2019/01/img1.png" alt="rules_tree" width="271" height="657" /></a></p>
+<h4 style="text-decoration: underline;">Adding a new class to Sitecore using Visual Studio</h4>
+<p><span style="font-weight: 400;">In your Visual Studio Solution, you create a new class with the same name:</span><br />
+<script src="https://gist.github.com/namics-gists/4cd2a61bec813ef93df94a96708ce05a.js"></script></p>
+<h4 style="text-decoration: underline;">Update Sitecore Rule Action</h4>
+<p><span style="font-weight: 400;">Afterwards, you can complete the fields in your Action item:</span></p>
+<p><a class="fancybox" href="/files/2019/01/img2.png"><img class="alignnone size-full wp-image-5381" src="/files/2019/01/img2.png" alt="rule_action" width="595" height="589" /></a></p>
+<p><span style="font-weight: 400;">In the Data section&rsquo;s text field you write the text the user will see in the Rule Editor. With the help of square brackets, you can define parameters that are then passed into your .NET class. Those parameters will be displayed as editable links in the Rule Editor. Within the brackets, the parameters can be defined in more detail. There are four positional parameters separated by commas. In the <a href="https://www.google.com/url?q=https://sdn.sitecore.net/upload/sitecore6/61/rules_engine_cookbook_sc61_a4.pdf&amp;sa=D&amp;ust=1560245450794000&amp;usg=AFQjCNGPmxtvRiKOJ68_v0eZA0QaY-tQ0g" target="_blank">Rules Engine Cookbook</a> there is a good description of those:</span></p>
+<ol>
+<li style="font-weight: 400;"><span style="font-weight: 400;">The name of the property that the parameter sets in the .NET class that implements the condition.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">The name of an item beneath the /Sitecore/System/Settings/Rules/Definitions/Macros item providing predefined functionality, or an empty string. For example, to activate a user interface allowing the user to select an item from the content tree, specify the value tree.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">URL parameters to the user interface activated by the macro specified by the previous parameter, or an empty string. For example, to specify the /Sitecore/Content/Home item as the root for a selection tree, enter root=/sitecore/content/home.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Text to display if the user has not specified a value for the parameter.</span></li>
+</ol>
+<p><span style="font-weight: 400;">In our case, only the first and fourth parameter is necessary, because the user should enter the field name as a string. (I tried using the tree to get the field ID, but as I don&rsquo;t know on which fields the rule will be used, the tree dialog has to start at the root item. And then there is a lot of clicking on the user&rsquo;s side to navigate to the specific field.)<br />
+</span><span style="font-weight: 400;">In the Type field of the Script section, you just enter the type signature of your .NET class. First the namespace, afterwards the containing project, comma separated.</span></p>
+<h4 style="text-decoration: underline;">Configuring Sitecore Rule conditions</h4>
+<p><span style="font-weight: 400;">To create a rule with your condition, navigate to /Sitecore/System/Settings/Rules/Item Saved/Rules and create a new Rule. Call it &ldquo;Autofill SEO Fields on Article Page&rdquo;, as this was the initial task.</span></p>
+<p>To open the Rule Editor you click on &ldquo;Edit rule&rdquo;. You then choose your conditions, which need to be true in order for your Action to run, and finally you add the action.</p>
+<p>[caption id="attachment_5394" align="alignnone" width="300"]<a class="fancybox" href="/files/2019/05/img3.png"><img class="size-medium wp-image-5394" src="/files/2019/05/img3-300x228.png" alt="Rule Editor. Click for bigger picture." width="300" height="228" /></a> Rule Editor. Click for bigger picture.[/caption]</p>
+<p><a class="fancybox" href="/files/2019/01/img4.png"><img class="alignnone size-full wp-image-5383" src="/files/2019/01/img4.png" alt="rule_editor_rule" width="556" height="274" /></a>&nbsp;<a class="fancybox" href="/files/2019/01/img5.png"><img class="alignnone size-full wp-image-5384" src="/files/2019/01/img5.png" alt="rule_data" width="368" height="353" /></a></p>
+<h3>The result - use cases resolved using the Sitecore Rules engine!</h3>
+<p><span style="font-weight: 400;">Now, every time you save an Article Content Page with an empty Page Description field, the content of the Introduction field is copied to the Page Description field. Mission accomplished ;-)</span></p>

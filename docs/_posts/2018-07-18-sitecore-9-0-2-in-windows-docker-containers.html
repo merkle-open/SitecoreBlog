@@ -1,0 +1,87 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore 9.0.2 in Windows Docker containers
+author:
+  display_name: iiric
+  login: iiric
+  email: igor.iric@namics.com
+  url: ''
+author_login: iiric
+author_email: igor.iric@namics.com
+excerpt: Probably all of you always wanted to have very quickly a clean installation
+  of Sitecore with all services and databases up and running, but you know that it
+  always takes a lot of time... Now it is possible to have it up and running in minutes
+  thanks to Docker. After a lot of searching and trying we finally created the docker
+  solution that works with the latest Sitecore update 9.0.2 (rev. 180604).
+wordpress_id: 4745
+wordpress_url: https://sitecore.namics.com/?p=4745
+date: '2018-07-18 10:04:11 +0200'
+date_gmt: '2018-07-18 08:04:11 +0200'
+categories:
+- Sitecore PowerShell Extensions
+- Sitecore 9
+tags:
+- Sitecore Habitat
+- Docker
+- Sitecore 9.0.2
+- Sitecore docker
+- Sitecore Helix
+comments:
+- id: 155593
+  author: Sourabh
+  author_email: sourabh.khatri@gmail.com
+  author_url: ''
+  date: '2019-08-30 17:22:28 +0200'
+  date_gmt: '2019-08-30 15:22:28 +0200'
+  content: "Thanks for this, it helps me a lot to setup sitecore on docker. One error
+    which i got is related to nssm download and i had fixed it by updating the Solr
+    docker file. Here i have added security protocol Tls12 for webrequest.  \r\n\r\nRUN
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    ; `\r\nInvoke-WebRequest -Uri \"https://nssm.cc/release/nssm-2.24.zip\" -OutFile
+    /nssm.zip ; `\r\n    Expand-Archive -Path /nssm.zip -DestinationPath /nssm ; `\r\n
+    \   Remove-Item /nssm.zip -Force"
+redirect_from:
+  - /2018/07/18/sitecore-9-0-2-in-windows-docker-containers/
+---
+<p><img class="  alignnone wp-image-4747" src="/files/2018/07/Sitecore_Docker.jpg" alt="Sitecore_Docker" width="550" height="187" /></p>
+<p>In our previous post&nbsp;<a href="https://sitecore.namics.com/2018/06/12/sitecore-meet-the-dockers/">Sitecore &ndash; Meet the Dockers </a>&nbsp;we showed that it is possible to run Sitecore in Docker on Mac or Windows and how to install it with&nbsp;<a href="https://kitematic.com/">Kitematic GUI</a>.</p>
+<p>In this post you will learn how to install a complete solution using Sitecore 9.0.2 with xConnect, Helix Habitat, MSSQL&nbsp;and Solr.</p>
+<p>Probably all of you always wanted to know how to get a clean installation of Sitecore with all services and databases up and running very quick, but you know that it always takes a lot of time...<br />
+Now it is possible to have it up and running in minutes thanks to Docker. After a lot of searching and trying we finally created the docker solution that works with the latest Sitecore update&nbsp;9.0.2 (rev. 180604). We have found some very good solutions like the official <a href="https://github.com/Sitecore/docker-images">Sitecore + Docker github repo</a> but there we have found out that it does not support xConnect and that it has many flaws. Then we found another great source from&nbsp;<a href="https://github.com/avivasolutionsnl/sitecore-docker">avivasolutionsnl</a>&nbsp;where we saw that those guys already implemented xConnect with Docker and saved us some time. We have played with this solution and we saw that it also has some problems with xConnect, but it was fixable. After all we fixed the problems with xConnect and database creations, hosts in docker images, watcher services and many more&nbsp;and we have implemented a complete solution based on the newest Sitecore version and the new version of SIF 1.2.1.</p>
+<p><!--more--></p>
+<p>When we realized that what we have is just a basic Sitecore without anything, we went one step further and we took the Habitat solution with the latest update packages for version&nbsp;9.0.2. We implemented some more tweaks for <a href="https://github.com/SitecoreUnicorn/Unicorn">Unicorn</a>&nbsp;files export and sync in the solution and configured our Sitecore Docker container to use the Habitat solution.<br />
+After all we got it up and running without any errors in the log files.</p>
+<p>We fixed the problem that Docker has sometime with domains and accessing the database and Solr. We implemented a Powershell script to write directly to the windows host file domains and IP addresses.&nbsp;In the Docker file we added new Powershell commands to run addhosts PS script "RUN /Scripts/Add-Hosts.ps1".</p>
+<h2><strong>Preparation</strong></h2>
+<p>In order to get your Sitecore in Docker up and running, you have to follow these steps:</p>
+<ul>
+<li>Install Docker for Windows which can be downloaded from the&nbsp;<a href="https://docs.docker.com/docker-for-windows/install/">official Docker store</a>.</li>
+<li><a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v">Enable Hyper-V</a>.</li>
+<li><a href="https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers">Enable&nbsp;Docker to use Windows containers</a>.</li>
+<li>You can then proceed with Sitecore containers creation. You need to download the Docker files from <a href="https://github.com/error505/sitecore-docker">GitHub&nbsp;repository</a></li>
+</ul>
+<p>You are now ready to start playing with Docker and Sitecore 9</p>
+<h2><strong>Build Sitecore Docker containers</strong></h2>
+<p>Before you start with building your own Sitecore containers you should download all the necessary Sitecore installation files and place them into the files folder. Run the script for the creation of the certificates&nbsp;./Generate-Certificates.ps1, and for the&nbsp;log folders ./CreateLogFolders.ps1.</p>
+<p>You must run your Powershell console with Windows administrator rights and go to the folder where you placed your Docker images files. From there you can run now the Powershell command "docker-compose build" and Docker will start with downloading of the necessary files and with the creation of the MSSQL, Solr, xConnect and Sitecore containers.</p>
+<p>When everything is built you must run "docker-compose up" to get your containers up and running.</p>
+<p>The last step should be to update your Habitat solution Gulp and config files in order to get it work directly with your Docker containers.</p>
+<p>To publish and run the Helix Habitat solution in your Sitecore Docker solution you have to add this script to your gulpfile.js</p>
+<p><script src="https://gist.github.com/error505/839db48cacc5b0b811c172b7e999a042.js"></script>To your gulp-config.js file add this line<br />
+ <code>var unicornExportFolder = "C:\\docker-images\\wwwroot\\Sitecore\\Unicorn";</code>&nbsp;&nbsp;<br />
+ and change instanceRoot to<br />
+ <code>var instanceRoot = "C:\\docker-images\\wwwroot\\Sitecore";</code><br />
+ You have to change Habitat.Dev.config to sync unicorn files from wwwroot<br />
+ <code>sc.variable name="sourceFolder" value="C:\inetpub\wwwroot\sitecore\Unicorn"</code></p>
+<h2><strong>Final Steps</strong></h2>
+<ul>
+<li>Run the Habitat.sln with Visual Studio export Unicorn files by executing gulp Export-Unicorn-Files command.</li>
+<li>Execute Gulp Publish-All-Projects.</li>
+<li>Your files should be exported in your Docker images\wwwroot\sitecore folder and it should be automaticaly synced with Sitecore inside Docker.</li>
+<li>Now you can run gulp sync-unicorn from your solution to synchronize all Unicorn files.</li>
+<li>If you get problems with SSL after runing sync-unicorn than you have to tweak your \scripts\Unicorn\Unicorn.psm1 file. Add this after "Add-Type -Path $MicroCHAP" line.<script src="https://gist.github.com/error505/c6d11f3f43ab29d83d89efa7e589180d.js"></script></li>
+</ul>
+<p>Run your Habitat URL https://docker.habitat.dev.local and you will have it up and running!</p>
+<p>Many thanks to&nbsp;<a href="https://github.com/avivasolutionsnl/sitecore-docker">avivasolutionsnl</a>&nbsp;that saved us a lot of time and accepted some of our changes in Git pull request.</p>

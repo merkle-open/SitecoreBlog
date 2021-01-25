@@ -1,0 +1,106 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Sitecore Path Analyzer: how to undeploy / remove a deployed map configuration'
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+wordpress_id: 5822
+wordpress_url: https://sitecore.namics.com/?p=5822
+date: '2019-08-14 10:00:25 +0200'
+date_gmt: '2019-08-14 08:00:25 +0200'
+categories:
+- Experience Marketing, Analytics, Automation
+- Sitecore 8
+- Tipps
+- Sitecore 9
+- Path Analyzer
+tags:
+- Experience Database
+- Operation
+- Path Analyzer
+comments: []
+redirect_from:
+  - /2019/08/14/sitecore-pathanalyzer-undeploy-maps/
+---
+<h4><strong>When creating new/custom Path Analyzer maps in Sitecore, sometimes the chosen data does not match the desired result or there is an error in the rules configuration (making them "not working") &ndash; in such cases, it would be helpful to "un-deploy" the map, just like one has to initially "Deploy" it using the Marketing Asset deployment workflow to activate it.</strong></h4>
+<h4><strong>But how can this be achieved?</strong></h4>
+<p><!--more--></p>
+<p>There is no general "un-deploy" option for existing Path Analyzer maps.</p>
+<p>Unfortunately&nbsp;a simple "Unpublish" does not to work, as Path Analyzer maps underlay different behaviour with xConnect, rather than the regular item publishing.&nbsp;You may try&nbsp;to simply delete the deployed Map configuration, but in cases we saw, that didn't actually remove the configuration from xConnect data aggregation.</p>
+<p>So, in the worst case, this procedure needs some manual work&nbsp;<strong>on the Database.</strong></p>
+<h3>Know and use the&nbsp;Path Analyzer admin-page</h3>
+<p>But: it's noteworthy to consult the Path Analyzer admin-page as a first step, if one of the actions there might support your Use Case for redeploying or un-deploying a Path Analyzer map:
+<pre>/sitecore/admin/pathanalyzer.aspx</pre>
+<p>&nbsp;</p>
+<h3>Un-deploy approach #1: clearing the application cache</h3>
+<ul>
+<li>Delete&nbsp;the Path Analyzer map configuration item</li>
+<li>Restart the IIS application pool for the CM server and check if the PA map is removed</li>
+</ul>
+<h3>Un-deploy approach #2: remove data in TreeDefinitions db-table</h3>
+<p>This may be applicable if the map you want to remove, is still&nbsp;listed in the&nbsp;TreeDefinitions database table&nbsp;&ndash; or causing log errors &ndash; after the&nbsp;#1 approach.</p>
+<p><strong>IMPORTANT</strong>: please backup the database &ndash; or at least the "TreeDefinitions"-table &ndash; before executing this operation!</p>
+<ol>
+<li>In SQL Server Management Studio, in the Reporting database, remove all the data from the "TreeDefinitions"-table, by executing the following command:<br />
+<code>Delete * from TreeDefinitions</code></li>
+<li>This should resolve any issue with&nbsp;
+<pre>Processing_GetTaskById</pre>
+<p>&nbsp;procedure</li>
+</ol>
+<p>&nbsp;</p>
+<h3>When could this actually matter?</h3>
+<p>We had a situation with custom Path Analyzer map having been deployed, but then suddenly starting to write a lot &ndash; and I really mean A LOT &ndash; of errors to the Sitecore logfile.</p>
+<p>In exchange with the Sitecore Support, we figured out that the only way to prevent this from happening was the above described approaches, ultimately manually clearing the TreeDefinitions table in the database.</p>
+<pre style="overflow:auto">6904 18:50:04 ERROR [Path Analyzer] Error during aggregation.
+Exception: System.AggregateException
+Message: One or more errors occurred.
+Source: Sitecore.Framework.Rules.Core
+ at Sitecore.Framework.Rules.RuleEngine.Run(IEnumerable1 rules, IEnumerable1 scopedResolvers)
+ at Sitecore.PathAnalyzer.Rules.RulesValidator.ValidateRule(Interaction interaction, String rulesXml, ConditionParameters parameters)
+ at Sitecore.PathAnalyzer.Construction.TreeBuilder.IsApplicable(Interaction interaction, String rulesXml, ConditionParameters conditionParameters)
+ at Sitecore.PathAnalyzer.Construction.TreeBuilder.Build(Interaction interaction)
+ at Sitecore.PathAnalyzer.Processing.AggregationContextCollector.Collect(Interaction interaction)
+ at Sitecore.PathAnalyzer.Processing.TreeAggregator.Aggregate(ItemBatch`1 batch)
+ at Sitecore.PathAnalyzer.Processing.Agents.TreeAggregatorAgent.Execute()
+Nested Exception
+Exception: Sitecore.Framework.Rules.RuleExecutionException
+Message: An error occured evaluating the primary condition of the rule. See the inner exception for details.
+Nested Exception
+Exception: System.ArgumentException
+Message: No rule fact resolver could be found for Type:'Sitecore.XConnect.Segmentation.Predicates.ISegmentationServiceContext', Role:''.
+Source: Sitecore.Framework.Rules.Core
+ at Sitecore.Framework.Rules.FactProvider._.Resolve(IFactIdentifier identifier)
+ at Sitecore.Framework.Rules.RuleExecutionContextExtensions.Fact[T](IRuleExecutionContext context, String roleName)
+ at Sitecore.XConnect.Segmentation.Predicates.Interactions.ChannelTypeMatches.Evaluate(IRuleExecutionContext context)
+ at Sitecore.Framework.Rules.BinaryCondition.Evaluate(IRuleExecutionContext context)
+ at Sitecore.Framework.Rules.BinaryCondition.Evaluate(IRuleExecutionContext context)
+ at Sitecore.Framework.Rules.RuleEngine.Run(IRule rule, IFactProvider factProvider)</pre>
+<p>&nbsp;</p>
+<pre style="overflow:auto">6904 18:50:04 ERROR [Path Analyzer] Cannot apply rule on the interaction.
+Exception: System.AggregateException
+Message: One or more errors occurred.
+Source: Sitecore.Framework.Rules.Core
+ at Sitecore.Framework.Rules.RuleEngine.Run(IEnumerable1 rules, IEnumerable1 scopedResolvers)
+ at Sitecore.PathAnalyzer.Rules.RulesValidator.ValidateRule(Interaction interaction, String rulesXml, ConditionParameters parameters)
+ at Sitecore.PathAnalyzer.Construction.TreeBuilder.IsApplicable(Interaction interaction, String rulesXml, ConditionParameters conditionParameters)
+Nested Exception
+Exception: Sitecore.Framework.Rules.RuleExecutionException
+Message: An error occured evaluating the primary condition of the rule. See the inner exception for details.
+Nested Exception
+Exception: System.ArgumentException
+Message: No rule fact resolver could be found for Type:'Sitecore.XConnect.Segmentation.Predicates.ISegmentationServiceContext', Role:''.
+Source: Sitecore.Framework.Rules.Core
+ at Sitecore.Framework.Rules.FactProvider._.Resolve(IFactIdentifier identifier)
+ at Sitecore.Framework.Rules.RuleExecutionContextExtensions.Fact[T](IRuleExecutionContext context, String roleName)
+ at Sitecore.XConnect.Segmentation.Predicates.Interactions.ChannelTypeMatches.Evaluate(IRuleExecutionContext context)
+ at Sitecore.Framework.Rules.BinaryCondition.Evaluate(IRuleExecutionContext context)
+ at Sitecore.Framework.Rules.BinaryCondition.Evaluate(IRuleExecutionContext context)
+ at Sitecore.Framework.Rules.RuleEngine.Run(IRule rule, IFactProvider factProvider)
+"[Path Analyzer] Cannot apply rule on the interaction."</pre>
+<p>&nbsp;</p>

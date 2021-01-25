@@ -1,0 +1,123 @@
+---
+layout: post
+status: publish
+published: true
+title: Uniquely identify your dynamic placeholders in Sitecore 9
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+wordpress_id: 4536
+wordpress_url: https://sitecore.namics.com/?p=4536
+date: '2018-03-29 16:22:40 +0200'
+date_gmt: '2018-03-29 14:22:40 +0200'
+categories:
+- Allgemein
+- Development in Sitecore
+- Sitecore 9
+tags: []
+comments:
+- id: 151696
+  author: Kamruz Jaman
+  author_email: kamruz.jaman@googlemail.com
+  author_url: https://jammykam.wordpress.com/
+  date: '2018-04-10 15:22:22 +0200'
+  date_gmt: '2018-04-10 13:22:22 +0200'
+  content: "The problem you have is that you add the Accordian Items *not* dynamically,
+    and then you want to bind the contents of the item dynamically... you should just
+    do everything dynamically.\r\n\r\nInstead of relying on items/folders being added
+    in the Content Editor, have a general \"Accordian\" Rendering with placeholder,
+    into which you add an Accordian Item which has a datasource to the folder item.
+    Inside that you item you add the content as normal.\r\n\r\nThe accordian item
+    can be fully managed from Experience Editor, personalized, re-ordered etc without
+    leaving EE mode."
+- id: 151697
+  author: Fabian Geiger
+  author_email: fabian.geiger@namics.com
+  author_url: ''
+  date: '2018-04-10 17:08:31 +0200'
+  date_gmt: '2018-04-10 15:08:31 +0200'
+  content: "Hi jammykam :)\n\nThank you for your response. It makes totally sense.
+    I have to admit that the accordion example I've used in this article is not accurate
+    to display the problem. In fact we mainly ran into problems where we needed to
+    have markup outside of the dynamic placeholder that corresponds to the added elements.
+    This happens for example in a tab component where the user can click a tab and
+    in response another content gets displayed. Here is an example code:\n\n<code>\n<div
+    class=\"tab-component\">\n\t<ul>\n\t\t<!-- The <li> elements need to correspond
+    to the dynamically added content elements -->\n\t</ul>\n\t<div>\n\t\t<!-- Here
+    is a dynamic placeholder -->\n\t</div>\n</div>\n</code>\n\nThere are ways to make
+    this work, such as using java script to render the ul/list-list or using another
+    dynamic placeholder in the place of the ul/li-list. However, they don't feel straight
+    forward. If you don't mind, I would be glad if you could share your preferred
+    approach for this kind of situation.\n\nCheers, Fabian"
+- id: 153199
+  author: Mike Muggli
+  author_email: mmuggli@gmail.com
+  author_url: ''
+  date: '2018-10-31 22:29:39 +0100'
+  date_gmt: '2018-10-31 21:29:39 +0100'
+  content: "Hi Fabian,\r\n\r\nI have the exact same problem. I had one idea to solve
+    this, and I know this feels like a complete hack, but it might work in practice.
+    \r\n\r\nThe idea is to take the GUID of the Tab ItemID and strip out all the letters,
+    leaving only numbers, and then using that as the integer seed value.\r\n\r\nI
+    fully recognize this does not guarantee a unique seed value, but what is really
+    the likelihood of a colliding seed value in this case?"
+- id: 153200
+  author: Mike Muggli
+  author_email: mmuggli@gmail.com
+  author_url: ''
+  date: '2018-10-31 22:47:17 +0100'
+  date_gmt: '2018-10-31 21:47:17 +0100'
+  content: Or maybe generating a HashCode out of the Guid? I mean, we are only talking
+    about a handful or two of tabs. In that universe, a collision seems unlikely.
+- id: 153214
+  author: Fabian Geiger
+  author_email: fabian.geiger@namics.com
+  author_url: ''
+  date: '2018-11-02 16:53:20 +0100'
+  date_gmt: '2018-11-02 15:53:20 +0100'
+  content: "Hi Mike,\r\n\r\nThat are some interesting thoughts. I would rather not
+    use the first method because you might end up with a value that is way more the
+    int.MaxValue. Therefore, hashing would be the better approach.\r\nPersonally,
+    I don't want to push my luck and better go the save route. Collision of 32 bit
+    hash codes can happen more likely than we think: https://blogs.msdn.microsoft.com/ericlippert/2010/03/22/socks-birthdays-and-hash-collisions/\r\n\r\nCheers,
+    Fabian"
+redirect_from:
+  - /2018/03/29/uniquely-identify-your-dynamic-placeholders-in-sitecore-9/
+---
+<p>Sitecore 9 introduced the dynamic placeholder feature. Please follow the <a href="https://doc.sitecore.net/sitecore_experience_platform/developing/developing_with_sitecore/dynamic_placeholders">official documentation</a> for more information about when and how to use it.</p>
+<h3>The problem with the default dynamic placeholders</h3>
+<p>At first glance, the new dynamic placeholders look very straightforward. Basically, we provide an integer which is the amount of placeholders that should be rendered. Additionally, we can define the seed which indicates the starting value that is used for key generation (see example below). Also the markup customization possibilities are quite nice. However, when I used it in a project I ran into a problem that made me realize that the simple mechanism comes with a huge downside. </p>
+<p><!--more--></p>
+<p><strong>Update:</strong> <a href="https://jammykam.wordpress.com/">jammykam</a> pointed out that the previous example using an accordion component wasn't beneficial to showcase the problem. Therefore I changed the example to a tab component.</p>
+<p>Let's examine what I mean by that in a simple example. We want to create an tabs component where the Sitecore item structure is as follows:</p>
+<p><a class="fancybox" href="/files/2018/03/tabs1.png"><img src="/files/2018/03/tabs1.png" alt="tabs" width="109" height="86" class="alignnone size-full wp-image-4817" /></a></p>
+<p>This component should give the author the possibility to place other components (e.g. text, image, table) onto each tab content area. This is a classic scenario where dynamic placeholders come into play. If we would use the default dynamic placeholders in this case we might use the following code:</p>
+<p><script src="https://gist.github.com/NaibafCH/bf0a588f150b19d32d72ed3f6543f6c7.js"></script></p>
+<p>This way, the resulting placeholder keys look something like this:</p>
+<ul>
+<li>tab-{2845070A-AEBD-4B45-A59D-88269B081204}-<strong>0</strong></li>
+<li>tab-{2845070A-AEBD-4B45-A59D-88269B081204}-<strong>1</strong></li>
+<li>tab-{2845070A-AEBD-4B45-A59D-88269B081204}-<strong>2</strong></li>
+</ul>
+<p>Each placeholder receives a unique key which is used to map renderings to it. However, we do not know which placeholder corresponds to which tab item. Here is why this is problematic: Let's assume an author is not happy with the sequence of the tab items and puts "Events" before "News". What happens now is that all renderings which have been assigned to "News" are getting rendered in "Events" and vice versa. Honestly, I couldn't come up with an elegant solution for this problem. If you found one, then I would be glad if you could give me a hint!</p>
+<h3>The solution</h3>
+<p>The solution I came up with is quite simple but involves extending the default functionality of dynamic placeholders. Basically, we need to add a unique identifier to each placeholder. Therefore I created a new helper method which lets us do that. This method takes in the placeholder name and a Sitecore.Data.ID object as parameters. The example mentioned before looks like this with the extended version:</p>
+<p><script src="https://gist.github.com/NaibafCH/38eedad88bbe47150c1c9a88c16dfc26.js"></script></p>
+<p>This way the resulting placeholder keys look like this:</p>
+<ul>
+<li>tab-{2845070A-AEBD-4B45-A59D-88269B081204}-<strong>{EE1CC84B-EB2D-4250-A3DE-F4DF0DB82138}</strong></li>
+<li>tab-{2845070A-AEBD-4B45-A59D-88269B081204}-<strong>{C6B08567-16ED-428E-9014-DD516B294E5B}</strong></li>
+<li>tab-{2845070A-AEBD-4B45-A59D-88269B081204}-<strong>{9487CD58-8CBB-423F-81D8-3E8612490D40}</strong></li>
+</ul>
+<p><strong>SitecoreHelper extension</strong></p>
+<p>As mentioned before, I added a new extension method for the SitecoreHelper type.</p>
+<p><script src="https://gist.github.com/NaibafCH/228c65c07999b229b57299c4492112f4.js"></script></p>
+<p><strong>Dynamic Placeholder pipeline customization</strong></p>
+<p>If you already followed the link to the official documentation of dynamic placeholders then you might have seen that Sitecore 9 offers pipelines to extend the basic dynamic placeholders. The following configuration and corresponding pipeline processors enable the recognition of a unique identifier in the placeholder key. The processors are built to work side-by-side with the existing features as for Sitecore 9.0 Update-1. As you might have noticed, I needed to replace the RemovePlaceholderUniqueKeySuffix processor so this statement might not be true in the future. Unfortunately, I couldn't figure out a way to avoid replacing a processor.</p>
+<p><script src="https://gist.github.com/NaibafCH/4021f59515e1a49b42897a70d737e0f2.js"></script></p>
+<p><script src="https://gist.github.com/NaibafCH/23db25fe8c1fea3cfd53f2221a8ab2ce.js"></script></p>
+<p><script src="https://gist.github.com/NaibafCH/f16f05e4ba5b6fb6491b6801d8a656b5.js"></script></p>

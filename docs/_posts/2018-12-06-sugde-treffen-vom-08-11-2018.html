@@ -1,0 +1,157 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore Usergroup Deutschland-Treffen in N&uuml;rnberg vom 08.11.2018
+author:
+  display_name: Carsten Meiselbach
+  login: cmeiselbach
+  email: carsten.meiselbach@namics.com
+  url: https://www.namics.com/person/carsten-meiselbach/
+author_login: cmeiselbach
+author_email: carsten.meiselbach@namics.com
+author_url: https://www.namics.com/person/carsten-meiselbach/
+wordpress_id: 4949
+wordpress_url: https://sitecore.namics.com/?p=4949
+date: '2018-12-06 16:16:08 +0100'
+date_gmt: '2018-12-06 15:16:08 +0100'
+categories:
+- Allgemein
+- Adventtipp
+tags:
+- Sitecore User Group
+comments: []
+redirect_from:
+  - /2018/12/06/sugde-treffen-vom-08-11-2018/
+---
+<p>Das 12. Treffen der <a href="https://www.sitecore-usergroup.de/" target="_blank">Sitecore Usergroup Deutschland</a> (SUGDE) seit deren Gr&uuml;ndung in 2015 fand in der gut ausgew&auml;hlten Location "Design Offices N&uuml;rnberg" statt, welches unmittelbar nahe dem Hauptbahnhof und der sch&ouml;nen Altstadt liegt. Schon am Abend davor berichteten Jana und Chris &uuml;ber die positive Entwicklung der Sitecore Usergroup Deutschland e.V. &nbsp;Es gab wieder zahlreiche gute Vortr&auml;ge und einen Austauschen zwischen den Sitecore'lern.</p>
+<p><span style="text-decoration: underline;"><strong>&Uuml;bersicht der Vortr&auml;ge</strong></span></p>
+<ol>
+<li>Break out of Frames &ndash; A (crazy) Sitecore Solution, Verr&uuml;ckte Anforderungen f&uuml;hren zu verr&uuml;ckten Sitecore Solutions</li>
+<li>Sitecore Commerce 9 Insides &ndash; Plugins f&uuml;r Payment-Provider am Beispiel von Heidelpay</li>
+<li>Sitecore 9 &ndash; Known Issues &amp; Learnings</li>
+<li>Helix in Practice and Helix.Skeleton Demo</li>
+<li>Sitecore Symposium 2018 Recap</li>
+</ol>
+<h3><span style="text-decoration: underline;">Break out of Frames &ndash; A (crazy) Sitecore Solution, Verr&uuml;ckte Anforderungen f&uuml;hren zu verr&uuml;ckten Sitecore Solutions</span></h3>
+<p>von Dirk Sch&auml;fauer (Solution Architect, Indeca).<br />
+Twitter:&nbsp;<a href="https://twitter.com/monkeydsc" target="_blank">https://twitter.com/monkeydsc</a></p>
+<p><a class="fancybox" href="/files/2018/12/20181108_131336.jpg"><img class="aligncenter size-medium wp-image-4953" src="/files/2018/12/20181108_131336-300x225.jpg" alt="SUGDE Treffen N&uuml;rnberg, Dirk Sch&auml;fauer (Solution Architekt, Indeca)" width="300" height="225" /></a></p>
+<blockquote><p>Was sind eure schwierigsten Kunden?</p></blockquote>
+<p>fragte Dirk Sch&auml;fauer zum Beginn des Vortrag, wozu es seitens des Publikums nur ein betretenes Schweigen gab. Moderne Websites werden zumeist im <strong>Responsive Layout</strong> gefertigt, um den verschiedenen Aufl&ouml;sungen von Desktop, Tablet oder Smartphones gerecht zu werden. Teilweise haben Kunden eine sehr statische Vorstellung vom Layout, welches f&uuml;r die neue Website geplant ist. So orientiert man sich schnell an einem Photoshop-Layout, welches keinerlei Dynamik auf einer Seite mit auf- und zuklappenden Elementen oder Einr&uuml;ckungen von Bl&ouml;cken bei &Auml;nderung der Aufl&ouml;sung zeigt. Am Beispiel eines Kunden aus der Werbeindustrie demonstrierte Dirk, dass die Design-Anspr&uuml;che eines Kunden oft zu holprigen Umsetzungen leiten und am Kundenbed&uuml;rfnis einer einfach zug&auml;nglichen, schnell erfassbaren und gut navigierbaren Website vorbeigehen.</p>
+<p>Um dem Problem Herr zu werden, konnten mittels dem Photoshop-Plugin "Zeplin" passende ger&auml;teabh&auml;ngige Exports (inkl. einem Basis-Template mit vererbbaren Elementen) vorgenommen werden. Das Plugin erm&ouml;glicht die Platzierung von Elementen inkl. ger&auml;teabh&auml;ngiger Visualisierung und ist damit f&uuml;r ein Visual Prototyping besser geeignet als eine rein statische PSD. Allerdings lieferten die exportierten Templates nur feste und keine relative Pixelkoordinaten.</p>
+<p>Sp&auml;testens hier f&auml;ngt die eigentliche technische Arbeit an: Umbau der festen Koordinaten in&nbsp;relative, um ein CSS3 Grid f&uuml;r das Responsive Layout passend zu machen. Die Integration in Sitecore erfolgte durch &Uuml;bernahme des Markup als cshtml und der Erstellung von Komponenten inkl. Einstellungen zu Positionierungen. Das Resultat glich mehr einer Art Page-Builder-Applikation und erlaubte weit mehr Flexibilit&auml;t bei der Erstellung einer Seite, als es bei vielen anderen Projekt typischerweise vorgenommen wird. Das Ziel der Kundenzufriedenheit war erf&uuml;llt und zeigte einmal wieder, wie flexibel Sitecore anpassbar ist.</p>
+<h3><span style="text-decoration: underline;">Sitecore Commerce 9 Insides &ndash; Plugins f&uuml;r Payment-Provider am Beispiel von Heidelpay</span></h3>
+<p>von Jonne Kats und Bart Hoppe, Aviva Solutions<br />
+Produkt: <a href="https://mercury-ecommerce.com/" target="_blank">https://mercury-ecommerce.com/</a><br />
+<a href="https://www.heidelpay.com/de/integration/shopmodule/" target="_blank">https://www.heidelpay.com/de/integration/shopmodule/</a></p>
+<p><a class="fancybox" href="/files/2018/12/20181108_133650.jpg"><img class="aligncenter size-medium wp-image-4954" src="/files/2018/12/20181108_133650-300x225.jpg" alt="SUGDE Treffen N&uuml;rnberg, Jonne Kats, Aviva Solutions" width="300" height="225" /></a></p>
+<p>Die Sitecore Commerce-Experten Jonne Kats und Bart Hoppe von Aviva Solutions stellten die E-Payment-L&ouml;sung "Heidelpay" vor, welche auf Basis des Mercury Commerce-System aufgesetzt wurde. Heidelpay wird bereits f&uuml;r verschiedene Plattformen als Plugin angeboten, bisher aber noch nicht f&uuml;r Sitecore Commerce. Mercury E-Commerce ist ein Sitecore Commerce-Plugin und versteht sich als Accelerator, welcher auf Sitecore 9 Experience Commerce und SXA aufbaut.</p>
+<p>Es gibt zahlreiche Anbieter von E-Payment-Modulen f&uuml;r alle m&ouml;glichen E-Commerce-Systeme. Jeder Website Betreiber hat dabei seine Vorlieben bzw. sein bereits erprobtes System beim E-Payment. Die Integration des E-Payment-Providers "Heidelpay" f&uuml;r Mercury E-Commerce war dabei eine Herausforderung. Jonne beschrieb den typischen Ablauf bei einer Bestellung im Online Shop und wie mittels der <strong>Integration von Hooks</strong> die Heidelpay-Adapter zusammengebracht worden sind.</p>
+<ol>
+<li>Erstellung einer Bestellung</li>
+<li>&Uuml;bertragung der Bezahlung auf Payment Provider</li>
+<li>Heidelpay Backend Payment-Verarbeitung</li>
+<li>Generierung Back-Url, R&uuml;cksprung auf Shop-Seite</li>
+</ol>
+<p>Das Plugin setzt auf Sitecore 9, .Net Core 2.0 und ist erweiterbar. Ein Datenaustausch findet mittels der REST OData API statt. Mercury E-Commerce erweitert Sitecore 9 Experience Commerce um Funktionen f&uuml;r Catalog, Card, Inventory, Promotions, Order, Pricing, Sitecore Identity Server und dem Commerce Business Tools-System.</p>
+<p>Probleme bei der Erstellung des Heidelpay-Plugins bereitete immer wieder die Sitecore 9-Dokumentation und letztendlich konnte viele Dinge erst mittels der Erkenntnisse von DotPeek-Analysen gefertigt werden. Ziel war die Erstellung einer Request Payment API inkl. Validatoren sowie einer Connection Library und HTTP Handler. Jonne demonstrierte die Applikation mittels einem Docker Image f&uuml;r Sitecore Experience 9.</p>
+<p>Zudem stellte sich noch der Platinum Implementierungspartner Macaw vor, welcher nun auch Partner von Mercury ist. Macaw bietet eine Erweiterung f&uuml;r Sitecore Experience Commerce 9 mit rund 120 zus&auml;tzlichen Funktionen wie Faceted Navigation, Product Bundles, Comparison und ist SXA-Compliant. Dadurch sollen k&uuml;rzerer Time-to-Market und weniger Projektaufw&auml;nde und -risiken entstehen.</p>
+<h3><span style="text-decoration: underline;">Sitecore 9 Migration &ndash; Known Issues &amp; Learnings</span></h3>
+<p>von Stefan Graber, kuehlhaus AG<br />
+Blog: <a href="https://stefans-sitecore-blog.kuehlhaus.com/" target="_blank">https://stefans-sitecore-blog.kuehlhaus.com/</a><br />
+Twitter: <a href="https://twitter.com/stefangraber_sc" target="_blank">https://twitter.com/stefangraber_sc</a></p>
+<p><a class="fancybox" href="/files/2018/12/20181108_142859.jpg"><img class="aligncenter size-medium wp-image-4955" src="/files/2018/12/20181108_142859-300x225.jpg" alt="SUGDE Treffen N&uuml;rnberg, Stefan Graber, kuehlhaus AG" width="300" height="225" /></a></p>
+<p>Stefan Graber pr&auml;sentierte die vielen <strong>Erfahrungen aus 4 verschiedenen Migrationsprojekten</strong> von Sitecore 8.x auf Sitecore 9 (SC9). Die Ziele der Migration waren prim&auml;r die Nutzung von Sitecore 9 Feature und die &Uuml;bernahme der meisten Features aus v8, einer m&ouml;glichst verlustfreien &Uuml;bernahme der xDB-Daten, einer Verbesserung der (Backend) Performance sowie minimale Downtime beim Server-Umzug.</p>
+<p><strong>Es stellten sich viele Herausforderungen:</strong></p>
+<ul>
+<li>Mongo DB f&auml;llt weg</li>
+<li>Lucene ist mit SC9 obsolete und sollte durch SOLR abgel&ouml;st werden</li>
+<li>WFFM ist obsolete und sollte nicht mehr verwendet werden. Nach wie vor ist es unklar, ob der WFFM-Nachfolger wirklich zu empfehlen ist.</li>
+<li>Neue Anforderungen an der Infrastruktur wie SQL Server 2016, Windows Server und IIS</li>
+<li>Die Content-Produktion beim Kunden sollten nicht blockiert werden und bestehender Content vollst&auml;ndig &uuml;bernommen werden</li>
+</ul>
+<p><strong>Zu empfehlen sind folgende Ma&szlig;nahmen zur Vorgehensweise beim Upgrade:</strong></p>
+<ul>
+<li>Kein Update einer bestehende Instanz, sondern besser eine neue Instanz / neuen Server mit Sitecore 9 aufsetzen. Erst dies erlaubt&nbsp;den notwendigen Aufr&auml;um-Prozess sowie den nicht-blockierenden Content-Produktionsprozess laufender Websites. Aufsetzen eines Parallsystems mit allen notwendigen angedockten Systemen wie Mailserver.</li>
+<li>Pro Kundenprojekt ist ein PoC zu empfehlen, da jede Website eigenen Bedingungen hat die man kaum &uuml;ber einen Kamm scheren kann.</li>
+<li>Content-Check durch den Kunden vor Going-Live sowie Content-Freeze</li>
+<li>Zuletzt die Umschaltung der IP f&uuml;r die relevanten Domains auf den neuen Server</li>
+</ul>
+<p><strong>Tipps zur Implementierung der Migration von SC8 auf SC9:</strong></p>
+<ul>
+<li>Eigener Branch</li>
+<li>Aktualisierung der DLLs inkl. 3rd Party</li>
+<li>Anpassung Code wo n&ouml;tig und Zeit f&uuml;r Refactoring nutzen</li>
+<li>Erste Migration des produktiven Contents zwecks Pr&uuml;fung der Funktionalit&auml;t. Nur mit Test-Content werden nicht alle Fehler sichtbar.</li>
+<li>Testing auf Stage, Korrekturschleifen</li>
+<li>Snapshot der bisherigen VM erzeugen und archivieren</li>
+<li>Learnings aus der Praxis der Migration</li>
+</ul>
+<p>Nach der kurzen Einf&uuml;hrung der gew&uuml;nschten Vorgehensweise kam Stefan zu den gewonnenen Learnings. Zwischen Theorie und Praxis gibt es ja oft einige Unterschiede, die sich auch beim Migrationsprojekt wieder gezeigt hatten.</p>
+<p><strong>Ausz&uuml;ge aus den Learnings:</strong></p>
+<ul>
+<li>Probleme mit Dynamic Placeholder, Nutzung des Fortis DynamicPlaceholder (http://fortis.ws/fortis-collection/dynamic-placeholders/). Durch unterschiedliche Formate kam es zu konflikten. Generell m&uuml;ssen in SC9 Dynamic Placeholder mit einem ver&auml;nderten Seed / einer Unique Id versehen werden.</li>
+<li>Glass Mapper-Fehlermeldung "Model can't be initiated" => Update auf GlassMapper v5, da &auml;ltere nicht kompatibel mit SC9.</li>
+<li>SOLR: nach Migration von Lucene auf SOLR gab es Probleme mit Filter. Ursache leider unbekannt. Umgehung durch angepasste predicate-Statements.</li>
+<li>Total Search Results: Problem mit hoher RAM Anforderung des w3p-Prozesses. => TotalSearchResults durch query.Count() ersetzen.</li>
+<li>Link Database: Problem mit "Unrecognized Guid Format, Format Exception". Ursache: SC9 erlaubt keine leeren Id Attribute beim General Link. L&ouml;sung: Sitecore Support lieferte einen Fix. Trotzdem noch gleicher Fehler, dann gefixt mit Fix #771795, welcher auch Teil von SC9.02 ist.</li>
+<li>Probleme mit AppPool und xConnect, Verbindungsfehler, auch Fehler im Log sichtbar. Ursache: Rechteprobleme. L&ouml;sung: AppPool von Website und xConnect rechtetechnisch zusammenbringen.</li>
+<li>xDB-Daten-Migration: da die MongoDb wegf&auml;llt und man m&ouml;glichst kein Datenverlust erleben m&ouml;chte, ist hier besondere Vorsicht geboten. Das von Sitecore zur Verf&uuml;gung gestellt Migrationstool war nur anteilig brauchbar wegen xDB Schema-Problemen, welche mit dem passenden Schema abgeglichen werden mussten. Nur bedingt zu empfehlen, da es zu Problemen mit der Stabilit&auml;t kam. Abhilfe schaffte dann ein Restart des IIS AppPool oder (teilweise notwendig) der ganzen Maschine.</li>
+<li>xDB-Daten werden nicht mehr angezeigt, Statistik ab einem beliebigen Datum keine Anzeige mehr. Rebuild der Reporting DB dauert ewig.</li>
+<li>Ursache: v9.0.1 Bug. L&ouml;sung. Fix #828414 aufspielen, SC9.0.2 gilt besser, nochmal zu pr&uuml;fen.</li>
+<li>Probleme mit xProfiles, Vor- und Nachname nicht mehr auffindbar. Ursache: DSGVO-Thema, muss per Config "IndexPIISensitiveData" freigeschaltet werden. Aber mit eingeschr&auml;nkter Suchergebnisdarstellung. Zudem stimmte die Anzahl der Ergebnisse nicht mehr, welches unbedingt gepr&uuml;ft werden muss.</li>
+<li>GIF89a-Grafiken (animierte GIFs) werden falsch dargestellt wegen Fehler mit der Skalierung. Ursache: Skalierung mit MW-Param.</li>
+<li>Sitecore Rocks l&auml;uft nicht direkt mit SC9. L&ouml;sung: Zugriffsrechte anpassen.</li>
+<li>Performance mit "My Item" im Content und Experience Editor. L&ouml;sung: Fix #549951 aufspielen.</li>
+</ul>
+<p><strong> Tipp</strong>: Known Issues der Sitecore v9 Versionen checken. &Uuml;bersicht ist leider unvollst&auml;ndig und sollte unbedingt von Sitecore auf einen aktuellen Stand gehalten werden.</p>
+<p><strong>Erfahrungen mit der Content-Migration:</strong></p>
+<ul>
+<li>Grunds&auml;tzliches Problem: i.d.R. ist nicht der gesamte Content in Unicorn bzw. TDS vorhanden, es wird aber "alles" gebraucht.&nbsp;L&ouml;sung: daf&uuml;r gibt keine Pauschall&ouml;sung, die Migration gestaltet sich sehr individuell. Gr&uuml;ndliches Testen ist wichtig, FxM dabei nicht vergessen, Last Minute Content Updates nachschieben.</li>
+<li>Profile Cards, nach Migration wurden Fehler geworfen. Ursache nicht bekannt. L&ouml;sung: manuelles neu anlegen, Menge war zum Gl&uuml;ck &uuml;berschaubar.</li>
+<li>Sitecore Analytics Dashboards. Problem: zeigen keine Daten mehr. L&ouml;sung: Filterung f&uuml;r Ansicht anpassen, "{}" bei Guids weglassen.</li>
+<li>Publish Service 3.x. Problem: Inhalte werden nicht publiziert. Ursache: Inhalte mit "bereits publiziert" markiert wurden nicht erneut publizert. L&ouml;sung: Publishing Dashboard &ouml;ffnen, Repair Mode starten und neu publizieren.</li>
+<li>EXM Subscription, API m&ouml;chte bei Anmeldung keine Liste sondern eine (Newsletter) Message. L&ouml;sung: Dummy User manuell anlegen, Newsletter Mail verschicken.</li>
+<li>EXM Testversand. Problem: Review-Tab mit Quick Test, Custom Tokens werde allerdings nicht bef&uuml;llt. Dadurch ist die Mail nicht mehr identisch mit der regul&auml;ren Mail. L&ouml;sung: Kampagne duplizieren.</li>
+</ul>
+<p>Es kamen am Schluss der Pr&auml;sentation einige <strong>Fragen</strong> auf, welcher in der kurzen Zeit Stefan noch beantworten konnte.</p>
+<ul>
+<li>Sind Engagement Pl&auml;ne, bei entsprechendem Umfang, aufwendig zu migrieren?<br />
+Antwort: Das h&auml;ngt sehr vom Projekt ab. Custom Actions, Conditions, etc. machen Probleme mit neuer API.</li>
+<li>Ist die Content-Migration auch mit Update Wizard / Package mittels Items-Auswahl machbar? Antwort: Das h&auml;ngt nat&uuml;rlich sehr von eventuell noch laufenden strukturellen Anpassungen ab und hat zudem eine Abh&auml;ngigkeit eines eventuell parallel-laufenden Refactoring des Codes.</li>
+</ul>
+<h3><span style="text-decoration: underline;">Helix in Practice and Helix.Skeleton Demo</span></h3>
+<p>von Tam&aacute;s T&aacute;rnok<br />
+Website: <a href="https://trnktms.com/" target="_blank">https://trnktms.com/</a><br />
+Projekt: <a href="https://github.com/trnktms/Helix.Skeleton" target="_blank">https://github.com/trnktms/Helix.Skeleton</a><br />
+<a href="https://github.com/trnktms/Helix.Skeleton.Example" target="_blank">https://github.com/trnktms/Helix.Skeleton.Example</a></p>
+<p><a class="fancybox" href="/files/2018/12/20181108_153540.jpg"><img class="aligncenter size-medium wp-image-4956" src="/files/2018/12/20181108_153540-300x225.jpg" alt="SUGDE Treffen N&uuml;rnberg, Tam&aacute;s T&aacute;rnok" width="300" height="225" /></a></p>
+<p>Tam&aacute;s T&aacute;rnok demonstrierte, wie die <a href="https://helix.sitecore.net/introduction/index.html" target="_blank">Sitecore Helix Design Principles</a> bei Allwin umgesetzt werden. Die Pr&auml;sentation startete mit einem kurzen Abriss, was Helix ausmacht und wof&uuml;r es zu empfehlen ist, eingesetzt zu werden. Seine grunds&auml;tzliche Empfehlung: Habitat und HabitatHome sind Beispiele von Sitecore, aber eher ungeeignet f&uuml;r einen guten Einstieg in Helix, wenn es das erste mal angewandt wird.</p>
+<p><strong>Empfehlungen f&uuml;r den Einsatz von Sitecore Helix:</strong></p>
+<ul>
+<li>Kategorisierung des Projektes nach Funktionalit&auml;t. Innerhalb einer Funktionalit&auml;t-Gruppe liegen Module. Dabei keine&nbsp;Funktionen pro Modul anlegen.</li>
+<li>GlassMapper ist f&uuml;r Helix geeignet, wenn man Interface anstatt Klassen benutzt.</li>
+<li>Page Templates besser in kleinere Basis-Templates zerteilen. Es gilt, zu gro&szlig;e Templates zu vermeiden. L&ouml;sung mittels PartialViews.</li>
+<li>Geeignet ist auch eine Umsetzung von JSS mit Helix.</li>
+<li>Support Patches als eigenes Projekt anlegen, im Visual Studio Insert as a Link integrieren.</li>
+<li>Unicorn vs. TDS for Helix: die Serialisierung via Konfiguration pro Projekt, Aufteilung von Content und Development-Items, Dependencies in Konfiguration lagern.</li>
+</ul>
+<p>Tam&aacute;s beschrieb zudem die Evolution vom Helix Skeleton-Projekt, welches mittels eines Generators eine Skeleton Anwendung anlegt. Eine Frage gab es zum Schluss noch von den Teilnehmern: Kann man einfach ein bestehendes Projekt zu Sitecore Helix umbauen? Antwort: nicht wirklich, da der Aufwand recht hoch erscheint. Aber Schritt-f&uuml;r-Schritt machbar, wenn man keine Big-Bang-Umstellung erwartet. Immer eine Frage von Zeit &amp; Geld, da viel Refactoring Aufwand anf&auml;llt, zudem die technischen Vorteile dem Kunden nicht einfach zu zeigen sind.</p>
+<h3><span style="text-decoration: underline;">Recap Sitecore Symposium</span></h3>
+<p>von Christopher Wojciech, netzkern AG<br />
+Twitter: <a href="https://twitter.com/_chriswoj" target="_blank">https://twitter.com/_chriswoj</a></p>
+<p>Von Chris gab es zum guten Schlu&szlig; der Veranstaltung noch einen pers&ouml;nlichen Recap des letzten Sitecore Symposiums 2018 in Orlando / FL.</p>
+<p><strong>Die Highlights:</strong></p>
+<ul>
+<li><a href="https://www.linkedin.com/pulse/complete-new-sitecore-user-interface-horizon-preview-emmerzaal/" target="_blank">Horizon User Interface</a></li>
+<li><a href="https://www.sitecore.com/de-de/company/press-and-media/press-releases/2018/10/sitecore-to-acquire-innovative-content-marketing-software-vendor-stylelabs" target="_blank">Integration von StyleLabs</a></li>
+<li>Sitecore Host mit Roadmap f&uuml;r die (vermutlich) n&auml;chsten Jahre</li>
+<li><a href="https://jss.sitecore.com/" target="_blank">Integration von JSS</a></li>
+<li><a href="https://jss.sitecore.com/docs/techniques/graphql/graphql-overview" target="_blank">Graph QL</a> mit Graph Browser</li>
+<li><a href="https://www.sitecore.com/de-de/resources/index/video-assets/sitecore-cortex" target="_blank">Sitecore Cortex</a></li>
+</ul>
+<p>Zudem wurde der Helix Infrastructure Level vorgestellt.</p>
+<p>Das SUGDE-Treffen in N&uuml;rnberg war, wie zuletzt auch immer, sehr gut organisiert und es hat sich f&uuml;r die tollen Vortr&auml;ge wieder voll gelohnt, dabei zu sein. Das <strong>n&auml;chste Treffen</strong> wird in Hamburg im Februar 2019 stattfinden.</p>
+<p><a href="/files/2018/12/SUGDE-2018-Nuernberg-Alle-Teilnehmer.jpg"><img class="aligncenter size-medium wp-image-4952" src="/files/2018/12/SUGDE-2018-Nuernberg-Alle-Teilnehmer-300x225.jpg" alt="SUGDE Treffen N&uuml;rnberg Teilnehmer" width="300" height="225" /></a></p>
+<p><strong>Also Moin Moin bis dahin!</strong></p>

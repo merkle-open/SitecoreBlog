@@ -1,0 +1,185 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore - Extract comparable item data with SPE
+author:
+  display_name: Andreas Klein
+  login: aklein
+  email: andreas.klein@namics.com
+  url: ''
+author_login: aklein
+author_email: andreas.klein@namics.com
+wordpress_id: 5924
+wordpress_url: https://sitecore.namics.com/?p=5924
+date: '2019-12-11 11:27:30 +0100'
+date_gmt: '2019-12-11 10:27:30 +0100'
+categories:
+- Allgemein
+- Development in Sitecore
+tags:
+- PowerShell
+- SPE
+- Compare
+- Environment
+comments: []
+redirect_from:
+  - /2019/12/11/sitecore-extract-comparable-item-data-with-spe/
+---
+<p><!-- wp:paragraph {"customTextColor":"#ffffff","customBackgroundColor":"#79c843"} --></p>
+<p style="background-color:#79c843;color:#ffffff" class="has-text-color has-background">How to export Sitecore item data in a customized comparable way with "Sitecore Powershell Extensions" (SPE)?</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:more --><br />
+<!--more--><br />
+<!-- /wp:more --></p>
+<p><!-- wp:paragraph --></p>
+<p>Sitecore's strength and weakness is based on it's granularity in data structure. Hundred thousands of items builds up a solution and sometime it can be enough that only on single field of an item causes a behavior or problem that could not so easily foreseen. <br>If you run your solution on different staged environments - for example a development, a UAT or a production - there is an additional dimension of miss-configuration injected.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Some of this items can be synchronized over environments by using a tool like Unicorn or TDS. Especially if they keep the same over all destinations. Templates, layouts, renderings, core items can usually handled by this.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If it comes to content or configuration items it can be more difficult. There are also options from the previous mentioned tools (News Items Only configuration in Unicorn).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>As a Sitecore developer working in bigger teams with a lot of feature implementation, creating git branches swapping this branches forth and back makes things also not easier.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>So something I'm familiar with through the last years of Sitecore development were questions like this:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>How to compare items?</li>
+<li>Why is that not working on environment a) but not on environment b)?</li>
+<li>Locally it worked on my machine, why is it not working on yours?</li>
+<li>Do I have published everything important?</li>
+<li>Can I compare the master database content with the web database content? (Is it published?)</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>The obvious solution to get an answer to this question is&nbsp;<strong>comparison of items&nbsp;</strong>between:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>databases</li>
+<li>environments</li>
+<li>different system/networks</li>
+<li>security restriction layers</li>
+<li>item tree paths</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4>Export data options</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>To get the ingredients for comparing something you need access to the data (items) in a format you can use (or even better in the format you exactly want to work with).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The items data is accessible by:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li><strong>Sitecore UI</strong>: The manual approach to compare something, no accurate approach for having fast and correct feedback</li>
+<li><strong>Databases</strong>: The Sitecore database structure is not very comfortable to easy compare things so you need a tool like "Razl", if you have no developer access to the environment this approach is also not possible</li>
+<li><strong>API / WebAPI</strong>: Is also depending from network/security accessibility</li>
+<li><strong>Serialized Data</strong>: Can be compared with comparing tools developers already know (like kdiff3, BeyondCompare, WinMerge etc.)
+<ul>
+<li><strong>Sitecore Serialization Files</strong>: you need access to the file system to copy the data</li>
+<li><strong>Sitecore Packages</strong>: can be retrieved as long you have Sitecore UI admin access.&nbsp;</li>
+<li><strong>Tool Serialization (Unicorn YAML)</strong>: Only data can be compared that is under unicorn control.&nbsp;</li>
+</ul>
+</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>One of the problems with all these approaches is that <strong>you get the data complete</strong>. Complete means you get all values of all fields and data you maybe don't want to compare.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>So you have a&nbsp;<strong>bigger size</strong>&nbsp;than you want and you have a lot more&nbsp;<strong>noise</strong>&nbsp;in the data you compare.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Some examples are "Standard Fields" which are part of all items. Comparing tools of course ignores these field data if it is the same but there are also fields which are often not the same but for you as interpreter it's not relevant.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Think about the the "Updated date" field&nbsp;</li>
+<li>In some circumstances also the "Created Date" or "Created By" field, owner</li>
+<li>On a Sitecore Task the "Last Run" field</li>
+<li>Sometimes the "ID" itself can differ from system to system</li>
+<li>if you want to compare trees that are note located at the same place in the tree you want to ignore path information</li>
+<li>version data can also be noise, eg: when you compare master database with web database (in web you only have the published version)</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>To assess the comparison it has advantages to convert the data into your needed format first. So you remove all the data noise in which you are not interested at the beginning.<br>The following approach could help you in some of the described scenarios.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading --></p>
+<h2 id="Sitecore-CompareEnvironmentData-SitecorePowershellExtensionApproach">Sitecore Powershell Extension Approach</h2>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>The approach looks the following:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Export item tree structure with the fields you need, of the database of your choice, in the version you want</li>
+<li>Use a PowerShell script on the CM environment to generate this data and download it to your file system</li>
+<li>Do the same export for comparison environment/database/tree</li>
+<li>(Optional) Generate file system tree from export (helps sometimes in the comparison tool to have a better overview)</li>
+<li>Use your favorite file comparison tool to find differences</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>Preconditions / Requirements</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>You have admin account access to the environment CM system</li>
+<li>Sitecore Powershell Extensions are installed on the CM systems&nbsp;</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3>About the script</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>The script should fulfill the following requirement:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Have a selection filter for items that should be part of the export</li>
+<li>Have configuration to define "included" or "excluded" fields for export of each item</li>
+<li>Have configuration for non field based data that could included to export or not (ID, Path, Template, Version Numbers, Language etc.)</li>
+<li>Export an dynamic object with properties</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>The script achieving this could look like that:</p>
+<p><!-- /wp:paragraph --></p>
+<p><script src="https://gist.github.com/namics-gists/a701bd3c5f37316f9d0770310ac00f83.js"></script></p>
+<p><!-- wp:paragraph --></p>
+<p>A very easy example in an empty Sitecore solution:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li> I added an own page template type with some fields located in the template helix project folder. </li>
+<li>I also added two content pages under the home item and published one of it.</li>
+<li>Afterwards I executed the example "Compare custom data of the project only" and it generates me the json files for the database only with the "path", "version", "language" and my custom projects fields I created!</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:image {"id":5925} --></p>
+<figure class="wp-block-image"><img src="/files/2019/12/example_export_masterandweb-1024x414.jpg" alt="" class="wp-image-5925"/><br />
+<figcaption>The two created examples exported from my /sitecore/content tree.</figcaption>
+</figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Note: The exported data only contains necessary fields defined in "global configuration" section of the script (Path, Name, Version) and the custom fields I had created.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":5926} --></p>
+<figure class="wp-block-image"><img src="/files/2019/12/example_comparing-1024x358.jpg" alt="" class="wp-image-5926"/><br />
+<figcaption>The compared files in WinMerge.</figcaption>
+</figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph {"customTextColor":"#ffffff","customBackgroundColor":"#79c843"} --></p>
+<p style="background-color:#79c843;color:#ffffff" class="has-text-color has-background">The example shows this script gives you some flexibility to the data you want to compare, doesn't matter if its separated through different environments, projects, tree locations or databases.</p>
+<p><!-- /wp:paragraph --></p>

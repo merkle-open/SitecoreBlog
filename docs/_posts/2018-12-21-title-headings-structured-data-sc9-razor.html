@@ -1,0 +1,141 @@
+---
+layout: post
+status: publish
+published: true
+title: Titles, Headings, Descriptions and Structured Data with Sitecore 9 and Razor
+  (SEO)
+author:
+  display_name: akroell
+  login: akroell
+  email: ''
+  url: ''
+author_login: akroell
+wordpress_id: 4920
+wordpress_url: https://sitecore.namics.com/?p=4920
+date: '2018-12-21 16:00:47 +0100'
+date_gmt: '2018-12-21 15:00:47 +0100'
+categories:
+- Development in Sitecore
+- Sitecore Experience CMS
+- Tipps
+- Adventtipp
+- Sitecore 9
+- SEO
+tags:
+- SEO
+comments: []
+redirect_from:
+  - /2018/12/21/title-headings-structured-data-sc9-razor/
+---
+<p style="text-align: left;"><span style="font-weight: 400;">The purpose of a Search Engine Optimization (SEO) campaign is to get more people on your website. But as you as developer probably know, SEO is more of a process than a product. We can&rsquo;t make a website...&rdquo;seo&rdquo;... But we can help to simplify the process and provide content creators some tools so they are able to create the outstanding content a search engine would love to rank up.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">So how can we achieve that? Well, first of all we should have a very quick, very superficial look on how search engines operate:</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">In general, search engines deliver results for specific keywords. The position on which a result will be displayed at, is dependent on how the search engine would rate it and it&rsquo;s relevance. All you need to do is to make the search engine and visitors like your page.&nbsp;</span>Yeah, you got that right. Visitors have to like your page, but that&rsquo;s another topic.<!--more--></p>
+<p style="text-align: left;">This article is about making a search bot or engine like your site a bit more by making it's life easier. To do so, we're going to enable&nbsp;editors to make their&nbsp;content accessible&nbsp;by using Headings, Titles and Meta Description (On-Page SEO) as well as Structured Data in the form of JSON-LD (Technical SEO)</p>
+<h3 style="text-align: left;">Title- and Meta Description Tags</h3>
+<p><span style="font-weight: 400;">In order to simplify discovering the page&rsquo;s content, a content creator should be able to determine an appropriate page title, which preferably contains one or multiple keywords the page should be optimized for.&nbsp;</span>Typically you won&rsquo;t be able to affect the title, due to not being part of the editors team, but you can provide Sitecore items and fields where creators can specify the page&rsquo;s title easily.&nbsp;<span style="font-weight: 400;">The same Sitecore item could also contain the text which is going to appear as page description, the content of the so called </span><i><span style="font-weight: 400;">meta description tag</span></i><span style="font-weight: 400;">. These descriptions do not affect the ranking of a search engines directly.</span></p>
+<p><span style="font-weight: 400;">&nbsp;<a class="fancybox" href="/files/2018/12/screenshot-christmas-tree-e1545396310101.png"><img class="aligncenter size-full wp-image-5269" src="/files/2018/12/screenshot-christmas-tree-e1545396310101.png" alt="screenshot christmas tree" width="500" height="356" /></a></span></p>
+<p><span style="font-weight: 400;">Meta Description&nbsp;is shown inside the search result, right below the URL. For the first search result, the&nbsp;description is:<a class="fancybox" href="/files/2018/12/amazondescriptiontag.png"><br />
+</a></span></p>
+<blockquote><p>Discover our great selection of&nbsp;<em>Christmas Trees</em>&nbsp;on Amazon.com. Over 8600 ...</p></blockquote>
+<p>The corresponding meta description tag looks like this:</p>
+<p><a class="fancybox" href="/files/2018/12/amazondescriptiontag.png"><img class="size-full wp-image-5265 aligncenter" src="/files/2018/12/amazondescriptiontag.png" alt="amazondescriptiontag" width="417" height="66" /></a></p>
+<p>As you can see, this is the content of the description text inside the search result. By the way, this is no cooperation with Amazon.&nbsp;You are totally free to decide where to buy your Christmas Trees.</p>
+<p><span style="font-weight: 400;">A meaningful description will help the potential visitor to figure out whether your site is what he/she looked for or not. The Title of a page does both jobs: It affects the ranking and is shown in the search result list.&nbsp;</span></p>
+<hr />
+<p><a class="fancybox" href="/files/2018/12/SEOItem.png"><img class="aligncenter size-full wp-image-5273" src="/files/2018/12/SEOItem.png" alt="SEOItem" width="554" height="270" /></a></p>
+<p><span style="font-weight: 400;">An item like this, including fields for the title as well as the meta description can be added to a page type item which already contains a layout.&nbsp;<a class="fancybox" href="/files/2018/12/dummypage.png"><img class="aligncenter size-full wp-image-5274" src="/files/2018/12/dummypage.png" alt="Dummypage" width="654" height="263" /></a></span></p>
+<p><span style="font-weight: 400;">That's it from Sitecore side. Now a corresponding controller might read these Sitecore fields and add the values to page item's layout cshtml :</span></p>
+<table>
+<tbody>
+<tr>
+<td>
+<pre><span style="font-weight: 400;">@model Models.Page</span>
+
+<span style="font-weight: 400;"><!DOCTYPE html></span>
+
+<span style="font-weight: 400;"><</span><span style="font-weight: 400;">html</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;">  <</span><span style="font-weight: 400;">head</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;</span><span style="font-weight: 400;"><</span><span style="font-weight: 400;">meta</span><span style="font-weight: 400;"> name=</span><span style="font-weight: 400;">"viewport"</span><span style="font-weight: 400;"> content=</span><span style="font-weight: 400;">"width=device-width"</span><span style="font-weight: 400;"> /></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;</span><span style="color: #3366ff;"><span style="color: #000000;"><span style="font-weight: 400;"><</span><span style="font-weight: 400;">title</span><span style="font-weight: 400;">></span></span><span style="font-weight: 400;">@Model.PageTitle</span><span style="color: #000000;"><span style="font-weight: 400;"></</span><span style="font-weight: 400;">title</span><span style="font-weight: 400;">></span></span></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;</span><span style="color: #3366ff;"><span style="color: #000000;"><span style="font-weight: 400;"><</span><span style="font-weight: 400;">meta</span><span style="font-weight: 400;"> name=</span><span style="font-weight: 400;">"description"</span><span style="font-weight: 400;"> content=</span></span><span style="font-weight: 400;"><span style="color: #000000;">"</span>@Model.MetaDescription<span style="color: #000000;">"</span></span><span style="font-weight: 400; color: #000000;">/></span></span>
+
+<span style="font-weight: 400;">  </</span><span style="font-weight: 400;">head</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;">  <</span><span style="font-weight: 400;">body</span><span style="font-weight: 400;">></span>
+
+<span style="font-weight: 400;">  [...]</span>
+
+<span style="font-weight: 400;">  </</span><span style="font-weight: 400;">body</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;"></</span><span style="font-weight: 400;">html</span><span style="font-weight: 400;">></span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Okay.&nbsp;Editors now&nbsp;can provide pages with an appropriate title and&nbsp;description.</p>
+<hr />
+<p>&nbsp;</p>
+<h3>Heading Tags</h3>
+<p><span style="font-weight: 400;"> In order to enable content creators to include <strong><br />
+<h1></strong> to <strong><br />
+<h6></strong>&nbsp;</span><b>tags </b><span style="font-weight: 400;">to their content, you should provide the Rich Text Editor in version </span><i><span style="font-weight: 400;">Full </span></i><span style="font-weight: 400;">or a custom one. You can read here </span><a href="https://community.sitecore.net/general/f/11/t/3725"><span style="font-weight: 400;">how to include the Rich Text Editor Full</span></a><span style="font-weight: 400;"> to your Sitecore. </span></p>
+<p><span style="font-weight: 400;">When a content creator is using keywords inside a h-tag, the bot is likely to understand the content of your page a bit easier. A website user will do also, by the way.</span></p>
+<hr />
+<p>&nbsp;</p>
+<h3>Structured Data - JSON-LD</h3>
+<p><span style="font-weight: 400;">Talking about making content easier to understand, Google recommends to include JSON-LD structured data. JSON-LD is a JavaScript based solution for including some meta data inside <head> or even <body> tags &nbsp;for crawlers and search engines. It has a whole bunch of templates predefined on </span><a href="https://schema.org/"><span style="font-weight: 400;">schema.org</span></a><span style="font-weight: 400;">. </span></p>
+<p><span style="font-weight: 400;">You probably won&rsquo;t know in advance which content is going to be created for each page. But what you do know are the types of your Sitecore items and the purpose of the website you are building. So when you know there is definitely going to be a FAQ page on that website, it should be marked as FAQPage with JSON-LD. When there&rsquo;s going to be a contact page, a product displayed inside a page, you should mark it as well.&nbsp;</span>In fact, there's lots of different &ldquo;Things&rdquo; to declare with JSON-LD, but there&rsquo;s a lot of help out there, too. When you have no idea what to do with structured data markup, give <a href="https://structuredseo.com/how-to-markup-structured-data-with-json-ld">structuredSEO</a> a try. JSON-LD does also provide a <a href="https://json-ld.org/playground/">playground </a>where you can validate structured data.</p>
+<p><span style="font-weight: 400;">But how can we provide a useful structured data in our markup with Sitecore? Well, this can be achieved through rendering the corresponding items. In most cases, there&rsquo;s a controller creating a view based on data stored in a Sitecore item. And that&rsquo;s already all you need for structured data.&nbsp;</span><span style="font-weight: 400;">Get the data from your item, find an appropriate schema and insert some JavaScript code to your cshtml file.</span></p>
+<p><span style="font-weight: 400;">In my very simple example, my Sitecore tree does contain a page with a sub-item of type &ldquo;Product&rdquo;.&nbsp;</span>The Product itself includes the following fields:</p>
+<p><a class="fancybox" href="/files/2018/12/productFields.png"><img class="aligncenter size-full wp-image-5267" src="/files/2018/12/productFields.png" alt="Product Item" width="520" height="191" /></a></p>
+<p><span style="font-weight: 400;">After searching on <a href="https://schema.org/docs/full.html">schema overview</a> for a possible markup type, I actually found the type </span><a href="https://schema.org/Product"><span style="font-weight: 400;">Product</span></a><span style="font-weight: 400;">. My Product model needs at least those properties when I want some valid, expressive structured data. So the Product view could use the same data for both structured data and html markup:</span></p>
+<table>
+<tbody>
+<tr>
+<td>
+<pre><span style="font-weight: 400;">@using Glass.Mapper.Sc.Web.Mvc</span>
+<span style="font-weight: 400;">@model Models.ProductModel</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;</span>
+<span style="font-weight: 400;"><</span><span style="font-weight: 400;">script</span><span style="font-weight: 400;"> type=</span><span style="font-weight: 400;">"application/ld+json"</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;{</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;  </span><span style="font-weight: 400;">"@@context"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"http://schema.org"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;  </span><span style="font-weight: 400;">"@@type"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"Product"</span><span style="font-weight: 400;">,</span>
+
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;  </span><span style="font-weight: 400;">"description"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"<span style="color: #3366ff;">@Model.Description</span>"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;  </span><span style="font-weight: 400;">"name"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"<span style="color: #3366ff;">@Model.Name</span>"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;  &nbsp;</span><span style="font-weight: 400;">"image"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"<span style="color: #3366ff;">@Model.Imagepath</span>"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;  &nbsp;&nbsp;</span><span style="font-weight: 400;">"offers"</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;{</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;</span><span style="font-weight: 400;">"@@type"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"Offer"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;  &nbsp;  &nbsp;&nbsp;&nbsp;</span><span style="font-weight: 400;">"availability"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"http://schema.org/InStock"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-weight: 400;">"price"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"<span style="color: #3366ff;">@Model.RecommendedRetailPrice</span>"</span><span style="font-weight: 400;">,</span>
+<span style="font-weight: 400;"> &nbsp;    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-weight: 400;">"priceCurrency"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400;">"EUR"</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;}</span>
+<span style="font-weight: 400;"> &nbsp;  &nbsp;&nbsp;}</span>
+<span style="font-weight: 400;"></</span><span style="font-weight: 400;">script</span><span style="font-weight: 400;">></span>
+
+<span style="font-weight: 400;"><</span><span style="font-weight: 400;">div</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;</span><span style="font-weight: 400;"><</span><span style="font-weight: 400;">h3</span><span style="font-weight: 400;">></span><span style="font-weight: 400; color: #3366ff;">@Model.Name</span><span style="font-weight: 400;"></</span><span style="font-weight: 400;">h3</span><span style="font-weight: 400;">></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.Glass().RenderImage(x => <span style="color: #3366ff;">Model.ProductImage</span>)</span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;</span><span style="font-weight: 400;"><</span><span style="font-weight: 400;">br</span><span style="font-weight: 400;">/></span>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3366ff;">@Model.Description
+</span></span>    <br/>
+<span style="font-weight: 400;"> &nbsp;&nbsp;&nbsp;    </span><span style="font-weight: 400;"><span style="color: #3366ff;">@Model.RecommendedRetailPrice</span><span style="color: #3366ff;"><span style="color: #000000;"> &euro;</span></span></span>
+<span style="font-weight: 400;"></</span><span style="font-weight: 400;">div</span><span style="font-weight: 400;">></span></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><span style="font-weight: 400;">With these adjustments, we can help search bots to better understand our websites. Of course there&rsquo;s lots of other things worth keeping an eye on like Sitemaps, Canonical Links, URLs and so on, but that would <a href="https://sitecore.namics.com/2018/12/19/sitecore-seo-international-targeting/">go beyond the scope</a> of this post.</span></p>
+<hr />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-weight: 400;">For further readings, check out these very interesting sites:</span></p>
+<p><a href="https://moz.com/beginners-guide-to-seo">https://moz.com/beginners-guide-to-seo</a><br />
+<a href="https://structuredseo.com/important-on-page-seo-factors/">https://structuredseo.com/important-on-page-seo-factors/</a><br />
+<a href="https://technicalseo.com/">https://technicalseo.com/</a><br />
+<a href="https://searchengineland.com/seo-website-design-everything-need-know-272899">https://searchengineland.com/seo-website-design-everything-need-know-272899</a><br />
+<a href="https://developers.google.com/search/docs/guides/intro-structured-data">https://developers.google.com/search/docs/guides/intro-structured-data</a><br />
+<a href="https://developers.google.com/search/docs/guides/sd-policies">https://developers.google.com/search/docs/guides/sd-policies</a><br />
+<a href="https://search.google.com/structured-data/testing-tool">https://search.google.com/structured-data/testing-tool</a><br />
+<a href="https://www.reliablesoft.net/technical-seo/#structured-data">https://www.reliablesoft.net/technical-seo/#structured-data</a></p>

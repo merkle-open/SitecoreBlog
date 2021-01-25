@@ -1,0 +1,109 @@
+---
+layout: post
+status: publish
+published: true
+title: Store Item "Published date" and "Published by" information on each Sitecore
+  item
+author:
+  display_name: Roland Brunner
+  login: rbrunner
+  email: roland.brunner@namics.com
+  url: https://www.namics.com/person/roland-brunner/
+author_login: rbrunner
+author_email: roland.brunner@namics.com
+author_url: https://www.namics.com/person/roland-brunner/
+excerpt: Did you ever miss that Sitecore doesn't keep track of who published which
+  item(s) at what date? Well, be not sad no longer! In this blog post you'll find
+  a neat solution to store the "Published date" and "Published by [user]" information
+  on all Sitecore items - so it's finally possible to blame the right person who published
+  too many items once again ;)
+wordpress_id: 5571
+wordpress_url: https://sitecore.namics.com/?p=5571
+date: '2019-04-16 14:47:22 +0200'
+date_gmt: '2019-04-16 12:47:22 +0200'
+categories:
+- Web Content Management
+- Development in Sitecore
+- Sitecore Experience CMS
+- Sitecore 8
+- CMS-Usability
+- Tipps
+- Update
+- Logging
+tags:
+- logging
+- multi-language
+- Zugriffsrechte
+- content editor
+- Publishing
+- Workflows
+- Sitecore 8
+comments: []
+redirect_from:
+  - /2019/04/16/item-publish-date-and-published-by-user-on-sitecore-items/
+---
+<h4 style="margin-bottom: 15px;"><strong>In this post I'll explain how you can store the "Published date" and "Published by [user]" information on Sitecore items once such have been published by a user, in order to be viewable by any content manager or Sitecore admin in the backend.</strong></h4>
+<p>The solution is based on an <a href="https://sitecorejunkie.com/2013/01/26/who-just-published-that-log-publishing-statistics-in-the-sitecore-client/" target="_blank" rel="noopener">article by Mike Reynolds</a> in 2013 &ndash; however, the code provided by Mike doesn't work correctly in a multi-version and multi-language instance. So I fixed that.</p>
+<h3>Let's dig in: extend your Item Statistics Section in Sitecore</h3>
+<p>I don't want to extend the original item template because any version update of Sitecore will destroy those customized changes. So I made a new custom item section and let the original template inherit from it:</p>
+<p><a class="fancybox" href="/files/2019/04/blog-statistics-section-001.jpg" target="_blank"><img class="alignnone size-full wp-image-5575" src="/files/2019/04/blog-statistics-section-001.jpg" alt="blog-statistics-section-001" width="791" height="556" /></a></p>
+<p>Now I know what you might think:</p>
+<blockquote><p>&hellip;but a version update will revert THOSE changes too!?</p></blockquote>
+<p>That's basically true, but I synched the original Statistics section with <a href="https://github.com/SitecoreUnicorn/Unicorn" target="_blank" rel="noopener">Unicorn</a> &ndash; however, EXCLUDING it's children. So any changes should not affect my customized changes :)</p>
+<h3>Configure a custom Statistics section</h3>
+<p>The original Section template can be found under this path:</p>
+<ul>
+<li>/sitecore/templates/System/Templates/Sections/Statistics</li>
+</ul>
+<p>Let's add a new, custom one under the following path:</p>
+<ul>
+<li>/sitecore/templates/User Defined/CustomerName/Sections/Statistics Section</li>
+<li><strong>Important:</strong> use the correct name for the section &ndash; "Statistics"! Otherwise it will not be add correctly to the existing Sitecore statistics section.</li>
+</ul>
+<p><strong>Please note:</strong> it's very, very, very important, that this section <strong>doesn't inherit</strong> from the standard template! Because this would mess up the whole item structure database-wise - causing your Sitecore solution not to work anymore. Believe me, I've been there ;)</p>
+<p>So, instead, <strong>use&nbsp;<em>{00000000-0000-0000-0000-000000000000}</em> as base template.</strong></p>
+<p><a class="fancybox" href="/files/2019/04/blog-statistics-section-0021.jpg" target="_blank"><img class="alignnone wp-image-5577" src="/files/2019/04/blog-statistics-section-0021.jpg" alt="blog-statistics-section-002" width="550" height="305" /></a></p>
+<h3>Required field configurations for the new section</h3>
+<p>We go ahead and add the following two fields to the template. Name the fields with two underscores:</p>
+<ul>
+<li><em>__Published</em></li>
+<li><em>__Published by</em></li>
+</ul>
+<p><a class="fancybox" href="/files/2019/04/blog-statistics-section-003.jpg" target="_blank"><img class="alignnone wp-image-5578" src="/files/2019/04/blog-statistics-section-003.jpg" alt="blog-statistics-section-003" width="550" height="115" /></a></p>
+<p>And once done &amp; saved, change the title of each field back to "Published" and "Published by" (without underscores)</p>
+<ul>
+<li><em>Published</em></li>
+<li><em>Published by</em></li>
+</ul>
+<p><a class="fancybox" href="/files/2019/04/blog-statistics-section-004.jpg" target="_blank"><img class="alignnone size-full wp-image-5579" src="/files/2019/04/blog-statistics-section-004.jpg" alt="blog-statistics-section-004" width="789" height="486" /></a></p>
+<h3>Now it's time to inherit...</h3>
+<p>Let the original Sitecore statistics section inherit from the new one:</p>
+<ul>
+<li>/sitecore/templates/System/Templates/Sections/Statistics</li>
+</ul>
+<p><a class="fancybox" href="/files/2019/04/blog-statistics-section-005.jpg"><img class="alignnone wp-image-5581" src="/files/2019/04/blog-statistics-section-005.jpg" alt="blog-statistics-section-005" width="550" height="221" /></a></p>
+<p>As you can see, that template is under Unicorn sync.<br />
+And again: before you add the new section to the Sitecore system section as base template make sure the new custom section <strong>doesn't inherit from the "standard template"</strong> &ndash; or you'll say "Hasta la vista" to your Sitecore database!</p>
+<h3>Keeping everything in-sync</h3>
+<p>Don't forget to add the original Sitecore system section to the Unicorn sync &ndash; excluding it's children.</p>
+<p>Unfortunately, there is no transparent sync possible if there are excludes for the children (at least to-date). So you have to run a Unicorn sync manually if you deploy this to another solution.</p>
+<p><script src="https://gist.github.com/namics-gists/1454cf5110e27db8c2da8ef21d9489fd.js"></script>If you use unicorn sync in general, it's mandatory to add a&nbsp;<em>fieldFilter</em> for the two new fields. Otherwise any publish on an item will lead to a changed <em>yml-file</em> of this or any related items, which then will be committed to your git/versioning tool. That's why we add the two fields as <em>fieldFilter</em> to the Unicorn config. Now, every item in Sitecore should have this two new fields in the "Statistics" section.</p>
+<h3>Time to create a custom PublishItemProcessor</h3>
+<p>Configure a custom <em>PublishItemProcessor</em>-pipeline:</p>
+<ul>
+<li>Sitecore.Publishing.Pipelines.PublishItem.PublishItemProcessor</li>
+</ul>
+<p>The original code from Mike, in our test solution, resulted in a problem that a new language version "de-DE" would be created with the "Published" and "Published by" values. And we do not want this to happen &ndash; unless such a item version already existed before the publish ;) Or it could be that this behaviour is a problem of our Sitecore 8.0 Initial version. Anyhow, here's a fixed code snippet overcoming this side effect:<script src="https://gist.github.com/namics-gists/d663e76d20694aad814656f2cfe46aa3.js"></script></p>
+<p>Compared to Mike's script, I enhanced it in order to allow it to get the right language-version-combination which will be updated on a publish.</p>
+<p>The code is executing the following list of priorities:</p>
+<ol>
+<li>Take item with <em>same language and same version</em></li>
+<li>if not found, take&nbsp;item with <em>same language</em></li>
+<li>if not found, take&nbsp;item with <em>language "en" as fallback</em> (because all our templates etc. are created in English)</li>
+</ol>
+<h3>Patching the original PublishItemProcessor</h3>
+<p>Go ahead an add the&nbsp;<em>PublishItemProcessor</em> after the <em>UpdateStatistics PublishItemProcessor</em> in a new patch config file:</p>
+<p><script src="https://gist.github.com/namics-gists/6eb0d4fa3530edb908b2c1fe798c46be.js"></script></p>
+<p>The <em>PublishItemProcessor</em> sets the publishing statistics on the newly added fields on the item in both, the source and target databases, and only if the publishing fields exist on the published item!</p>
+<h3>That's it &ndash; we now have additional publish details when publishing items!</h3>
+<p>Now, every item publish results in saving the Sitecore username to the "Published by" and the current timestamp to the "Published" fields in the statistics section.</p>

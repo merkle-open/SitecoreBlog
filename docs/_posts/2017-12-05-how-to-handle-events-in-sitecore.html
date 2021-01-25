@@ -1,0 +1,47 @@
+---
+layout: post
+status: publish
+published: true
+title: How to handle Events in Sitecore
+author:
+  display_name: Najmeddine Ayadi
+  login: nayadi
+  email: najmeddine.ayadi@namics.com
+  url: ''
+author_login: nayadi
+author_email: najmeddine.ayadi@namics.com
+wordpress_id: 4437
+wordpress_url: https://sitecore.namics.com/?p=4437
+date: '2017-12-05 08:15:47 +0100'
+date_gmt: '2017-12-05 07:15:47 +0100'
+categories:
+- Allgemein
+- Development in Sitecore
+- Sitecore 8
+tags:
+- Development
+- Sitecore 8
+- Event Handling
+comments: []
+redirect_from:
+  - /2017/12/05/how-to-handle-events-in-sitecore/
+---
+<p>Sitecore provides many ways to integrate own logic while executing specific actions. One of those ways is event handler.</p>
+<h2><b>1. Default Event Handler</b><br />
+<h2>
+<p>Sitecore have per default some events which are defined in Sitecore.config configuration file.</p>
+<p><!--more--></p>
+<p><a class="fancybox" href="/files/2017/12/Image.png"><img class="alignnone size-medium wp-image-4439" src="/files/2017/12/Image-300x159.png" alt="Image" width="300" height="159" /></a></p>
+<p>It is possible to catch those events and embed some methods within own created classes.<br />
+To achieve this, we need first to define which events need to be catched. As you can see some actions are defined with two different events. For example when the user delete an item, two events will be "fired". First, the Event (item:deleting) will be occured while the item is deleting. Second, the event (item:deleted) will be occured after the item is deleted.</p>
+<h2><b>2. Create own event handler</b></h2>
+<p>In this block we will try to write something in log file after saving an item. We will catch the event (item:saved) and write the message "The ItemSavedEvent has been catched" in log file. (item:saved) will occures after the item has been saved.</p>
+<p>In the first step we will create the logic which will be affected after the (item:saved) event has been fired. The logic will be implemented within the new implemented class "ItemSavedHandler". This class contains the method "OnItemSaved".</p>
+<p><a class="fancybox" href="/files/2017/12/Image2.png"><img class="alignnone size-medium wp-image-4440" src="/files/2017/12/Image2-300x124.png" alt="Image2" width="300" height="124" /></a></p>
+<p>As you can see, the function will log the message "The ItemSavedEvent has been catched" as info in log file.</p>
+<p>In the next step we will register this handler in Sitecore, there is two ways to register an own implemented event handler.<br />
+You can either add a handler to the specific event section in sitecore.config configuration file.</p>
+<p>Or, subscribe the event handler at runtime using "Event.Subscribe"</p>
+<p><a class="fancybox" href="/files/2017/12/Image4.png"><img class="alignnone size-medium wp-image-4442" src="/files/2017/12/Image4-300x53.png" alt="Image4" width="300" height="53" /></a></p>
+<p>Now, every time an item is saved, the message "The ItemSavedEvent has been catched" will be logged.</p>
+<p><a class="fancybox" href="/files/2017/12/Image5.png"><img class="alignnone size-medium wp-image-4443" src="/files/2017/12/Image5-300x27.png" alt="Image5" width="300" height="27" /></a></p>

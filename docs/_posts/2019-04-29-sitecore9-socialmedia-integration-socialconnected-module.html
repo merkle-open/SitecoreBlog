@@ -1,0 +1,100 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Publishing to Facebook & Twitter from Sitecore: bringing back the Social Connected
+  module functionality for Sitecore 9'
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+excerpt: 'According to the release notes of Sitecore 9.0 Initial Release, the Social
+  Connected application is not included/deprecated since Sitecore CMS 9. As a result,
+  we searched for another option to bring back this functionality to Sitecore 9 –
+  and we found it: the SocialConnect module from Addact Technologies, which is nicely
+  compatible with Sitecore 9.0, Sitecore 9.1 and newer.'
+wordpress_id: 5429
+wordpress_url: https://sitecore.namics.com/?p=5429
+date: '2019-04-29 13:10:57 +0200'
+date_gmt: '2019-04-29 11:10:57 +0200'
+categories:
+- Experience Marketing, Analytics, Automation
+- Sitecore Experience CMS
+- Tipps
+- Social Media
+- Sitecore Social Connected
+- Sitecore 9
+tags:
+- sitecore
+- Social Media
+- Content scheduling
+- campaign
+- social connected
+- content authoring
+comments: []
+redirect_from:
+  - /2019/04/29/sitecore9-socialmedia-integration-socialconnected-module/
+---
+<h4 style="margin-bottom:15px;"><strong>According to the <a href="https://dev.sitecore.net/Downloads/Sitecore%20Experience%20Platform/90/Sitecore%20Experience%20Platform%2090%20Initial%20Release/Release%20Notes" target="_blank">release notes of Sitecore 9.0 Initial Release</a>, the <strong>Social Connected</strong> application is <u>not included/deprecated&nbsp;since Sitecore&nbsp;CMS&nbsp;9.0</u>. As a result, we searched for another option&nbsp;to bring back&nbsp;this functionality to Sitecore&nbsp;9.</strong></h4>
+<p><!--more-->Thanks to a <a href="https://sitecore.stackexchange.com/a/15729/1083" target="_blank">discussion</a> on the Sitecore StackExchange we&nbsp;found the&nbsp;<strong><a href="https://nam.to/addactsocial" target="_blank">SocialConnect&nbsp;module from Addact Technologies</a></strong>, which looks like a good&nbsp;alternative to cover the functions of the original Social Connected&nbsp;module from Sitecore &ndash; but compatible&nbsp;with Sitecore&nbsp;9.0, Sitecore 9.1 and newer.</p>
+<h2><strong>SocialConnect bei Addact - all you need to know</strong></h2>
+<p><img class=" size-medium wp-image-5497 aligncenter" src="/files/2019/02/addact-SocialConnect-300x68.png" alt="addact-SocialConnect Logo" width="300" height="68" /><br />
+Check out this Sitecore Habitat demosite explaining all features of SocialConnect by Addact:</p>
+<p>ℹ️ <a href="https://sitecoredemo.namics-test.com/en/PlayArea/SocialConnect?sc_camp=1AB1B72873644FCCBC5C63F46BFA9EBD" target="_blank">Introduction of the SocialConnect module by Addact Technologies</a>.</p>
+<h4><strong>Example Posts &ndash; sent directly via Sitecore</strong><br />
+<h4>
+[gallery columns="2" size="medium" ids="5699,5700"]</p>
+<h3>Installing the SocialConnect module in Sitecore 9</h3>
+<p>The installation of SocialConnect is very easy and can be done in just a few minutes.</p>
+<ol>
+<li>Just go to the official website&nbsp;of Addact&nbsp;and download the latest module package: <a href="https://nam.to/addactsocial" target="_blank">https://www.addact.in/addact-socialconnect/</a></li>
+<li>Then follow the <a href="https://www.addact.in/wp-content/uploads/2018/12/SocialConnectGuide_TechGuide_V1.pdf">installation guide</a>&nbsp;starting with page 6.</li>
+</ol>
+<p>After a completed installation of the package, it is possible to add various social media accounts for <strong>Facebook</strong> and <strong>Twitter</strong> to your Sitecore CMS.</p>
+<h3>How to connect&nbsp;a Facebook account&nbsp;with SocialConnect in Sitecore</h3>
+<h4><strong>Pre-requisites for the Facebook integration</strong></h4>
+<ol>
+<li>in order to connect one or more Facebook&nbsp;accounts with SocialConnect, you will need to&nbsp;<strong>create a&nbsp;Facebook app providing you an app API<sup>*</sup></strong>&nbsp;for your&nbsp;Facebook account(s) or Facebook pages you want to post to. Read more about this&nbsp;<a href="https://developers.facebook.com/docs/apps/" target="_blank">here</a>&nbsp;or in the&nbsp;<a href="https://www.addact.in/wp-content/uploads/2018/12/SocialConnectGuide_TechGuide_V1.pdf">TechGuide</a> from Addact, or directly head over to <a href="https://developers.facebook.com/apps/" target="_blank">developers.facebook.com/apps/</a>.<br />
+<sup><strong>*</strong> hint to save you nerves: keep your Facebook App in the "developer" mode as long as you don't need a huge amount of API calls &ndash; so neither send it to review, nor activate the "live"-mode</sup></li>
+<li>in the Sitecore backend, you will need to&nbsp;<strong>add a&nbsp;Facebook Application to the SocialConnect module</strong>:<br />
+insert a new Facebook Application&nbsp;below&nbsp;<em>/sitecore/system/Social/Applications</em>.</li>
+</ol>
+<p><img class="alignnone wp-image-5441 size-full" src="/files/2019/02/SocialConnect_Addact_Application.png" alt="SocialConnect_Addact_Application" width="1374" height="77" /></p>
+<h4><strong>Configure&nbsp;a Facebook SocialConnect application</strong></h4>
+<p>Once&nbsp;you&nbsp;have a Facebook application in SocialConnect ready, the data fields must be filled&nbsp;in&nbsp;with the&nbsp;appropriate&nbsp;API data provided from your Facebook app. The following table gives you an overview of the relations between the data from a Facebook App API and the Sitecore Facebook application:</p>
+<p><em>/sitecore/system/Social/Applications/ [Your Facebook Application]<br />
+</em><a class="fancybox" href="/files/2019/02/SocialConnect_Addact_Facebook.png" target="_blank"><img class="alignnone wp-image-5490" src="/files/2019/02/SocialConnect_Addact_Facebook-1024x274.png" alt="SocialConnect_Addact_Facebook" width="550" height="147" /></a></p>
+<p>After set up your account in Sitecore, it is possible to sign in to your Facebook-account before you are able to post a message (oAuth authentication). In this step, the field&nbsp;AccessToken is filled automatically with the needed data.<br />
+<sup>Don't forget to persist your Facebook API key &ndash; meaning, convert it from a short living key into a long living or never expiring API key. Follow the instructions&nbsp;in this guide to do so:&nbsp;<a href="https://medium.com/@Jenananthan/how-to-create-non-expiry-facebook-page-token-6505c642d0b1" target="_blank">How to create never expires Access Token for Facebook Page</a>. Replace the long living API key manually in the Facebook application in the SocialConnect settings.</sup></p>
+<h3>How to connect&nbsp;a Twitter account with SocialConnect&nbsp;in Sitecore</h3>
+<h4><strong>Pre-requisites for the Twitter integration</strong></h4>
+<ol>
+<li>in order to connect any Twitter account, you will need to <strong>create a Twitter app providing you an app API</strong> for your Twitter account(s). Read more about his <a href="https://developer.twitter.com/en/docs/basics/apps/guides/the-app-management-dashboard" target="_blank">here</a> or head over to <a href="https://twitter.com/apps" target="_blank">twitter.com/apps</a>.</li>
+<li>in the Sitecore backend, you will need to <strong>add a Twitter Application to the SocialConnect module</strong> &ndash; just as it was explained before for a new Facebook Application.</li>
+</ol>
+<h4><strong>Configure&nbsp;a&nbsp;Twitter SocialConnect application</strong></h4>
+<p>In order to make a connection to your Twitter account within SocialConnect in Sitecore, you need to fill&nbsp;in the corresponding data fields in the&nbsp;Sitecore&nbsp;backend&nbsp;with the&nbsp;provided API data from your Twitter application.&nbsp;Here's a table explaining which data to put in which fields:</p>
+<p><em>/sitecore/system/Social/Applications/ [Your Twitter Application]<br />
+</em><a class="fancybox" href="/files/2019/02/SocialConnect_Addact_Twitter.png" target="_blank"><img class="alignnone wp-image-5491" src="/files/2019/02/SocialConnect_Addact_Twitter-1024x272.png" alt="SocialConnect_Addact_Twitter" width="550" height="146" /></a></p>
+<p>Fill in all the information to set up the social media account in Sitecore. After this step, your Twitter account is ready to use.</p>
+<h3>Ready, set, go &ndash; try to share content to your Social accounts now!</h3>
+<p>After you set up your accounts you are able to post/tweet from your social media accounts.&nbsp;In order to do so,&nbsp;go to&nbsp;any&nbsp;webpage item in&nbsp;Sitecore for&nbsp;which&nbsp;you like to send&nbsp;a post to your social network. Navigate to the "Publish"-tab in the navigation bar and&nbsp;launch SocialConnect by clicking on it's icon:</p>
+<p><img class="alignnone wp-image-5443" src="/files/2019/02/SocialConnect_Addact_Button-1024x113.png" alt="SocialConnect_Addact_Button" width="800" height="89" /></p>
+<p>Here you can choose the configured network(s), where you like to send your message&nbsp;to&nbsp;and fill the form with all&nbsp;information for a new post.</p>
+<p>By pressing the button <<POST>> with Facebook or <<Tweet>> with Twitter, the post/tweet is directly posted to the according account.</p>
+<p>After you post your message on social media, you can track the created and posted messages directly within the SocialConnect module window, because a Sitecore-item is being created after you submit your form.&nbsp;Note that your posted URL contains the selected campaign ID to analyze the activity of your post. This aspect can be displayed in Sitecore Experience Analytics, if it is enabled.</p>
+<p><a class="fancybox" href="/files/2019/02/SocialConnect_Addact_Overview.png" target="_blank"><img class="alignnone wp-image-5442" src="/files/2019/02/SocialConnect_Addact_Overview.png" alt="SocialConnect_Addact_Overview" width="550" height="391" /></a></p>
+<h3>Storage of the social media posts</h3>
+<p>You can find all the posted or scheduled message-items in the Sitecore content editor below <em>/sitecore/system/Social/PostMessage</em></p>
+<h3>Enhancements to make the SocialConnect module even better</h3>
+<p>We were delighted to work with the team at Addact to improve the SocialConnect module for even better Sitecore 9.1 compatibility and by contributing some fixes and enhancements.&nbsp;So in case you also want to contribute to the development of the module, don't hesitate to get in touch with Addact via <a href="https://nam.to/addactsocial" target="_blank">their website</a>.</p>
+<p>There are also a few things in the pipeline already, such as:</p>
+<ul>
+<li>automatically generating & including the page's URL when sharing a social media message</li>
+<li>improvements of the messages overview list to better handle a large amount of accounts</li>
+<li>an improved select list to choose the appropriate campaign to be linked when sharing a social media message</li>
+</ul>

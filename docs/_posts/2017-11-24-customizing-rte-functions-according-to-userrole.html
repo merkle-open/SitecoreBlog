@@ -1,0 +1,128 @@
+---
+layout: post
+status: publish
+published: true
+title: Customizing RTE functions according to user/role
+author:
+  display_name: Najmeddine Ayadi
+  login: nayadi
+  email: najmeddine.ayadi@namics.com
+  url: ''
+author_login: nayadi
+author_email: najmeddine.ayadi@namics.com
+wordpress_id: 4415
+wordpress_url: https://sitecore.namics.com/?p=4415
+date: '2017-11-24 11:29:01 +0100'
+date_gmt: '2017-11-24 10:29:01 +0100'
+categories:
+- Allgemein
+- Development in Sitecore
+- Sitecore 8
+tags:
+- Rich Text Editor
+- Sitecore 8
+- Customizing
+comments: []
+redirect_from:
+  - /2017/11/24/customizing-rte-functions-according-to-userrole/
+---
+<div>In many cases, the customer want that some functionality in RTE are not&nbsp;accessible&nbsp;for some authors and accessible to the other. For safety reasons for example, it's necessary to allow the Webmaster only the ability to insert links within rich text editor or to add images. In Sitecore it is possible and pretty easy to set access rights for some roles or users to read, write or edit some fields within a component.</div>
+<div>In this article we will take a look how we could configure a rich text editor, the way that the role "User/Author" will not be able to use the button "Insert Link" while the Webmaster is allowed to use the "Insert Link" button.</div>
+<p><!--more--></p>
+<div>Assumed, we have a component with a Title, Subtitle and a copy text which will be edited within a Rich Text Editor. The rich text editor contains the following functions:</div>
+<ul>
+<li>Copy, Paste</li>
+<li>Undo, Redo</li>
+<li>Italic</li>
+<li>Superscript</li>
+<li>Insert Link</li>
+</ul>
+<div></div>
+<div>The Webmaster role will be able to use all functions, the user/author role will not be permitted to use "Insert Link". There is a simple way to achieve that.</div>
+<h3>1. Create a Html Editor Profile</h3>
+<div>We create two toolbars within the "Html Editor Profiles", in the first Toolbar "Toolbar 1" we will add the buttons (Copy, Paste, Undo, Redo, Italic and Superscript) and within the second Toolbar "Toolbar 2" we will place the "Insert Link" button only.</div>
+<div>First we create own Html Editor Profile, change to "core" database. Open the Content Editor, go to sitecore/system/settings/Html Editor Profiles, you will find some default Html Editor Profiles, like Rich Text Default, Rich Text Full etc. As the name indicates, those are pre configured rich text profile with several functions, Rich text default for example, contains the default toolbar functions, like Bold, Italic, Divider etc. This profile contains the "Insert Link" button, that we need. So we will create a similar profile, the easiest way to achieve that is, right click on Rich Text Default Profile folder and click on "Duplicate" in the context menu.</div>
+<div></div>
+<div><img src="file:///C:/Users/nayadi/AppData/Local/Temp/enhtmlclip/Duplicate_RichTextDefault.png" alt="" /><a class="fancybox" href="/files/2017/11/Duplicate_RichTextDefault.png"><img class="alignnone size-medium wp-image-4417" src="/files/2017/11/Duplicate_RichTextDefault-231x300.png" alt="Duplicate_RichTextDefault" width="231" height="300" /></a></div>
+<div></div>
+<div>We rename it to "Custom Rich Text Profile".</div>
+<div>When we expand the content of this new duplicated profile, we will see that we have one toolbar only "Toolbar 1", so we create a second toolbar by duplicating "Toolbar 1". Right click on "Toolbar 1" and select "Duplicate", rename it to "Toolbar 2", at the end delete all other buttons within "Toolbar 2" except the "Insert Link" button and delete the "Insert Link" button within "Toolbar 1". And don't forget to save.</div>
+<div>Until this step we have a new rich text profile with two toolbars.</div>
+<div></div>
+<div>In the next step, we will add the path of the new created rich text profile to the datasource of rich text editor within the component, in this way sitecore know which profile should be showed in the used rich text editor.</div>
+<div>Go to "master" database, and open the template, which contains the rich text editor. Add in the data source field of the rich text editor the path of the "Custom Rich Text Profile" folder.</div>
+<div></div>
+<div><img src="file:///C:/Users/nayadi/AppData/Local/Temp/enhtmlclip/Paste_RTE_Profile_Path.png" alt="" /><a class="fancybox" href="/files/2017/11/Paste_RTE_Profile_Path.png"><img class="alignnone size-medium wp-image-4418" src="/files/2017/11/Paste_RTE_Profile_Path-300x88.png" alt="Paste_RTE_Profile_Path" width="300" height="88" /></a></div>
+<div></div>
+<h3>2. Set the&nbsp;access&nbsp;rights</h3>
+<div></div>
+<h4><b>2.1 Simple case</b></h4>
+<div></div>
+<div>Now we need to&nbsp;configure&nbsp;the access rights the way that every user of the role "User" will not be able to use the "Toolbar 2", which contains the "Insert Link" Button.</div>
+<div></div>
+<table>
+<colgroup>
+<col />
+<col />
+<col /></colgroup>
+<tbody>
+<tr>
+<td>
+<div>Role</div>
+</td>
+<td>
+<div>Access rights on Toolbar 1</div>
+</td>
+<td>
+<div>Access rights on Toolbar 2</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>User/Author</div>
+</td>
+<td>
+<div>Full</div>
+</td>
+<td>
+<div>None</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>Webmaster</div>
+</td>
+<td>
+<div>Full</div>
+</td>
+<td>
+<div>Full</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div></div>
+<div></div>
+<div>Sitecore provides a useful tool called "Security Editor"</div>
+<div><img src="file:///C:/Users/nayadi/AppData/Local/Temp/enhtmlclip/Security_Editor.png" alt="" /></div>
+<div><a class="fancybox" href="/files/2017/11/Security_Editor.png"><img class="alignnone size-medium wp-image-4419" src="/files/2017/11/Security_Editor-294x300.png" alt="Security_Editor" width="294" height="300" /></a></div>
+<div></div>
+<div></div>
+<div>With the "Security Editor" we could set access rights for&nbsp;explicit&nbsp;fields and items.</div>
+<div>We need to switch again to "core" database, to set access rights directly on "Custom Rich Text Editor".</div>
+<div>We open the security Editor, select the role user or author, as needed. Expand again&nbsp;sitecore/system/settings/Html Editor Profiles/Custom Rich Text Profile, select "Toolbar 2" and set the read, write, edit etc. rights to deny.</div>
+<div></div>
+<div><img src="file:///C:/Users/nayadi/AppData/Local/Temp/enhtmlclip/Set_Deny_Toolbar2_User.png" alt="" /><a class="fancybox" href="/files/2017/11/Set_Deny_Toolbar2_User.png"><img class="alignnone size-medium wp-image-4420" src="/files/2017/11/Set_Deny_Toolbar2_User-300x123.png" alt="Set_Deny_Toolbar2_User" width="300" height="123" /></a></div>
+<div></div>
+<div>Until this point we don't need to do any further actions, the toolbar "Toolbar 2" with "Insert Link" button is denied for all users with Author or User as role. "Toolbar 1" and "Toolbar 2" are per default accessible for other roles like Webmaster.</div>
+<div></div>
+<h4><b>2.2 User role inherit from Webmaster role</b></h4>
+<div></div>
+<div>In some cases, according to implemented role concept, the user role&nbsp;inherit&nbsp;from Webmaster role. That means the user role has the same access rights as the Webmaster. Now the question is, how could we configure the access rights the way that the user is forbidden to read "Toolbar 2" although he inherit the read rights from the webmaster, which is allowed to read "Toolbar 2". The magic word is "broke the inheritance", sitecore provides the possibility to broke the inheritance of access rights between a role and its&nbsp;ancestor. Concrete, we tell sitecore that the role "Webmaster" has full access rights to "Toolbar 2" and that the role "User/Author" has broken inheritance to "Webmaster" on this toolbar</div>
+<div></div>
+<div>So we set the full rights of "Webmaster" explicit on the profile folder of the&nbsp;tool bars, in our example&nbsp;"Custom Rich Text Editor". &nbsp;And for "User/Author" we broke the inheritance on "Toolbar 2".</div>
+<div><img src="file:///C:/Users/nayadi/AppData/Local/Temp/enhtmlclip/Break_Inheritance.png" alt="" /></div>
+<div><a class="fancybox" href="/files/2017/11/Break_Inheritance.png"><img class="alignnone size-medium wp-image-4416" src="/files/2017/11/Break_Inheritance-300x119.png" alt="Break_Inheritance" width="300" height="119" /></a></div>
+<div></div>
+<div>That is all. When a Webmaster use the rich text editor, "Toolbar 2" will be visible and editable, but for "User/Author" it will be hidden.</div>
+<div>That was just an example how we could edit the access rights on several items the way we need, it was a guideline more than a checklist.</div>

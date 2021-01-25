@@ -1,0 +1,59 @@
+---
+layout: post
+status: publish
+published: true
+title: Make Channel allocation in Sitecore 9 great again
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+wordpress_id: 5842
+wordpress_url: https://sitecore.namics.com/?p=5842
+date: '2019-08-22 15:08:58 +0200'
+date_gmt: '2019-08-22 13:08:58 +0200'
+categories:
+- Experience Marketing, Analytics, Automation
+- Development in Sitecore
+- Sitecore 9
+tags:
+- Social Media
+- Experience Analytics
+- Channels
+- Interactions
+- Traffic
+comments: []
+redirect_from:
+  - /2019/08/22/make-channel-allocation-in-sitecore-9-great-again/
+---
+<p>After upgrading to Sitecore 9, our customer noticed some odd behaviour regarding channel allocation in Experience Analytics. The problem was that most of the traffic had been assigned to the "Direct" or "Organic non-branded search" channels. All the other channels barely received any assignments.</p>
+<p><!--more--></p>
+<p><a class="fancybox" href="/files/2019/08/top-channels-by-visit.png"><img class="alignnone size-full wp-image-5843" src="/files/2019/08/top-channels-by-visit.png" alt="top-channels-by-visit" width="808" height="471" /></a></p>
+<p>Back in Sitecore 8.1 we had a way more diverse distribution (especially from social channels). Therefore we first had a look at the data that has been collected in the xConnect collection database. We found out that the amount of interactions which have been mapped to the "Organic non-branded search" channel was correct. However, the "Direct" channel received way too many assignments. It became apparent that a lot of interactions with referrer of social platforms like Facebook or Twitter have been mapped to the "Direct" channel. Only the ones which were associated with a Campaign were properly assigned. The Channel "Other referrals" which previously received all the remaining mappings was basically a blank.</p>
+<p>After some chatting with Sitecore Support we were informed that some changes happened between Sitecore 8 and Sitecore 9 Update-1 which ultimately lead to this behaviour (the following information has been copied from the release notes):</p>
+<ul>
+<li><strong>Sitecore 9.0 Initial Release</strong>: <em>"The Social Connected application is not included in Sitecore 9.0. Information about future availability will be confirmed at a later date."</em></li>
+<li><strong>Sitecore 9.0 Update-1</strong>: <em>"The Sitecore.Analytics.OmniChannel.Pipelines.DetermineInteractionChannel.ReferringSite class has been deprecated and removed from the configuration file."</em></li>
+</ul>
+<p>What does this mean? First of all, the Social Connected application was a module integrated into Sitecore which gave content authors and marketers different functionalities to better integrate social networks into their site. It also offered posting messages to the social networks along with publishing Sitecore items. If you are interested in something like that then check out <a href="https://sitecore.namics.com/2019/04[cc]/29/sitecore9-socialmedia-integration-socialconnected-module/">Oliver Raduner's post</a> on bringing back the Social Connected module functionality for Sitecore 9 using an alternative module. Back to our problem: Alongside the Social Connected application, a pipeline processor called <em>SocialChannels</em> went into retirement. This processor was present in the <em>determineInteractionChannel</em> pipeline and was responsible for assigning traffic to the proper social channels in Sitecore.<br />
+The second change I want to point out is about the <em>ReferringSite</em> processor (also previously in <em>determineInteractionChannel</em> pipeline). It was responsible for mapping every unassigned interaction (which has a referrer) to the channel "Other referrals". Quite simple, but it makes a big difference at the end of the day.</p>
+<p>Now, it's up to you how you want to handle this situation. In the following part I will give you instructions on how to bring back the channel allocation as it worked back in Sitecore 8. You have also the possibility to just go with one of the two described processors. As a side note: Sitecore Support has registered a feature request to bring back those functionalities.</p>
+<h3>Enable "Other referrals" channel allocation</h3>
+<p>This one is quite simple to enable. As the processor is still available in all of the available Sitecore 9 versions (current version: Sitecore 9.2 Initial Release) we can simply introduce the <em>ReferringSite</em> processor back to the pipeline. Please keep in mind that this processor is flagged as "Obsolete". This means it might get removed in a future version of Sitecore.</p>
+<p><script src="https://gist.github.com/NaibafCH/02c5893746d2cc6b246ab2f3e8fb8ca1.js"></script></p>
+<h3>Enable "Social" channels allocation</h3>
+<p>Reintroducing the "Social" channels allocation is a bit more work because this functionality is gone for good in Sitecore 9. Therefore I've reconstructed the old code and made some minor modifications/improvements. You can copy <a href="https://github.com/namics/SitecoreBlog/tree/master/interaction-channel-mapping/Sitecore.Foundation.Channels">this Helix-ready project</a> into your Visual Studio solution and will be done within a few minutes. Please notice that this project also includes the config file which enables the <em>ReferringSite</em> processor. If you don't want to use it, then just remove the <em>Foundation.Channels.ReferringSite.config</em> file. Let's have a look at the configuration:</p>
+<p><script src="https://gist.github.com/NaibafCH/6dedf0a90e13ce0a4f65eac6331675b9.js"></script></p>
+<p>As you can see, we have a new <em><social></em> node which lets us configure the behaviour of channel allocation. This is not only restricted to social network traffic but can be used for all kinds of channels. Simply map one or more referrers to a channel (by ID) which is present in Sitecore. You can also create completely new channels and map those. You can find more information about this topic in the <a href="https://doc.sitecore.com/users/92/sitecore-experience-platform/en/create-a-channel.html">official documentation</a>.</p>
+<h3>A word on retroactive allocation</h3>
+<p>There is no retroactive allocation of past collected interactions. If you want to map those interactions to the proper channels, then you have to do it yourself. I haven't done it myself but here are the steps you have to take most likely:</p>
+<ol>
+<li>Backup your Shard databases!</li>
+<li>Run a custom script which fetches all interactions with ChannelId <em>{B418E4F2-1013-4B42-A053-B6D4DCA988BF}</em> (this is the "Direct" channel) from xConnect or directly from the Shard databases. This will highly depend on how much data you have to process. Also make sure you fetch the corresponding InteractionFacets.</li>
+<li>Parse the FacetData value of the InteractionFacets (is stored in JSON) and read the Referrer property value.</li>
+<li>If the Referrer value is not empty, then run the <em>determineInteractionChannel</em> pipeline with this value.</li>
+<li>Save the ChannelId which has been calculated by the pipeline.</li>
+<li>Rebuild your reporting database. This can also be a tricky and time consuming part if you have millions of interactions to process. You might want to consider purging parts of the data which you don't need anymore. Sitecore 9.2 introduced a new <a href="https://doc.sitecore.com/developers/92/sitecore-experience-platform/en/deleting-contacts-and-interactions.html">Purging API</a> which should help you handle this task. There is also a marketplace module available, called <a href="https://marketplace.sitecore.net/en/Modules/Analytics_Database_Manager.aspx">Analytics Database Manager</a>.</li>
+</ol>

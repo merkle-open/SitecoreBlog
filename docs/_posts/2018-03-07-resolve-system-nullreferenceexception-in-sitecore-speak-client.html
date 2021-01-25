@@ -1,0 +1,73 @@
+---
+layout: post
+status: publish
+published: true
+title: How to resolve an Application Cache System.NullReferenceException in Sitecore.Speak.Client
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+wordpress_id: 4542
+wordpress_url: https://sitecore.namics.com/?p=4542
+date: '2018-03-07 11:29:49 +0100'
+date_gmt: '2018-03-07 10:29:49 +0100'
+categories:
+- Web Content Management
+- Sitecore Experience CMS
+- Caching
+- Sitecore 8
+- Web Experience Manager
+tags:
+- Exception
+- Operation
+- IIS
+- AppPool Restart
+- NullReferenceException
+comments: []
+redirect_from:
+  - /2018/03/07/resolve-system-nullreferenceexception-in-sitecore-speak-client/
+---
+<h3>The situation</h3>
+<p><strong>One of our clients reported recently, that the content managers started to be affected by a situation, where they were&hellip;</strong></p>
+<ol>
+<li><strong>not able to fully load the Sitecore Experience Editor anymore (stuck with the spinning loading-icon)</strong></li>
+<li><strong>and also weren't able to use the Sitecore Link Manager in the Content Editor anymore (content tree was not loading anymore / empty).</strong></li>
+</ol>
+<h3>The failed solution attempt</h3>
+<p>Upon reproducing the situation, the first approach was to simply <a href="http://firebreaksice.com/sitecore-admin-pages-explained/" target="_blank">clear the Sitecore caches</a> via:</p>
+<pre class="prettyprint">/sitecore/admin/cache.aspx</pre>
+<p>But unfortunately <strong>this did not help nor resolve the situation</strong>.</p>
+<h3>The real cause of the issues</h3>
+<p><strong>As seen from the web-browser console<br />
+</strong>By inspecting the issues further, the following errors in the <strong>web-browser console</strong> / developer tools were noticed:<br />
+<code class="prettyprint lang-js">Application Cache Progress event /-/speak/v1/ribbon/QuickBar.js &ndash; ?sc_mode=edit&amp;...<br />
+Application Cache Error event: Resource fetch failed (500) /-/speak/v1/ribbon/QuickBar.js<br />
+GET /-/speak/v1/assets/main.js net::ERR_ABORTED &ndash; require.js<br />
+Uncaught Error: Script error for: main &ndash; require.js</code><br />
+<strong>As seen in the Sitecore log<br />
+</strong>Additionally, the <strong>Sitecore log</strong> confirmed issues with the SPEAK UI:<br />
+<code class="prettyprint lang-cs">4072 09:51:17 INFO AUDIT (sitecore\user):<br />
+Start editing: master:/sitecore/content/Site/Home/Pageitem, language: en-US, version: 1, id: {8F009746-5E94-40B1-8E93-DAD797BB9E21}</p>
+<p>7948 09:51:41 ERROR Application error.<br />
+Exception: System.NullReferenceException<br />
+Message: Object reference not set to an instance of an object.<br />
+Source: Sitecore.Speak.Client<br />
+at Sitecore.Resources.Pipelines.ResolveScript.Controls.Scan()<br />
+at Sitecore.Resources.Pipelines.ResolveScript.Controls.Process(ResolveScriptArgs args)<br />
+at (Object , Object[] )<br />
+at Sitecore.Pipelines.CorePipeline.Run(PipelineArgs args)<br />
+at Sitecore.Resources.Scripts.ScriptHandler.DoProcessRequest(HttpContext context)<br />
+at Sitecore.Resources.Scripts.ScriptHandler.ProcessRequest(HttpContext context)<br />
+at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()<br />
+at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()<br />
+at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)</code></p>
+<h3>The final solution</h3>
+<p>We ended up simply <strong>performing a proper <a href="https://msdn.microsoft.com/en-us/library/ms957500(v=cs.70).aspx" target="_blank">IIS restart</a> of the Sitecore AppPool</strong> on the Content Management-Webserver: as soon as the&nbsp;Sitecore site was up and running again &ndash; <strong>the JavaScript errors in the Sitecore Content Editor &amp; Experience Editor were gone.</strong></p>
+<p>Unfortunately the first rule of&nbsp;<a href="http://www.imdb.com/title/tt0487831/" target="_blank">IT Crowd</a>&nbsp;seemed to&nbsp;apply&nbsp;here:</p>
+<p><img class="alignnone size-full wp-image-4549" src="/files/2018/03/IT-Crowd-Turning-it-Off-and-On-again.jpg" alt="IT Crowd - Turning it Off and On again" width="348" height="300" /></p>
+<p>We hope you will never run into this issue &ndash; but if you do, we hope this article helps resolving the issue more quickly.</p>
+<p><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script></p>

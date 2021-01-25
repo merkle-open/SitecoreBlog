@@ -1,0 +1,137 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Delivering multilingual content using Sitecore: the right content in the right
+  language for your visitors'
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+excerpt: This article describes a working approach and use case for evaluating your
+  website visitors country and language preferences, in order to deliver them the
+  right content in the right language using the Sitecore Experience Platform.
+wordpress_id: 5326
+wordpress_url: https://sitecore.namics.com/?p=5326
+date: '2019-01-03 16:28:58 +0100'
+date_gmt: '2019-01-03 15:28:58 +0100'
+categories:
+- Development in Sitecore
+- Sitecore Experience CMS
+- CMS-Usability
+- Tipps
+- SEO
+tags:
+- personalisierung
+- SEO
+- multi-language
+- language
+- Sitecore 8
+- personalization
+- Sitecore 9
+- language-management
+- content management
+- content
+comments: []
+redirect_from:
+  - /2019/01/03/delivering-multilingual-content-to-visitors-using-sitecore/
+---
+<p><strong>When visiting a website,&nbsp;one usually&nbsp;expects to&nbsp;see content presented in a language&nbsp;that's&nbsp;readable and understandable.<br />
+But as a content manager and marketeer in charge of achieving this, it's&nbsp;not that easy to ensure your target audiences see the right content in the right language from the very first visit &ndash; especially when serving content to multiple countries and in various languages.</strong></p>
+<p>Let's look at some key factors in deciding what your visitors should see when visiting your website from&nbsp;around&nbsp;the world &ndash; and understand from a hands-on use case, how&nbsp;it can technically be achieved to deliver the right content for the right visitors. As a plus, this will also help increase your website's Search Engine visibility.<br />
+<!--more--><br />
+<h3>Recap: important requirement to define when conceptually&nbsp;developing a global, multilingual website</h3>
+<p>In&nbsp;the first blog post&nbsp;of&nbsp;my series about <a href="/2018/12/07/global-multilanguage-multicountry-sites-with-sitecore/">building global&nbsp;multilinigual websites using Sitecore</a>, I pointed out that you&nbsp;should conceptually answer the following questions &ndash; related to the topic of this post, namely delivering the right language content to the right visitors:</p>
+<blockquote><p>Which language/country is shown on a first visit?</p>
+<p>How can a visitor change between pages in different language cultures? Or do we do no want this?</p>
+<p>Will we use GeoIP localization for delivering the right content language to every visitor right from the first visit?</p></blockquote>
+<p>From a business perspective &ndash;&nbsp;e.g.&nbsp;serving your potential future clients with the right data, products and sales contacts (exemplary) &ndash; you should incorporate a decision on whether&hellip;</p>
+<ul>
+<li>&hellip;A) it's more important to serve visitors <strong>content from&nbsp;the&nbsp;most appropriate&nbsp;market</strong> your business is operating in?</li>
+<li>or B) if it's more important and&nbsp;advantageous if you <strong>serve your visitors these contents&nbsp;in their&nbsp;preferred&nbsp;language</strong>?</li>
+</ul>
+<p>I mention this decision, because it will have a groundbreaking impact on how you build you website in terms of serving multilingual content and establishing market focused online representations of your business.</p>
+<p>So in a nutshell and to close this recap, keep in mind:</p>
+<p style="text-align: center;"><strong>You have to decide WHICH&nbsp;content you want your visitors to see (first) when visiting your website.</strong></p>
+<h3>Challenges when trying to&nbsp;identify your visitor's origin, language- and country-settings</h3>
+<p>Nevertheless which way you decide on&nbsp;will be the right one to go &ndash; delivering market focused or visitor language focused content primarily &ndash; you will need some kind of information of your visitors in order to deliver them "the right" language content on a first visit. So what challenges are we facing, in doing so?</p>
+<h4><strong>1) Using GeoIP localisation: complete and&nbsp;accurate&nbsp;data must be available</strong></h4>
+<p><img class="alignleft size-full wp-image-5336" style="float: left; margin: 5px 15px 50px 0px;" src="/files/2019/01/Sitecore-Delivering-Right-Content-in-Right-Language-GeoIP-Accuracy-Icon.png" alt="Sitecore Delivering Right Content in Right Language - GeoIP Accuracy Icon" width="100" height="100" />Mapping&nbsp;a visitor's IP can give you valuable information on his/her origin &ndash; on country but even on area or city scope. But to make this work accurately &ndash; and thus not confusing your visitors &ndash; make sure to have a solid, complete and always up-to-date IP2Geo resolving database in place!</p>
+<p>A special challenge to overcome in getting a visitor's IP is when using a Content Delivery Network (CDN) with your website: make sure to pass and grab the correct IP address for mapping locations to (and not the CDN system's IP address ;-) ).</p>
+<h4><strong>2) A visitor's browser region &amp; language data is not always&nbsp;complete</strong></h4>
+<p><img class="alignleft size-full wp-image-5337" style="float: left; margin: 5px 15px 50px 0px;" src="/files/2019/01/Sitecore-Delivering-Right-Content-in-Right-Language-Security-Icon.png" alt="Sitecore Delivering Right Content in Right Language - Security Icon" width="100" height="100" />A common way to find out what language a visitor prefers is checking and parsing his/her "browser language". But be aware: this information might not always be &ldquo;trustworthy&rdquo; nor &ldquo;complete&rdquo; &ndash; web browsers like Firefox allow to easily modify this information; additionally the amount of such client information provided, by any web browser, has been continuously&nbsp;reduced over the last couple of years.</p>
+<p>For example: you might also only get a language code &ndash; not complete information about preferred language AND country the visitor is coming from. Therefore it makes sense to combine this information with the visitor's IP2Geo resolving &ndash; see point #1.</p>
+<h4><strong>3)&nbsp;The country- and language identification procedure should be configurable &amp; flexible</strong></h4>
+<p><img class="alignleft size-full wp-image-5335" style="float: left; margin: 5px 15px 50px 0px;" src="/files/2019/01/Sitecore-Delivering-Right-Content-in-Right-Language-Configure-Icon.png" alt="Sitecore Delivering Right Content in Right Language - Configure Icon" width="100" height="100" />I mentioned this requirement before, especially when we strive for best <a href="/2018/12/19/sitecore-seo-international-targeting/">international targeting of a global website</a>, therefore I mention it again: any automatisms regarding delivering content on your website should not be "locked in" aka "hard coded" &ndash; make sure to build a solution which is flexible to adjust on the fly. Once you will get your hands on first analytics results of what initial culture your&nbsp;visitors land on your website, you may see some room for improvements or adjustments. And you want these to happen fast.</p>
+<h4><strong>4)&nbsp;Possibility to reproduce the country and language resolving procedure of a visit is&nbsp;extremely&nbsp;helpful</strong></h4>
+<p><img class="alignleft size-full wp-image-5338" style="float: left; margin: 5px 15px 50px 0px;" src="/files/2019/01/Sitecore-Delivering-Right-Content-in-Right-Language-Test-Icon.png" alt="Sitecore Delivering Right Content in Right Language - Test Icon" width="100" height="100" />As followup to point #3, not only should the solution in place be easy to configure and maintain, but you should also have the possibility to reproduce and test various scenarios &ndash; by manually passing a certain IP address and browser language information when accessing your website &ndash; in order to understand the data you see in Analytics. And again: to help improve the mechanisms in place for continuously&nbsp;improved behaviour of the system.</p>
+<h3>Real world example: how to actually evaluate and deliver the right language content to&nbsp;every visitor?</h3>
+<p>When putting it all together, and to evaluate and validate with your business stakeholders, it makes sense to have something in place "visually". For example a simple procedural list, describing&nbsp;each step of a visitor identification on your website, based on the defined mechanisms.</p>
+<p>&#x1f4a1;You can grab a&nbsp;more detailed&nbsp;copy&nbsp;of the following procedure as Excel spreadsheet on my GitHub:&nbsp;<a href="https://nam.to/scvisitlngchklst" target="_blank">namics/Sitecore - Visitor language resolving - Checklist.zip</a></p>
+<p>The following is based on an example use case, where we want to&nbsp;identify a visitor&rsquo;s country &amp; language&nbsp;for delivering content from the <strong>appropriate&nbsp;target market</strong>.</p>
+<table style="margin: 10px; border-top: 1px solid; border-bottom: 1px solid;">
+<thead style="border-bottom: 1px solid;">
+<tr>
+<th style="font-weight: bold;">Checks and steps</th>
+<th style="font-weight: bold;">Example use case</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px dotted;">
+<td><strong>1. Sitecore default mechanisms</strong>: querystring sc_lang=en &amp; url-path /en-US/</td>
+<td>https://www.mysite.fi/ => no querystring &amp; no url-path</td>
+</tr>
+<tr style="border-bottom: 1px dotted;">
+<td><strong>2. Existing language Cookie</strong></td>
+<td>https://www.mysite.fi/ => no existing language Cookie</td>
+</tr>
+<tr style="border-bottom: 1px dotted;">
+<td><strong>3. GeoIP AreaCode + browser language combination</strong></td>
+<td>GeoIP AreaCode: "FI" (Finland) Browser language: "en" (English) => "en-FI" => not applicable</td>
+</tr>
+<tr style="border-bottom: 1px dotted;">
+<td><strong>4. Predictive 2-char AreaCode matching</strong> against existing languages in Sitecore</td>
+<td>2-char AreaCode matching => <strong>"FI-FI" (Finnish-FInland) - SUCCESS</strong></td>
+</tr>
+<tr style="border-bottom: 1px dotted;">
+<td><strong>5. Predictive 2- or 5-char language &amp; country matching</strong> of browser language</td>
+<td><em>not applicable anymore &ndash; step 4. matched already</em></td>
+</tr>
+<tr>
+<td><strong>6. Fallbacks</strong>: culture from Sitecore -config or "DefaultLanguage"-setting</td>
+<td><em>not applicable anymore &ndash; step 4. matched already</em></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<h3>How language identification works from a technical perspective</h3>
+<p>So when adapting the mentioned challenges on a technical level, how do we actually get and process a visitor's information to serve the right content language? Here are a few examples to help doing so:</p>
+<h4><strong>Browser language</strong></h4>
+<p>Is passed&nbsp;by web browsers&nbsp;as the "<em>Accept-Language</em>" HTTP-header on every webpage request.<br />
+There are&nbsp;plenty of example implementations for working with this information, e.g. on GitHub.</p>
+<h4><strong>GeoIP lookup</strong></h4>
+<p>When working with the Sitecore Experience Platform, there are basically 2 recommended ways to&nbsp;map&nbsp;a visitor's IP to location information:</p>
+<h5>A) the Sitecore IP Geolocation Service</h5>
+<ul>
+<li>(+) Advantages: officially&nbsp;supported by Sitecore and &ndash; in the meantime &ndash; available for free as part of the Experience Platform.</li>
+<li>(-) Disadvantages: cloud-based service, little information on the accuracy and up-to-date-ness of IP2Geo data.</li>
+</ul>
+<h5>B)&nbsp;GeoLite2 databases by MaxMind&nbsp;(free version or subscription based)</h5>
+<ul>
+<li>(+) Advantages: can be&nbsp;used free of charge (however: updated less often, low granularity, scope depends on the database used). On a purchase basis, it's updated weekly and you will get&nbsp;a full blown database with accurate data. You can also use their online service to lookup how certain IP addresses resolve using the MaxMind Geo2IP service:&nbsp;<a href="https://www.maxmind.com/en/geoip-demo" target="_blank">https://www.maxmind.com/en/geoip-demo</a></li>
+<li>(-) Disadvantages: needs to be implemented and maintained by a software engineer. Updated databases need to be deployed to the live system regularly.&nbsp;You are relying on a third party, independently / not tailored to the Sitecore Experience Platform.</li>
+</ul>
+<h4><strong>Sitecore's LanguageResolver</strong></h4>
+<p>Rule of thumb here is: try to leave the original LanguageResolver as it is &ndash; properly enhance it with your custom code/procedures<br />
+<code style="margin-bottom:25px;">
+<processor patch:after="*[@type='Sitecore.Pipelines.HttpRequest.LanguageResolver, Sitecore.Kernel']" type="My.LanguageResolver, My" /></code><br />
+&#x1f4a1;You can find an <strong>example code for&nbsp;an enhanced Sitecore LanguageResolver&nbsp;</strong>implementation here on GitHub:&nbsp;<a href="https://gist.github.com/namics-gists/c93bdf24ac47486860801b17c68697ef" target="_blank">namics-gists/BrowserLanguageResolver.cs</a></p>
+<p>&nbsp;</p>
+<h3>What's next?</h3>
+<p>In the next post of this series you will learn&nbsp;a few <strong>helpful suggestions to properly&nbsp;configure and report data in Sitecore Experience Analytics and the Campaign Manager&nbsp;when managing global multilingual websites</strong> with the Sitecore CMS.</p>
+<h4><strong>Background story</strong></h4>
+<p>Last&nbsp;October&nbsp;we &ndash; my colleague&nbsp;<a href="https://twitter.com/naibaf_net" target="_blank">Fabian Geiger</a>&nbsp;&amp;&nbsp;<a href="http://twitter.com/oliverattweetin" target="_blank">myself</a>&nbsp;&ndash; had the pleasure to hold a breakout session at the Sitecore Symposium 2018 in Orlando. This blog post is a summary and&nbsp;follow up&nbsp;from the knowledge shared&nbsp;for building globally focused websites based on the Sitecore Experience Platform, with multiple languages and country cultures. Consider this a non conclusive compilation of learnings and recommendations from our project work at&nbsp;<a href="https://www.namics.com/unternehmen/produkte-partnerschaften/sitecore/" target="_blank">Namics</a>.</p>

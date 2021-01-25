@@ -1,0 +1,55 @@
+---
+layout: post
+status: publish
+published: true
+title: Make SIF work with Windows 8.1 and IIS 8.5
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+wordpress_id: 4452
+wordpress_url: https://sitecore.namics.com/?p=4452
+date: '2017-12-15 17:07:47 +0100'
+date_gmt: '2017-12-15 16:07:47 +0100'
+categories:
+- Allgemein
+tags: []
+comments:
+- id: 150977
+  author: Sitecore 9 on Windows 8.1, my experience &#8211; XtremDev
+  author_email: ''
+  author_url: https://xtremdev.wordpress.com/2018/01/08/sitecore-9-on-windows-8-1-my-experience/
+  date: '2018-01-08 09:27:02 +0100'
+  date_gmt: '2018-01-08 08:27:02 +0100'
+  content: "[&#8230;] Then make sure that you follow the changes to the scripts that
+    Fabian is presenting here. [&#8230;]"
+redirect_from:
+  - /2017/12/15/make-sif-work-with-windows-8-1-and-iis-8-5/
+---
+<p>If you found all your way to this article, chances are you ran into the following error during installation of Sitecore 9.0: "Cannot bind argument to parameter 'Signer' because it is null."</p>
+<p><a class="fancybox" href="/files/2017/12/self-signed-certificate-failed.png"><img class="alignnone size-full wp-image-4453" src="/files/2017/12/self-signed-certificate-failed.png" alt="self-signed-certificate-failed" width="834" height="299" /></a></p>
+<p><!--more--></p>
+<p><a href="https://neilkillen.com/2017/11/04/sitecore-9-0-sif-windows-8-1-server-2012-gotchas/">Neil Killen already stated</a>&nbsp;that the Sitecore Fundmentals and therefore also the Sitecore Installation Framework (SIF)&nbsp;do&nbsp;not support Windows 8.1 / IIS 8.5. The problem here is that Sitecore Fundamentals internally use some Windows PowerShell&nbsp;Cmdlets which might differ from one version to another. More precisely, in this very situation it uses the New-SelfSignedCertificate Cmdlet. If we compare this in both&nbsp;<a href="https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate?view=win10-ps">Windows 10</a> and <a href="https://technet.microsoft.com/library/hh848633(v=wps.630)">Windows 8.1</a> it&nbsp;becomes obvious why this error happens after all. The&nbsp;parameter "Signer" and various other parameters are not present in the Windows 8.1 version.</p>
+<p>Warning: The following fix is not meant for production use. It only supplements your local environment setup.</p>
+<h3>How to fix this issue</h3>
+<p><strong>1. Create a self-signed certificate in Windows 8.1</strong></p>
+<p>As the name of the Cmdlet mentioned before already tells us, it tries to create a self-signed certificate. As we cannot rely on Sitecore Fundamentals to perform this task for us, we need to do it ourselves.&nbsp;Luckily <a href="https://kamsar.net/index.php/2017/10/Quickly-add-SSL-to-Solr/">Kam Figy already&nbsp;provides a great script</a> for securing your Solr server. I&nbsp;made some slight changes to this script in order to meet our requirement (e.g. SIF requires read permissions to the private key of the certificate) and converted it to a SIF task.&nbsp;Download&nbsp;New-SignedCertificateWindows81.ps1 and save it to the folder where the script from the&nbsp;<a href="https://dev.sitecore.net">Sitecore 9 installation guide</a> (section 5.2.1) is located.<br />
+<script src="https://gist.github.com/NaibafCH/431acc78ea4078a3c86228c0eb6f7533.js"></script></p>
+<p><strong>2.&nbsp;Change&nbsp;xconnect-createcert.json</strong></p>
+<p>We need to integrate the&nbsp;New-SignedCertificateWindows81.ps1 script into SIF.</p>
+<ol>
+<li>Open&nbsp;xconnect-createcert.json and change&nbsp;task "CreateSignedCert" as shown below</li>
+<li>Register the new module as shown below</li>
+</ol>
+<p><script src="https://gist.github.com/NaibafCH/d35def58028e2ad2adaa53f889efe51b.js"></script></p>
+<p><strong>3. Change the official installation script</strong></p>
+<p>In our main script which is provided by the&nbsp;<a href="https://dev.sitecore.net">Sitecore 9 installation guide</a>&nbsp;(section 5.2.1) we need to do two slight changes.</p>
+<ol>
+<li>Remove the suffix "_client" from variable $certParams.CertificateName</li>
+<li>Add a new property SSLCert in variable&nbsp;$xconnectParams</li>
+</ol>
+<p><script src="https://gist.github.com/NaibafCH/9e04d83268cfc227beff68a17d167349.js"></script></p>
+<p>Now, you should be able to run the official installation script without errors regarding certificate handling. If you have any problems then let me know in the comments down below.</p>

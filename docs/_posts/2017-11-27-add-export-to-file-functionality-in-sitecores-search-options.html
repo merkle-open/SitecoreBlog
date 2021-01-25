@@ -1,0 +1,51 @@
+---
+layout: post
+status: publish
+published: true
+title: Add Export to File Functionality in Sitecore's Search Options
+author:
+  display_name: Roland Brunner
+  login: rbrunner
+  email: roland.brunner@namics.com
+  url: https://www.namics.com/person/roland-brunner/
+author_login: rbrunner
+author_email: roland.brunner@namics.com
+author_url: https://www.namics.com/person/roland-brunner/
+wordpress_id: 4349
+wordpress_url: https://sitecore.namics.com/?p=4349
+date: '2017-11-27 14:01:39 +0100'
+date_gmt: '2017-11-27 13:01:39 +0100'
+categories:
+- Allgemein
+- Web Content Management
+- Development in Sitecore
+- Sitecore 8
+tags: []
+comments: []
+redirect_from:
+  - /2017/11/27/add-export-to-file-functionality-in-sitecores-search-options/
+---
+<p>This blog post is based on the Article <a href="http://deansorianositecoreph.blogspot.ch/2014/07/add-export-to-file-functionality-in.html" target="_blank">Add Export to File Functionality in Sitecore's Search Options</a> by Dean Mark Soriano.</p>
+<p>To follow this guidance as well as possible it is required that you have already completed the steps from this blog post: <br />
+<a href="https://sitecore.namics.com/2017/11/03/customized-sitecore-search-view-list-buckets-values-in-dynamic-placeholders">https://sitecore.namics.com/2017/11/03/customized-sitecore-search-view-list-buckets-values-in-dynamic-placeholders</a>.</p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_14-43-54.jpg"><img class="alignnone size-full wp-image-4306" src="/files/2017/11/2017-11-02_14-43-54.jpg" alt="2017-11-02_14-43-54" width="550" /></a></p>
+<p>Now we want to export the result list into an excel file.</p>
+<p><!--more--></p>
+<p>First, create a new Item called "Export To File" under "System/Settings/Buckets/Settings/Search Operations/User Defined/"<br />
+with following field values:</p>
+<ul>
+<li>Type: bucket:exporttofile</li>
+<li>List Name: Export To File</li>
+<li>Enabled: true</li>
+</ul>
+<p><a class="fancybox" href="/files/2017/11/2017-11-03_15-34-12.jpg"><img class="alignnone size-full wp-image-4357" src="/files/2017/11/2017-11-03_15-34-12.jpg" alt="2017-11-03_15-34-12" width="613" height="510" /></a></p>
+<p>Then add a command for "bucket:exporttofile" in a config file:<br />
+(The other settings in this sample are reminders from the previous article: <a href="https://sitecore.namics.com/2017/11/03/customized-sitecore-search-view-list-buckets-values-in-dynamic-placeholders">https://sitecore.namics.com/2017/11/03/customized-sitecore-search-view-list-buckets-values-in-dynamic-placeholders</a>)</p>
+<p><script src="https://gist.github.com/rbrunneratnamics/556b433fe97a96da942713790c79e96b.js?file=ExportToFile.config"></script></p>
+<p>Then create a class for the code behind (in our example it is called "ExportSearchToFileCommand.cs"). You can take the following code as a reference point (Please keep in mind to use your own mechanism to get a configuration item and that we used our own ORM.):</p>
+<p><script src="https://gist.github.com/rbrunneratnamics/556b433fe97a96da942713790c79e96b.js?file=ExportSearchToFileCommand.cs"></script></p>
+<p>The delimiter for the Excel/CSV file can be configured in a configuration item. Normaly you would use a semicolon. In my case, the file is only readeable in Excel when it is in UTF-8 format.<br /></p>
+<p>Because of the fact that we use a dynamic configuration for the bucket we have to create a model class:</p>
+<p><script src="https://gist.github.com/rbrunneratnamics/556b433fe97a96da942713790c79e96b.js?file=ImportModel.cs"></script></p>
+<p>Howto export to file:<br />
+<a class="fancybox" href="/files/2017/11/ExportToFile.jpg"><img src="/files/2017/11/ExportToFile.jpg" alt="ExportToFile" width="550"  class="alignnone size-full wp-image-4362" /></a></p>

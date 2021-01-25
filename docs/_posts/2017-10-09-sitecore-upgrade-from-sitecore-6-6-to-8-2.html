@@ -1,0 +1,198 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore - Upgrade from Sitecore 6.6 to 8.2
+author:
+  display_name: Andreas Klein
+  login: aklein
+  email: andreas.klein@namics.com
+  url: ''
+author_login: aklein
+author_email: andreas.klein@namics.com
+wordpress_id: 4196
+wordpress_url: https://sitecore.namics.com/?p=4196
+date: '2017-10-09 09:00:05 +0200'
+date_gmt: '2017-10-09 07:00:05 +0200'
+categories:
+- Allgemein
+- Sitecore 8
+- Update
+tags:
+- update
+- Sitecore 8
+- Upgrade
+comments: []
+redirect_from:
+  - /2017/10/09/sitecore-upgrade-from-sitecore-6-6-to-8-2/
+---
+<p>First of all some words about Sitecore and Upgrades<br />
+When I was a beginner in Sitecore developement, the Sitecore world stands almost still for several months to years with the release of Sitecore 6.5.<br />
+So what I want to say with that is the product was more or less very stable with few small&nbsp;issues and no big need to update the solution for business or technical reasons.<br />
+What we did was creating wonderfull solutions without thinking to much about "how we will update/upgrade this in the future". In my opinion Sitecore haven't done the same in that dimension they have to do it now.<br />
+Often a Sitecore infrastructure consists of a single server instance with two - maybe three - environments (development and production) which was easy to maintain and handle.<br />
+Years go along management environements separate from delivery machines more and more, single server instances disappear in many cases to high scalable solutions with multiple servers for webapplications, sql servers, mongodb instances. Publishing instances and third party products not included.<br />
+On the other hand, we all get a little bit older: the employees searched for new challenges in other companies and you remember them only from some years ago.</p>
+<p><!--more--></p>
+<p>Some years later you find yourself in the situation of upgrading exactly this solution to an actual release version of Sitecore.<br />
+It's not necessary to summerize the key challenges here:</p>
+<ul>
+<li>Nobody here that knows or remembers exactly the functional scope of this project</li>
+<li>Sitecore upgrades from a version that doesn't offer a fast upgrade path</li>
+<li>Content of the system has grown to dimensions which are very unhandy</li>
+<li>Customers need an update, but have to be briefed very careful about consequences</li>
+<li>Update should be done immediately in no time for low costs</li>
+</ul>
+<p>At this point we all think at this green shiny lovely big button with the text "Update" or "Upgrade" which let us believe that things could be done such easely.<br />
+In truth, the years of Sitecore developement taught us what kind of work waiting for us in the coming ticket flood of our issue tracking system.</p>
+<p>In the last months it took me a lot of time to bring such projects to good ends.<br />
+Some of my learnings I want to share with you and I hope you can profit from this in your own project even if that means that you go you own ways or don't struggle for the same issues.</p>
+<h2><strong>Estimation</strong></h2>
+<p>To be truthful, the first contact point with your upgrade project is unfortunately the estimation. I mean the situation in which a person contacts you and say: Hey guy: How long does it take to upgrade Sitecore 6 to Sitecore 8?<br />
+In HIS mind, there are some numbers like "1 or 2" and that numbers don't mean weeks, months or years. Your adorable best answer could be: "No problem I will do that this evening so that we can test it tommorow and go live."<br />
+YOUR mind, some interesting questions as well, but they don't have any similarity to the things before.</p>
+<p>In conclusion you can say: "It depends!" Followed by a discussion how to determine an accurate answer right and arguable in front of a customer.</p>
+<p>At this point to give you a clue its worth to take this very serious and discuss about every aspect of the upgrade project!<br />
+A checklist can be very helpful to don't forget any important aspect. Although, if you are only responsible as technical lead, don't forget to initiate a dialog with the business level.</p>
+<p>Some possible&nbsp;points are:</p>
+<ul>
+<li>If the customer understands the impacts of the upgrade:
+<ul>
+<li>Often, major releases include breaking changes, processes look different, the user interface has changed, browser compatibility &nbsp;etc.</li>
+</ul>
+</li>
+<li>Maybe there have to be done a lot of work from customer to migrate things or make new teaching material and so on</li>
+<li>It's possible to get an image of&nbsp;the project scope?
+<ul>
+<li>Espacially if its a solution you haven't implemented, documentation is not in a good condition</li>
+</ul>
+</li>
+<li>Where are the responsibilities, is there an infrastructure team exist, third party supplier included</li>
+<li>Who will do the testing?</li>
+<li>Who will make author training?</li>
+<li>What are the interface to third party services?</li>
+<li>Are the interfaces compatible?</li>
+<li>Destroy illusions and build facts!</li>
+<li>An upgrade does not automatically means: performance boost, don't having issues anymore etc.</li>
+<li>What are new features and benefits for the customer?</li>
+</ul>
+<h2></h2>
+<h2><strong>The plan</strong></h2>
+<p>For all agile enthusiasts out there. You can challenge this absolutely&nbsp;in a agile way, but in my opinion: nothing is more worth in an upgrade project than a good plan and a better understanding what we have to do from the beginning.<br />
+Because many upgrade decisions could lead you on different upgrade paths and a lot of them can break your neck.<br />
+So before you stand in a maze, look here:</p>
+<ul>
+<li>Do we want to use the Sitecore upgrade path?</li>
+<li>Is there a "Fast migration path" exists from Sitecore?</li>
+<li>Do we use a project from scratch and migrate data and code?</li>
+</ul>
+<p>There are a lot of blog articles out there, which handle that kind of question. If it's your first upgrade project, the answer seams not so far away.<br />
+But, don't forget, your decision has impacts to the whole project afterwards.</p>
+<p>Defaults and standards are two very important things in&nbsp;Sitecore. The product flexibility in your solution development can made a Sitecore upgrade by standard way&nbsp;or cruel in case of many customizations.<br />
+The fact that you have to install every upgrade step on each server on each environment blows up your first ideation of a small and quick upgrade&nbsp;process.<br />
+Example: A development server, a staging server, a Content Management Preprod Server and two Delivery Servers plus the same for production, results in eight instances. And each of those environments needs all upgrade packages to be installed.</p>
+<p>Fast migration paths are helpful if they exists, but unfortunately they don't yet exists on version 6 and below. And for many versions in the middle, a upgrade to the last or initial release is necessary before.</p>
+<p>Projects from scratch contains the benefits to setup a parallel system easily which allows you to compare differences between the old and new system.<br />
+The disadvantage is that you can never be sure what Sitecore does in its upgrade process. There are data manipulation at schemas or other things which you have to handle.<br />
+I wished for years Sitecore would publish a list of upgrade notes in which they declare what changed exactly in their data structure.</p>
+<p>We already have used each of the upper cases and till now we have to make a decision for each project again.<br />
+In this blog article I will deal with the last case from scratch.</p>
+<p>First action is to bring the project in good preconditions:</p>
+<ul>
+<li>Do you have human resources they have already worked with the project: take this advantage and book them (they know the upcoming risk the best)</li>
+<li>If you have some experience with similar upgrades: look into your notes and protocols from the past</li>
+<li>Are there any third party operators and do they have to change something (configuration changes etc.) bring them to a map</li>
+<li>Visualize the process and upgrade steps as a concept</li>
+<li>Make a PoC (Proof of Concept)</li>
+</ul>
+<h2></h2>
+<h2><strong>Proof of Concept</strong></h2>
+<p>In an upgrade project, a proof of concept means: setting up a local project and update it and let the small issues beside.<br />
+In our case this means:</p>
+<ul>
+<li>Setup an empty Sitecore Solution</li>
+<li>Migrate the content: using Sitecore Packages, Serialization Features or Tools like Razl</li>
+<li>Migrate the code</li>
+<li>Build</li>
+<li>Take a closer look what is running and what doesn't let&nbsp;you sleep next nights, where do you made mistakes and what do you have forgotten to do</li>
+</ul>
+<p>After the PoC you should have a better understanding of what you are doing and list of things you have to introduce into you current plan / concept.<br />
+With this practical part of your concept I revealed a lot of problems I wouldn't&nbsp;have recognized in another way. You should also have a better feeling for your estimations.</p>
+<ul>
+<li>Data volume: We had very large databases for which we had to plan more time for data migration, because of the parallel operation we need also additional space</li>
+<li>Third Party integrations: we simply overlook some kind of integration</li>
+<li>Necessary improvement: there have some things changed, obsoleted pipelines, refactored namespaces for which fixing time needs to be planned</li>
+</ul>
+<p>In or before starts an upgrade process, one upcoming topic should be: Do we upgrade the solution exactly how it is or do we plan to improve, change or adding new features because the situation seems to be ideal.<br />
+An argument to change things can be that you want to clean your solution. On the other hand a solution working exactly like the other in a parallel running setup is perfect for testing and comparing reasons.<br />
+In all upgrades I did, this question was not that important as I thought. Reality shows you that it will be a hybrid solution at the end, anyway. Especially for upgrade which take a long time to go live.</p>
+<h2><strong>Data Migration</strong></h2>
+<p>Before I physical starting the upgrade the plan could look like this:</p>
+<ol>
+<li>Setup a clean Sitecore solution: including best practices, build and deployment automation</li>
+<li>Install any Sitecore modules: like WFFM, SXA, EEM, SPE</li>
+<li>Data Migration
+<ol>
+<li>Migrate Definition</li>
+<li>Migrate Content and prepare and additional content migration</li>
+<li>Data manipulation: transform incompatible data into valid data, cleanups</li>
+</ol>
+</li>
+<li>Code Migration
+<ol>
+<li>Compile Solution: Rereference assemblies and packages, Update project .NET Framework, do whatever you have to do to compile</li>
+<li>Disable Configuration: Disable all include configurations which you have to check in feature migration</li>
+</ol>
+</li>
+<li>Feature Migration: Enable features step by step by enabling configuration and code</li>
+<li>Testing, Finishing etc.</li>
+</ol>
+<p>I don't want to explain every step but pick out some of the most important:</p>
+<h2></h2>
+<h2><strong>Now, start to upgrade your solution</strong></h2>
+<p>The first part of data migration called "Migrate Definitions" is maybe the easiest step. Maybe you already using TDS (Team Development for Sitecore) or Unicorn to serialize all project data definitions to your source control.<br />
+If you do the only thing you have to check is the product integration and if there are untracked or critical items in there which can cause troubles.<br />
+Untracked items could be: items which are standard Sitecore items which you have modified in project. For example a folder or media folder template with additional Sitecore insert options.<br />
+Critical items could be: a tracked item template from standard Sitecore or a module like WFFM which has changes with a new version.<br />
+In these cases choose individually if you must update your tracking configurations (TDS/Unicorn) or do some manual steps to correct definitions.</p>
+<p>The second part called "Migrate Content" is often underestimated. If you work with the scenario of using a parallel solution, you want to take the content migrate twice.<br />
+First time when you take the definitions, for a second time short before going live to have the updated content. This can results in&nbsp;a "content freeze" for authors.<br />
+You can take on board features like Sitecore Package Manager and/or serialization feature to export and import data from the old to the new solution. Additional Tools like "Razl" can also be helpful.<br />
+Notice: Even&nbsp;Sitecore haven't changed much in its data structure from version to version. There are some changes you must handle. More about this in "Data Manipulation".<br />
+Other important points are:</p>
+<ul>
+<li>Sitecore Packages are not made to handle sizes of gigabytes of data: so maybe you must use serialization</li>
+<li>Serialization needs a start item from which you can "revert": so maybe you need Sitecore Packages to export/import to root nodes for which you want to revert</li>
+<li>Some things can go wrong so split your content in many packages/serialization paths</li>
+<li>Exporting and importing data needs time, note your needed time in your test runs (first content import) and check that you have suspended/disabled your indexing</li>
+<li>Expect and remember that you must migrate content more than once: automate your process as far as possible. For example you can use SPE powershell scripts for index suspending and serialization/deserialization of trees with a single script.</li>
+</ul>
+<p>The third and maybe most ugly step of data migration can be the data manipulation. Together with the decision to use a new Sitecore solution and jump over every Sitecore upgrade step you missed every data schema changes included in the Sitecore upgrading process. Some of them you picked up by using the newest version with its initial databases other you can't catch.<br />
+Known changes from Sitecore 6.6 to Sitecore 8.2:</p>
+<ul>
+<li>Paths and IDs: Sitecore 6 uses at many places paths to reference other items (for example: data sources of presentation details)</li>
+<li>A script which changes the values from paths to IDs is recommended if you want to start with a "clean" solution (put paths will work to for compatibility reasons)</li>
+<li>Cloning: In Sitecore 6 there is one field "__Source" used to reference a clone item, Sitecore 8 uses two fields "Source" and "__Source Item"</li>
+<li>If you don't use clones => you are safe</li>
+<li>If you need clones: create a solution for that, correction scripts and so on</li>
+<li>Tracking field xml scheme has been changed: in our case we had to correct this for our WFFM form goals</li>
+<li>Rules Engine: Sitecore changed and reordered items for the rule engine: which is interesting if you use own rules/conditions etc.</li>
+<li>There is data like security accounts which are non-item based and also have be migrated (migrating users with their passwords is not out of the box!)</li>
+</ul>
+<h2></h2>
+<h2><strong>Code Migration</strong></h2>
+<p>If you mastered the data migration you maybe feel better because you come to a more controllable step: code migration<br />
+A first goal is to build your solution without errors.<br />
+The second step is bring your features alive. Both of them are as easier as your solution follows the best practices in implementation.<br />
+It becomes a little bit more complex if you don&rsquo;t understand your solution in scope, complexity or are in a total black box situation. Deepest sympathy and good luck my friend!<br />
+Some noticeable points:</p>
+<ul>
+<li>Most code should be compatible because Sitecore looks with new releases for as less as possible breaking changes. But sometimes you have to decide if you want to replace obfuscated code now or in the next upgrade. This could be a wizard which migrates&nbsp;from a ASP.NET WebForms implementation to a Speak UI implementation.</li>
+<li>A hidden change from Sc6 to Sc8 is usage of dates. In Sitecore 8, Sitecore has changed the raw data format of the date field by taking the timezone into consideration. So you will find blog articles about that and what you have to do. The result could be search in your code for date field usages and modify it to the expected result and set the ServerTimeZone setting correctly.</li>
+<li>Keep new features in mind, there are many new settings in Sitecore 8 which you should set correctly for your solution before you go live.</li>
+<li>Remove unused Sitecore Support fixes</li>
+<li>Check customizations and overridden standard code with your implementation</li>
+</ul>
+<p>At the end, if the solution is ready for live going, be prepared for incoming issues after the deployment.<br />
+And I recommend to train the go live process on an integration environment.<br />
+I hope this article can help you recognize and improve your plan to upgrading a Sitecore solution.</p>

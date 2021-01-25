@@ -1,0 +1,140 @@
+---
+layout: post
+status: publish
+published: true
+title: Basic concepts & principles for building global multi-language and multi-country
+  websites using Sitecore
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+excerpt: Conceptual thoughts and recommendations for building globally focused websites
+  based on the Sitecore Experience Platform with multiple languages and country cultures.
+  Consider this a non conclusive compilation of learnings and recommendations from
+  our experience building such web platforms since many years. (Part 1 of a series)
+wordpress_id: 4905
+wordpress_url: https://sitecore.namics.com/?p=4905
+date: '2018-12-07 10:00:35 +0100'
+date_gmt: '2018-12-07 09:00:35 +0100'
+categories:
+- Web Content Management
+- Sitecore Experience CMS
+- Sitecore 8
+- Sitecore 7
+- Tipps
+- Adventtipp
+- Sitecore 9
+tags:
+- config
+- Authoring
+- multi-language
+- concept
+- country
+- language-management
+- cultures
+- multilingual
+comments: []
+redirect_from:
+  - /2018/12/07/global-multilanguage-multicountry-sites-with-sitecore/
+---
+<p>When planning to build any website, you will for sure start working out concepts answering how to address the given ideas and requirements. One topic will &ndash; hopefully &ndash; cover language handling with the Sitecore Experience Platform,&nbsp;in terms of multi-lingual content authoring, but also regarding addressing your website visitors correctly.</p>
+<p>In the following&nbsp;I am going to share valuable thoughts &amp; recommendations, which you should think&nbsp;about and specify before building a new web platform with Sitecore.<br />
+<!--more--><br />
+<h3>Dealing with multiple languages and countries on global websites&colon; simple questions &ndash; but no simple answers</h3>
+<p>In order to get an idea&nbsp;of the scope and dimension of cultures, languages and countries you will need to consider for your site, try to answer the following question in a conceptual document; as precise and complete as possible:</p>
+<blockquote><p>Which are your corporate languages?</p>
+<p>Which languages must be on your website?</p>
+<p>Which characteristics apply to these languages?</p>
+<p>What is your primary content language?</p>
+<p>What are the languages you will translate into?</p>
+<p>Which language/country is shown on a first visit?</p>
+<p>Which additional languages/countries will we add over time?</p></blockquote>
+<p>This will give you a good idea of which aspects you'll need to consider for adapting the answers on a technical basis from early on in a Sitecore Experience platform project.</p>
+<h3>First step to make it all a&nbsp;bit easier: focus on 2 types of users</h3>
+<p>What you will notice from the initial questions&nbsp;pointing to your site's language coverage requirements, that you are actually dealing with two different stakeholders to serve with the future solution:</p>
+<ol>
+<li><strong>Sitecore CMS users (content managers)</strong></li>
+<li><strong>Website visitors</strong></li>
+</ol>
+<h4><strong>1) Sitecore CMS users</strong></h4>
+<p>At first, this seems to be a pretty simple&nbsp;stakeholder with requirements easy to fulfil. This is merely because some things are given:</p>
+<ul>
+<li>the Sitecore Experience GUI is available in 8&nbsp;languages only</li>
+<li>Usually, 1 of&nbsp;these languages is your corporate language anyway &ndash; known by your content managers from other systems already</li>
+<li>For each user, the default GUI- &amp; content language can be set in their Sitecore user profile</li>
+</ul>
+<p>But&nbsp;upon deeper thinking about the content authoring process for your future website content &ndash; which is done by this group of stakeholders in the end &ndash; you will realise that addressing requirements&nbsp;gets more complex:</p>
+<blockquote><p>Who can add and edit content in which language and for which country(ies)?</p>
+<p>How do we translate content from language A to B?</p>
+<p>Who reviews &amp; publishes final content for our website?</p>
+<p>Who defines &amp; creates the site structure (considering publishing for multiple market-focused pages)?</p>
+<p>Are we going to use shared- or language specific page layout(s) (meaning same layout of pages &amp; components, or differentiate them per culture)?</p>
+<p>How are we planning to do personalization considering the different languages and visitor personas from our global markets?</p>
+<p>Are we using pictures which should show different content based on the content language they are displayed under? E.g. in Asian markets tendentially more Asian buildings/people/habits, in English for the US accordingly adjusted, so as for English in the UK, etc.</p></blockquote>
+<p>&hellip;and you will for sure identify many more such topics.</p>
+<h4><strong>2) Website visitors</strong></h4>
+<p>When looking at the second stakeholder &ndash; visitors of your website &ndash;&nbsp;you'll realise that&nbsp;serving them proper content in multiple language- and country-dimensions, is not as easy as it might seem:</p>
+<blockquote><p>Do we provide an on-page country/region/ language-selector? What can the visitor choose&nbsp;when wanting to view our website in a different culture?</p>
+<p>How can a visitor change between pages in different language cultures? Or do we do no want this?</p>
+<p>Will we use GeoIP localization for delivering the right content language to every visitor right from the first visit?</p>
+<p>Can we use content inheritances from other languages (= language fallback), because not everything needs individual translations? E.g. French content for France compared to French content for Canadian French&hellip;</p>
+<p>What&nbsp;regional settings must be respected, because they are different in almost every country (displaying currencies: $, &euro;, &yen;; number formats: 0.99&nbsp;or 0,99; etc.)?</p>
+<p>How do we want to include and show the content culture-information&nbsp;in URLs of our website? /fr/? /en-us/? de.mywebsite.com?</p></blockquote>
+<p>&hellip;and again, you will identify many more use cases and questions that need to be thought through on a conceptual level before starting any technical implementations.</p>
+<h3>Conceptual approaches for&nbsp;defining&nbsp;all cultures &amp; their parameters</h3>
+<p>Simply said: the key is to bring all answers &ndash; based on the previously mentioned questions and thoughts &ndash; into a conceptual document, so you can brief every project member and implementation teams, content teams and your internal stakeholders, how language &amp; country handling will happen on your website and using the Sitecore&nbsp;CMS backend.</p>
+<h3>Conceptual approaches for building your future site structure with the Sitecore Experience Platform</h3>
+<p>In terms of&nbsp;actually bringing your global, multi-language and multi-country website "to life" &ndash; by respecting all the challenges from it's due nature &amp; because of various aspects of different stakeholders as we described them before &ndash; you will need to build a site structure that can be built with the Sitecore Experience platform (remarks: there are almost no limitations) respecting mentioned requirements.</p>
+<p>In the following, we briefly want to explain&nbsp;3 different scenarios for doing so.&nbsp;We found these approaches to be the most&nbsp;common scenarios that actually&nbsp;help perfectly&nbsp;building multi-language websites with Sitecore.</p>
+<h4><strong>Variation A &ndash; &laquo;Simple&raquo; structure</strong></h4>
+<p>In this scenario, each site has its own&nbsp;language culture.</p>
+<p>And this&nbsp;language culture&nbsp;can directly be assigned in it's site configuration.</p>
+<p>[caption id="attachment_4994" align="alignnone" width="256"]<a class="fancybox" href="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-example-simple.png"><img class="size-medium wp-image-4994" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-example-simple-256x300.png" alt="Global multilanguage and multicountry websites with Sitecore - Site structure example - simple" width="256" height="300" /></a> <sup>Site structure example &laquo;simple&raquo;</sup>[/caption]</p>
+<h4><strong>Variation B &ndash; &laquo;Shared&raquo; content</strong></h4>
+<p>Here a tenant site structure is used, which&nbsp;offers all language cultures to translate individual pages &amp; items.</p>
+<p>However, a default language can &ndash; and should &ndash; be defined in the Sitecore site configuration:</p>
+<pre><site name="mysite" patch:before="site[@name='website']"
+language="en" hostName="mysite.com"
+rootPath="/sitecore/content/Tenant/mysitecom" startItem="/home"
+... /></pre>
+<p>&nbsp;</p>
+<p>[caption id="attachment_4996" align="alignnone" width="300"]<a class="fancybox" href="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-example-shared.png"><img class="size-medium wp-image-4996" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-example-shared-300x85.png" alt="Global multilanguage and multicountry websites with Sitecore - Site structure example - shared" width="300" height="85" /></a> <sup>Site structure example &laquo;shared&raquo;</sup>[/caption]</p>
+<h4><strong>Variation C &ndash; &laquo;Hybrid&raquo; approach</strong></h4>
+<p>This scenario brings&nbsp;multiple sites&nbsp;with each having multiple languages.</p>
+<p>However, some settings and/or content is shared between different sites</p>
+<p>Best practice: configure which language is used on each site (e.g. using a "Language Setting")</p>
+<p>Consider a more advanced language resolving for assigning your visitors to the right site &amp; culture when accessing your website!</p>
+<pre><site name="mysiteeu" patch:before="site[@name='website']"
+language="en" hostName="mysite.eu"
+rootPath="/sitecore/content/Tenant/mysiteeu" startItem="/home"
+... /></pre>
+<p>[caption id="attachment_4995" align="alignnone" width="283"]<a class="fancybox" href="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-example-hybrid.png"><img class="size-medium wp-image-4995" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-example-hybrid-283x300.png" alt="Global multilanguage and multicountry websites with Sitecore - Site structure example - hybrid" width="283" height="300" /></a> <sup>Site structure example &laquo;hybrid&raquo;</sup>[/caption]</p>
+<h4><strong>Further reading on implementing multilingual websites using the Sitecore Experience platform</strong></h4>
+<p>A great deep dive of these techniques and approaches have also been well documented by our colleague Chris Sulham over at Velir.com:&nbsp;<a href="https://www.velir.com/blog/2017/12/12/implementing-multilingual-websites-sitecore-how-organize-your-content" target="_blank">https://www.velir.com/blog/2017/12/12/implementing-multilingual-websites-sitecore-how-organize-your-content</a></p>
+<p>&nbsp;</p>
+<h3>Now let's just write&nbsp;everything down in a concept! Or not&hellip;?</h3>
+<p>As you may imagine at this point, one conceptual documentation or specification will not be enough to cover all relevant areas when dealing with multiple cultures, countries and languages. Our experience tells us, that at least 2 types of documents with a different focus should be developed:</p>
+<h4><strong>A language&nbsp;concept</strong></h4>
+<p>In the language concept you can truly add every single language and language derivation &ndash; with all their individual and shared parameters or specialities. Here's an example sneak&nbsp;peek how this could look.</p>
+<ul>
+<li><strong>Feel free to grab a full copy of the Excel spreadsheet here</strong>:&nbsp;<a href="https://nam.to/sclngconceptdoc" target="_blank">Sitecore &ndash; Language and country concept &ndash; Blueprint.zip</a></li>
+</ul>
+<p>[caption id="attachment_4993" align="alignnone" width="300"]<a class="fancybox" href="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Language-concept-sneakpeek-.png"><img class="size-medium wp-image-4993" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Language-concept-sneakpeek--300x133.png" alt="Global multilanguage and multicountry websites with Sitecore - Language concept sneakpeek" width="300" height="133" /></a> <sup>Language concept sneak peek</sup>[/caption]</p>
+<h4><strong>A site&nbsp;structure concept focusing on content cultures</strong></h4>
+<p>In this conceptual document, you will cover the structure(s) required to build and present your website for different markets / in different language cultures. You may also incorporate this as part of the information architecture (IA) concept. Actually, the IA &ndash; if you developed such &ndash; can also be a solid foundry for the site structure concept. For discussion purpose with your internal stakeholders and market leads, you can develop different structures allowing a solid base for discussion and agreeing on the final design. And: it will also help thinking about "who will be in charge of what content / content-trees".</p>
+<p>Something I want to point out explicitly is &ndash;&nbsp;because&nbsp;this is usually not considered in a content-focused IA &ndash; to cover also the following "technical" areas in the conceptual structure:</p>
+<ul>
+<li>the Sitecore Media Library tree and structure (where will which folders, files and images be placed?)</li>
+<li>the Sitecore Templates, Renderings, Settings, Configuration-Items, etc. Item-Trees &ndash; especially when you will deal with multiple tenants, this will help you design Sitecore flexible &amp; extensible from the very start.</li>
+</ul>
+<p>A great advantage of using accurate culture specific contents in this concept is, indicated with red circles in the sneak peek image, that you will easily spot challenges where different languages have longer / shorter texts &ndash; which may impact the presentation of your website, if you don't consider this early on!</p>
+<p>[caption id="attachment_4992" align="alignnone" width="300"]<a class="fancybox" href="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-concept-sneakpeek-.png"><img class="size-medium wp-image-4992" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-Site-structure-concept-sneakpeek--300x120.png" alt="Global multilanguage and multicountry websites with Sitecore - Site structure concept sneakpeek" width="300" height="120" /></a> <sup>Site structure concept sneak peek</sup>[/caption]</p>
+<p>&nbsp;</p>
+<h3>What's next?</h3>
+<p>in the next post of this series you will learn what <a href="/2018/12/11/sitecore-contentauthoring-multilanguage-multicountry-content/">challenges multi-language &amp; multi-country sites&nbsp;will bring&nbsp;for&nbsp;the content authoring process</a>.</p>
+<h4><strong>Background story</strong></h4>
+<p>this October&nbsp;we &ndash; my colleague <a href="https://twitter.com/naibaf_net" target="_blank">Fabian Geiger</a> &amp; <a href="http://twitter.com/oliverattweetin" target="_blank">myself</a> &ndash; had the pleasure to hold a breakout session at the Sitecore Symposium 2018 in Orlando. This blog post is a summary and&nbsp;follow up&nbsp;from the knowledge shared&nbsp;for building globally focused websites based on the Sitecore Experience Platform, with multiple languages and country cultures. Consider this a non conclusive compilation of learnings and recommendations from our project work at <a href="https://www.namics.com/unternehmen/produkte-partnerschaften/sitecore/" target="_blank">Namics</a>.</p>

@@ -1,0 +1,67 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore - Meet the Dockers
+author:
+  display_name: allehmann
+  login: allehmann
+  email: alain.lehmann@namics.com
+  url: ''
+author_login: allehmann
+author_email: alain.lehmann@namics.com
+wordpress_id: 4608
+wordpress_url: https://sitecore.namics.com/?p=4608
+date: '2018-06-12 16:52:15 +0200'
+date_gmt: '2018-06-12 14:52:15 +0200'
+categories:
+- Development in Sitecore
+- Sitecore 8
+- Sitecore 9
+tags:
+- sitecore
+- Development
+- Docker
+comments:
+- id: 152239
+  author: Sitecore 9.0.2 in Windows Docker containers &#8211; Sitecore
+  author_email: ''
+  author_url: https://sitecore.namics.com/2018/07/18/sitecore-9-0-2-in-windows-docker-containers/
+  date: '2018-07-18 10:20:58 +0200'
+  date_gmt: '2018-07-18 08:20:58 +0200'
+  content: "[&#8230;] previous post&nbsp;Sitecore &ndash; Meet the Dockers&nbsp;you
+    have saw that there is possibility to use Sitecore in Docker on Mac or Windows
+    and how to [&#8230;]"
+redirect_from:
+  - /2018/06/12/sitecore-meet-the-dockers/
+---
+<p style="text-align: center"><a class="fancybox" href="/files/2018/04/docker_logo.png"><img src="/files/2018/04/docker_logo-150x134.png" class="alignnone wp-image-4609 size-thumbnail" width="150" height="134" alt="docker_logo"></a></p>
+<p style="text-align: left"><span style="font-weight: 400">Today I like to show you how Docker can be a really good companion for a Sitecore developer. As strange as this may sound but I am developing Sitecore on a Mac with Windows running in a VM. This has to do with my history as Mac guy and my difficulties to adapt to the Windows system's behaviour. I was searching for ways to save as much ressources on my VM as possible and to make my development environment as flexible as possible and in time I became aware of Docker.</span></p>
+<p><!--more--></p>
+<p style="text-align: left"><span style="font-weight: 400">Just for those who have never heard of Docker (which may be few): Docker is a container virtualization that allows you to package up an application with all the parts and dependencies it needs. A lot of big software companies create Docker images of their products that you can use out of the box eg. Apache Solr, MSSQL or MongoDB just to name some that can be important for Sitecore Devs.</span></p>
+<p style="text-align: left"><span style="font-weight: 400">First of all download Docker for </span><span style="font-weight: 400"><a href="https://docs.docker.com/docker-for-mac/install/" target="_blank">Mac</a></span><span style="font-weight: 400"> or </span><span style="font-weight: 400"><a href="https://docs.docker.com/docker-for-windows/" target="_blank">Windows</a></span><span style="font-weight: 400">&nbsp;and run the installer.&nbsp;</span><span style="font-weight: 400">You can run Docker completely in the Command Line but some things just are easier with a GUI. Therefore I recommend to install Kitematic which is a GUI that supports basic operations of Docker like installing images and configure the settings of your containers. Here I will mostly use the Kitematic GUI and only switch to CMD for special operations that are not supported in Kitematic. To install just klick on Kitematic in the Docker menu and follow the instructions.&nbsp;</span></p>
+<p style="text-align: left"><a class="fancybox" href="/files/2018/04/browse-images.png"><img src="/files/2018/04/browse-images-1024x708.png" class="wp-image-4610 aligncenter" height="354" alt="browse-images" width="512"></a></p>
+<p><b>Note:</b><span style="font-weight: 400"> If you are using Docker on Windows you must decide if you want to use Windows or Linux containers. You cannot use both!</span></p>
+<p><span style="font-weight: 400">Now I show you how easy it is to get a Docker container up and running. Just open Kitematic and you get an overview of the images that are available. Just search for the one you want, click create and you are done. You are running your first Docker container. </span></p>
+<p><span style="font-weight: 400">Certainly we need to configure the container to use it for our purposes. So let's install a Microsoft SQL Server. Search for MSSQL and you will find the official mssql-server-linux image from Microsoft. Click on "CREATE" if you want to install the latest version, if not click the button with the three dots and then on the latest tag. A view with the available versions will open, select the version you want to install, close the view with the (X) and then click create.</span></p>
+<p><a class="fancybox" href="/files/2018/04/Screen-Shot-2018-04-24-at-13.11.07.png"><img src="/files/2018/04/Screen-Shot-2018-04-24-at-13.11.07.png" class="wp-image-4613 aligncenter size-full" height="171" alt="Screen Shot 2018-04-24 at 13.11.07" width="559"></a></p>
+<p><span style="font-weight: 400">Here we use the latest version of MSSQL. When the image is installed the container starts and then you will see an error. This is because we need to make a fews settings before we can run this container. Switch to settings in the upper right corner of Kitematic. </span></p>
+<p>First we give our container a name that describes the use of it. In the Environmental Variables we need to enter ACCEPT_EULA as key and YES as value and we can also set the SA_PASSWORD. Another setting to have a look at is the port setting under Hostname/Ports. You can leave it to the default value or change it to your wishes. If you change the setting, Kitematic will warn you on save if the port is already in use.</p>
+<p><a class="fancybox" href="/files/2018/04/Screen-Shot-2018-04-23-at-11.15.24.png"><img src="/files/2018/04/Screen-Shot-2018-04-23-at-11.15.24.png" class="wp-image-4614 aligncenter" height="436" alt="Screen Shot 2018-04-23 at 11.15.24" width="740"></a></p>
+<p><span style="font-weight: 400">Your MSSQL server is now reachable with the address of your localhost and the Port number specified on the container. &nbsp;</span></p>
+<p><span style="font-weight: 400">Now that server is up and running we need some databases and here comes one advantage of docker - we can mount a volume into docker which references to our filesystem. We won&rsquo;t do this in Kitematic but in the command line. So open your command line tool and enter:</span></p>
+<p><code><span style="font-weight: 400">docker run --name=msssqlNamics -d -v ~/MsSqlBackup:/home/backup/ microsoft/mssql-server-linux:latest</span></code></p>
+<p><span style="font-weight: 400">In this example </span><span style="font-weight: 400">~/MsSqlBackup</span><span style="font-weight: 400"> references to the folder in my filesystem and </span><span style="font-weight: 400">/home/backup/ </span><span style="font-weight: 400">references to the containers filesystem. </span><span style="font-weight: 400">microsoft/mssql-server-linux:latest </span><span style="font-weight: 400">is just the imageName:Version.</span></p>
+<p>Now we have created a new container from an image with a reference to our filesystem where we can easily exchange files with the Docker container. If you want to create databases from backups you place the files in your local folder connect to the server with the MSSQL Management Studio restore the databases from the backup as you are used to.</p>
+<p><span style="font-weight: 400">Sure you don&rsquo;t need to mount a local volume you can also copy the files into docker directly. The easiest way to do this is also with the command line. First find out your containers id and name by entering </span><span style="font-weight: 400">docker container ls. </span><span style="font-weight: 400">That lists all running containers.</span></p>
+<p><a class="fancybox" href="/files/2018/04/Screen-Shot-2018-04-23-at-13.09.47.png"><img src="/files/2018/04/Screen-Shot-2018-04-23-at-13.09.47-1024x63.png" class="alignnone size-large wp-image-4615" width="1024" height="63" alt="Screen Shot 2018-04-23 at 13.09.47"></a></p>
+<p><span style="font-weight: 400">With the name or id known enter:</span></p>
+<p><code><span style="font-weight: 400">docker cp ~/MsSqlBackup/testdb.bak namics-blog-mssql:/home</span></code></p>
+<p><span style="font-weight: 400">This will copy the files into the home folder in the container.</span></p>
+<p><span style="font-weight: 400">When everything is setup another advantage shows itself. You can commit the container into a new image. All your data and changes in the container will be saved to this new image and you can distribute it to your fellow co-workers and they will have a set of running (Sitecore-)Databases at hand. To commit the container enter the following in the command line:</span></p>
+<p><code><span style="font-weight: 400">docker commit 31dfb528f53f namics-blog-mssql:latest</span></code></p>
+<p><span style="font-weight: 400">The number is just the id of the container and then you define name:tag of the new image. When the image is committed you can find it in the command line with </span><span style="font-weight: 400">docker images</span><span style="font-weight: 400"> or also in Kitematic under My Images.</span></p>
+<p><a class="fancybox" href="/files/2018/04/Screen-Shot-2018-04-23-at-14.24.34.png"><img src="/files/2018/04/Screen-Shot-2018-04-23-at-14.24.34-1024x230.png" class="alignnone size-large wp-image-4616" width="1024" height="230" alt="Screen Shot 2018-04-23 at 14.24.34"></a></p>
+<p><span style="font-weight: 400">Another great thing about Docker is that you are able to download different versions of software. That comes real handy if you use Apache Solr for example. </span></p>
+<p><span style="font-weight: 400">Different Sitecore projects may have different Solr versions and for sure you can install them also as services in Windows but Docker makes it real easy to just add a new container running Solr 6.6.2 for example add the indexes of your project, commit the container to a new image and you just have a default solr configuration for your project.</span></p>
+<p><span style="font-weight: 400">I&rsquo;m sure there is a lot more that Docker could help with in a Sitecore project but as I am also a newbie to this topic these are the main reasons for me to use Docker at the moment.</span></p>

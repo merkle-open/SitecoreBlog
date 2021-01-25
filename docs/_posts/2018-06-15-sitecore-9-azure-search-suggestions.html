@@ -1,0 +1,47 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore 9 - Azure Search Suggestions
+author:
+  display_name: iiric
+  login: iiric
+  email: igor.iric@namics.com
+  url: ''
+author_login: iiric
+author_email: igor.iric@namics.com
+wordpress_id: 4648
+wordpress_url: https://sitecore.namics.com/?p=4648
+date: '2018-06-15 11:37:33 +0200'
+date_gmt: '2018-06-15 09:37:33 +0200'
+categories:
+- Suche
+- Sitecore 9
+tags:
+- Sitecore 9
+- Azure search
+- Suggestions
+- Indexing
+- Azure search suggestions
+comments: []
+redirect_from:
+  - /2018/06/15/sitecore-9-azure-search-suggestions/
+---
+<p><a class="fancybox" href="/files/2018/06/sitecore-azure-logo.png"><img class="aligncenter wp-image-4769 size-medium" src="/files/2018/06/sitecore-azure-logo-300x51.png" alt="sitecore-azure-logo" width="300" height="51" /></a></p>
+<p>As you already know Sitecore 9 is Microsoft Azure compatible, but when it comes to Azure Search than it has many limitations. One of those limitations is Azure Search highlighting, Azure Search Suggestions and some others...<br />
+On one of our projects we had to provide suggestions with the search. After some investigations we decided to build it on our own, instead to wait and see if it will come out with new versions of Sitecore.</p>
+<p>The biggest problem was that Sitecore packages for Azure Search do not support building indexes with suggestions. In order to build an Azure Index with Suggester we have made a workaround and extended the Sitecore implementation of IndexDefinitionJsonConverter.<!--more--></p>
+<p><script src="https://gist.github.com/error505/9b893bac4d55ac9b8191b3fce87ad73b.js"></script><br />
+ In order to create a suggester for the Azure index we had to create a config file with config node "suggesters" and the child node for the fields "sourceFields". In sourceFields we have added fields that will be added to the suggester on the Azure index.<br />
+<script src="https://gist.github.com/error505/057440f2b649f6eaac6cf674bd295b30.js"></script><br />
+After the code has been compiled and and everything is published you have to rebuild your index you want in order to have the suggester up and ruining on the Azure Search.</p>
+<figure id="attachment_4653"><a class="fancybox" href="/files/2018/06/rebuildIndex.png"><img class="alignnone size-medium wp-image-4653" src="/files/2018/06/rebuildIndex-281x300.png" alt="Azure Search Index With Suggester" width="281" height="300" /></a> Azure Search Index With Suggester</figure>
+<p>When you rebuild your index from the sitecore back-end you should have your index rebuilt with the suggester and selected fields for suggestions.</p>
+<figure id="attachment_4654"><a class="fancybox" href="/files/2018/06/indexWithSuggester.png"><img class="alignnone size-full wp-image-4654" src="/files/2018/06/indexWithSuggester.png" alt="Sitecore 9 Azure Search Suggestions" width="805" height="166" /></a> Sitecore 9 Azure Search Suggestions</figure>
+<figure id="attachment_4655"><a class="fancybox" href="/files/2018/06/nameAsSuggestFiled.png"><img class="alignnone wp-image-4655 size-full" src="/files/2018/06/nameAsSuggestFiled.png" alt="nameAsSuggestFiled" width="796" height="140" /></a> Sitecore 9 Azure Search Suggestions</figure>
+<p>In order to call our suggester to give us results we had to build API calls manually.<br />
+<script src="https://gist.github.com/error505/de83688cc480802d36d7db346b221b79.js"></script><br />
+<script src="https://gist.github.com/error505/992ee90933ebbf47ccda5d891cf6419e.js"></script></p>
+<p>Now the only thing left is to make your web api controller and to set API&nbsp;url which you will call when you need to get search suggestions and to build your front-end to give you the result in a json response.</p>
+<figure id="attachment_4664"><a class="fancybox" href="/files/2018/06/suggestions1.png"><img class="alignnone wp-image-4664 size-full" src="/files/2018/06/suggestions1.png" alt="Azure search suggestions in frontend" width="733" height="276" /></a> Azure search suggestions in frontend</figure>
+<p>With this approach you can create your own web API call that will have highlighting or a count&nbsp;included.</p>

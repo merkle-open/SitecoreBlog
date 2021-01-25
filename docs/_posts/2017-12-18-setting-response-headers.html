@@ -1,0 +1,46 @@
+---
+layout: post
+status: publish
+published: true
+title: Setting Response Headers
+author:
+  display_name: Manuel Fischer
+  login: manfischer
+  email: manuel.fischer@namics.com
+  url: ''
+author_login: manfischer
+author_email: manuel.fischer@namics.com
+wordpress_id: 4296
+wordpress_url: https://sitecore.namics.com/?p=4296
+date: '2017-12-18 16:10:50 +0100'
+date_gmt: '2017-12-18 15:10:50 +0100'
+categories:
+- Allgemein
+- Development in Sitecore
+tags: []
+comments: []
+redirect_from:
+  - /2017/12/18/setting-response-headers/
+---
+<p>Sometimes it can be necessary to set certain&nbsp;HTTP headers to increase the security of your Sitecore site. Many customers of us have requested such a feature and therefore we implemented&nbsp;this functionality where a site admin can set various HTTP headers in the Sitecore backend.</p>
+<p>With this post I want to show you how can set HTTP headers with Sitecore on the basis of the two important HTTP headers&nbsp;<em>Content-Security-Policy</em>&nbsp;(helps to prevent attacks) and <em>X-Frame-Options&nbsp;</em>(helps to avoid clickjacking attacks).</p>
+<p><!--more--></p>
+<p><strong>1) Create a Template</strong></p>
+<p>First, you need to create a Sitecore template with the following fields:</p>
+<p><a class="fancybox" href="/files/2017/12/setting_response_headers_section_template.png"><img class="alignleft size-medium wp-image-4466" src="/files/2017/12/setting_response_headers_section_template.png" alt="setting_response_headers_section_template" width="900" height="255" /></a></p>
+<p>Second, decide which mechanism to set the response headers you want to choose:</p>
+<ul>
+<li>Central configuration: Create an item from this template (or your already existing configuration template inherits this new template)</li>
+<li>Each layout item controls the HTTP headers: Add this template to your layout templates if you want to control the HTTP headers for each page separately</li>
+</ul>
+<p><strong>2) Write&nbsp;a custom HttpRequest Processor</strong></p>
+<p>In order to set the HTTP headers you have to write a custom HttpRequest processor.</p>
+<p>Please keep in mind that the following code examples overwrite the values which are already in the HTTP headers. You may have to change the implementation here if you want a different approach (maybe you want to merge the values or you don't want to set them at all if the headers are already set).</p>
+<p>2.1) Central Configuration Item:</p>
+<p><script src="https://gist.github.com/hombreDelPez/ae20e5c346d429e161fc3878d0451a6e.js"></script>2.2) Each layout item controls the HTTP headers:</p>
+<p><script src="https://gist.github.com/hombreDelPez/eee0591b5dfa053243f3c91d0e979e7d.js"></script><br />
+In this example the central configuration item is a fallback if the fields on the context item are not set or the item has no values in the fields.</p>
+<p><strong>3) Create a patch config</strong></p>
+<p>The last step is to create a patch config which hooks your custom HttpRequest processor in the&nbsp;<em>httpRequestEnd</em> pipeline from Sitecore. In our example we inserted the processor at the end of the <em>httpRequestEnd</em> pipeline where you have the biggest control over the HTTP headers (for example you can check if the headers were already set etc.).</p>
+<p><script src="https://gist.github.com/hombreDelPez/f9fba1889f4d85545ade0c73ef338e2f.js"></script></p>
+<p>That was about it. With the help of this guide you can also set other or additional HTTP headers of course.</p>

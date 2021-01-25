@@ -1,0 +1,213 @@
+---
+layout: post
+status: publish
+published: true
+title: Dependency Injection with Autofac
+author:
+  display_name: Najmeddine Ayadi
+  login: nayadi
+  email: najmeddine.ayadi@namics.com
+  url: ''
+author_login: nayadi
+author_email: najmeddine.ayadi@namics.com
+wordpress_id: 4521
+wordpress_url: https://sitecore.namics.com/?p=4521
+date: '2018-01-11 10:07:13 +0100'
+date_gmt: '2018-01-11 09:07:13 +0100'
+categories:
+- Allgemein
+- Development in Sitecore
+- Open Source
+- Tipps
+tags:
+- Autofac
+- Dependency Injection
+comments: []
+redirect_from:
+  - /2018/01/11/dependency-injection-with-autofac/
+---
+<div>Dependencies Injection is a pattern which could be very helpful to create a maintainable and a less complex code. It is a form of IoC (Inversion of Control). The aim of this pattern is to give away the&nbsp;responsibility to instance some objects within own code. That means we don't need to take care of, how, when and where we create an instance of an object. Also you have the possibility to mock up the interfaces and services in order to create unit tests. If you once understand it, you will never want to code without it again.</div>
+<div></div>
+<p><!--more--></p>
+<div>There are three ways to inject the dependencies (Constructor Injection, Property Injection, Method Injection), in this article we will talk about the Constructor Injection.</div>
+<div>In Sitecore projects using MVC pattern, usually&nbsp;we implement the business functions in services, which will be used by the controllers of the renderings. Instead of creating instances of those services within the Controllers, we could simply "inject" there dependencies.</div>
+<div>Within this article we will create a small web application in <a href="http://asp.net/">ASP.Net</a>&nbsp;MVC, this application should store some users in the database after validating its content.</div>
+<div>To store the user objects we will use the Entity Framework (EF6, Model First approach).</div>
+<div></div>
+<h2>1. Create ASP.NET&nbsp;MCV Solution</h2>
+<div>Open Visual Studio (in this example VS2017), create a new Project by selecting "ASP.NET Web Application (.NET Framework)</div>
+<div><a class="fancybox" href="/files/2018/01/CreateSolution.png"><img class="alignnone size-medium wp-image-4522" src="/files/2018/01/CreateSolution-300x207.png" alt="CreateSolution" width="300" height="207" /></a></div>
+<div></div>
+<div>
+<div>
+<div>After that, we define our model structure, we create first a class named "UserGroup.cs".</div>
+<div>
+<div>namespace DependencyInjection.Models</div>
+<div>{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public class UserGroup</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public string Name { get; set; }</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public string Description { get; set; }</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>}</div>
+</div>
+<div>We create also a class named "User.cs"</div>
+<div>&nbsp;using System;</div>
+<div>
+<div>namespace DependencyInjection.Models</div>
+<div>{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public class User</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public string Name { get; set; }</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public DateTime Birthday { get; set; }</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public string Adress { get; set; }</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public UserGroup UserGroup { get; set; }</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>}</div>
+</div>
+<div></div>
+<div>To store users in the database, we add a new project item "ADO.NET Entity DataModel" and we call it "DataContext", after adding this item, a new class "DataContext.cs" will be generated. Within this class we add a property of type DbSet<User> to query our users from it. For more informations about Entity Framework see:&nbsp;<a href="https://msdn.microsoft.com/en-us/library/jj193542(v=vs.113).aspx">https://msdn.microsoft.com/en-us/library/jj193542(v=vs.113).aspx</a></div>
+<div></div>
+<div>Now we implement two services. DatabaseService to handle all operations against the database or in this case our DataContext, ValidationService will validate all created users before storing in database. Each service will implement it is own interface (IDatabaseService, IValidationService).</div>
+<div></div>
+<div>
+<div>using DependencyInjection.Models;</div>
+<div>&nbsp;namespace DependencyInjection.Business</div>
+<div>{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public interface IDatabaseService</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool AddUser(User user);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool UpdateUser(User user);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool RemoveUser(User user);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>}</div>
+</div>
+<div></div>
+<div>So we create a class "DatabaseService" implementing from IDatabaseService interface. This service will be the only class which interact with the DataContext, to achieve that we need to instance the DataContext class, or we inject it into DatabaseService and we give the responsibility to instance it to another class or framework.</div>
+<div></div>
+<div>
+<div>using System.Data.Entity;</div>
+<div>using DependencyInjection.Models;</div>
+<div>namespace DependencyInjection.Business</div>
+<div>{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public class DatabaseService:IDatabaseService</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private readonly DataContext _dataContext;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public DatabaseService(DataContext dataContext)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_dataContext = dataContext;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public bool AddUser(User user)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_dataContext.Users.Add(user);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return _dataContext.SaveChanges().Equals(1);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public bool UpdateUser(User user)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_dataContext.Entry(user).State = EntityState.Modified;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return _dataContext.SaveChanges().Equals(1);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public bool RemoveUser(User user)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_dataContext.Entry(user).State = EntityState.Deleted;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return _dataContext.SaveChanges().Equals(1);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>}</div>
+</div>
+<div></div>
+<div>The constructor of DatabaseService receive a parameter of type DataContext, after passing this parameter to a private property, we can use the functions of DataContext in the whole DatabaseService class. We did nothing else as "injecting" the dependency of DataContext to DatabaseService throw its constructor. DatabaseService don't need to instance DataContext to use its functions.</div>
+<div>Now we implement the "ValidationService.cs" which implement the interface "IValidationService",</div>
+<div>
+<div>public interface IValidationService</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool UserIsValid(User user);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div></div>
+<div>public class ValidationService:IValidationService</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public bool UserIsValid(User user)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return !string.IsNullOrEmpty(user.Name)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;&amp; !string.IsNullOrEmpty(user.Adress)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;&amp; user.UserGroup != null;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+</div>
+<div>But we are not finished yet, the DataContext should be instanced by a class or framework, Dependency Injection&nbsp;doesn't mean we can use&nbsp;uninstantiated classes.</div>
+<h2>2. Using Autofac</h2>
+<div>Autofac is a framework for Microsoft .NET to build container to inject constructor with parameters and to manage dependencies between classes. It is able to instance services/controllers and classes.</div>
+<div>To Install the Autofac Nuget Package using Package Manager Console in Visual Studio, enter "Install-Package Autofac.Mvc5 -Version 4.0.2"</div>
+<div>&nbsp;or open the Nuget Package Manager Tool and search for Autofac.Mvc (see:&nbsp;<a href="https://www.nuget.org/packages/Autofac.Mvc5/4.0.2">https://www.nuget.org/packages/Autofac.Mvc5/4.0.2</a>)</div>
+<div>In the next step we need to tell Autofac which services and classes we want to inject in the application. We could create a static class "DependencyRegister.cs" which contains the steps to register the services and classes. Please note that the registration should be executed before &nbsp;calling the first constructor with injected parameter , the best way is to execute the registration within the <strong>Global.asax</strong> class.</div>
+<div>We take a look at the the implementation of our "DependencyRegister.cs" class</div>
+<div>
+<div>public static class DependencyRegister</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public static void ExecuteRegistration()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var builder = new ContainerBuilder();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.RegisterControllers(typeof(MvcApplication).Assembly);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.RegisterType<DatabaseService>().As<IDatabaseService>();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.RegisterType<ValidationService>().As<IValidationService>();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.RegisterType<DataContext>();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var container = builder.Build();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DependencyResolver.SetResolver(new AutofacDependencyResolver(container));</div>
+<div></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+</div>
+<div></div>
+<div>As we can see, after creating an instance of ContainerBuilder(), we need to register the controller which also could have injected parameter to their constructors, with Autofac we are able to register all Controllers within the application with no need to specify each one of them.</div>
+<div>In the next lines we register the DatabaseService, ValidationService and their interfaces IDatabaseService and DatabaseService.</div>
+<div>In "DatabaseService" we used "DataContext.cs" as injected instance, so we need also to register it.</div>
+<div>
+<div>builder.RegisterType<DataContext>();</div>
+</div>
+<div></div>
+<div>After that we build the registered types and create a container.</div>
+<div>
+<div>var container = builder.Build();</div>
+</div>
+<div></div>
+<div>At the end we resolve the dependencies created within the container.</div>
+<div>
+<div>DependencyResolver.SetResolver(new AutofacDependencyResolver(container));</div>
+</div>
+<div></div>
+</div>
+<div>Now we have registered all our classes and services needed and we can use it in any class if we pass its instances as parameter to the constructor.</div>
+<div>As additionally example, we want to provide the possibility to validate and to add an user within the "Home" Controller. So we define an instance of the interface IDatabaseService and an instance of IValidationService as parameter for the constructor of "Home" Controller.</div>
+<div>
+<div>namespace DependencyInjection.Controllers</div>
+<div>{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public class HomeController : Controller</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private readonly IDatabaseService _databaseService;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private readonly IValidationService _validationService;</div>
+<div></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public HomeController(IDatabaseService databaseService, IValidationService validationService)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_databaseService = databaseService;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_validationService = validationService;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HttpPost]</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public ActionResult Create(User user)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!_validationService.UserIsValid(user))</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return View("Error");</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_databaseService.AddUser(user);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return View("Index");</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public ActionResult Index()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return View();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>}</div>
+<div></div>
+</div>
+<div>We have implemented a small web application with two services without creating any instance of it, creating&nbsp;instances is now the concern of Autofac.</div>
+</div>

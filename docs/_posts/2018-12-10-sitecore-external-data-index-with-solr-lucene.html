@@ -1,0 +1,82 @@
+---
+layout: post
+status: publish
+published: true
+title: Creating a custom searchable index for an external data source in Sitecore
+author:
+  display_name: allehmann
+  login: allehmann
+  email: alain.lehmann@namics.com
+  url: ''
+author_login: allehmann
+author_email: alain.lehmann@namics.com
+excerpt: "I am sure that all of you have created a regular item index for Sitecore
+  with Solr or Lucene in the past already. I got to the challenge that I needed to
+  call an external service which is provided by a third-party system provided by the
+  client. My first thought was to directly call the service and show the results of
+  that call – but the response took too long.\r\nSo I decided to make a custom index
+  containing the external data and thus having a great response time."
+wordpress_id: 4852
+wordpress_url: https://sitecore.namics.com/?p=4852
+date: '2018-12-10 17:23:16 +0100'
+date_gmt: '2018-12-10 16:23:16 +0100'
+categories:
+- Suche
+- Sitecore 8
+- Sitecore 7
+- Tipps
+- Adventtipp
+- Solr
+tags:
+- Entwicklung
+- search
+- lucene
+- Indexing
+comments:
+- id: 156331
+  author: Witold Sosnowski
+  author_email: witeksosnowski@hotmail.com
+  author_url: ''
+  date: '2019-11-21 15:37:04 +0100'
+  date_gmt: '2019-11-21 14:37:04 +0100'
+  content: Can you please show how can we index nested objects?
+- id: 156496
+  author: allehmann
+  author_email: alain.lehmann@namics.com
+  author_url: ''
+  date: '2019-12-11 14:31:03 +0100'
+  date_gmt: '2019-12-11 13:31:03 +0100'
+  content: |-
+    Hi Witold
+    What exactly do you mean with nested objects. Could you please provide an example to clarify?
+    Best regards
+    Alain
+redirect_from:
+  - /2018/12/10/sitecore-external-data-index-with-solr-lucene/
+---
+<p>I am sure that all of you have created a regular item index for Sitecore with Solr or Lucene in the past already. I got to the challenge that I needed to call an external service which is provided by a third-party system provided by the client. My first thought was to directly call the service and show the results of that call &ndash; but the response took too long.<br />
+So I decided to make a custom index containing the external data and thus having a great response time.</p>
+<h4><!--more-->Credits where credits are due</h4>
+<p>After some search I found&nbsp;two blog posts on&nbsp;<a href="http://sitecoreexperiences.blogspot.com/2015/08/serving-non-sitecore-data-in-sitecore.html">SitecoreStories </a>and <a href="http://www.sitecorize.it/2017/09/indexing-from-external-sources-part-1.html">SitecoreizIt </a>which helped me a lot. So thank you very much for this. In the following chapters I consolidated the information, so it suits my case.</p>
+<h3>Adding a new class representing the index data field</h3>
+<p>First we will create an <em>IndexableDataField</em>-class which will represent the field in the index document. I am building an index from a persons database so I named my class <em>IndexablePersonDataField</em> and it inherits from the <em>IIindexableDataField</em>-class.</p>
+<p><script src="https://gist.github.com/beowulfdk/f8074e05339c315e8604b271c68ede3b.js"></script>As you can see this class is straight forward. We have a constructor that has two parameters, one is our Model of the Database and the other is the fieldInfo which describes what kind of field we are writing to the index.</p>
+<h3>Adding an indexable class</h3>
+<p>The next class we are going to create is the <em>Indexable</em>-class in my case the <em>IndexablePerson</em>-class. This inherits from <em>IIndexable</em> and describes the indexable object.<script src="https://gist.github.com/beowulfdk/3166dc936000407dcbd8db5c93668d1e.js"></script></p>
+<h3>Building a custom crawler to index the external data</h3>
+<p>Finally we need a custom crawler that builds up our index. I named mine <em>PersonCrawler</em>. The crawler inherits from Sitcore's <em>FlatDataCrawler</em>.</p>
+<h4>Defining the item collection</h4>
+<p>Here we need to override some methods but basically I am just using the <em>GetItemsToIndex()</em>-method. Here we are returning a collection of items that should be in the index.</p>
+<p><script src="https://gist.github.com/beowulfdk/6105378ef5a054545509eaa3db832c53.js"></script></p>
+<h3>Adjusting the configuration file</h3>
+<p>Then we need to provide a configuration file for Lucene or Solr where we add our custom crawler.<script src="https://gist.github.com/beowulfdk/2cc9e6a3823a5cef9d4b55afe0195d58.js"></script></p>
+<p>So far so good. But I also needed a scheduled task that runs daily to rebuild my index.</p>
+<h3>Adding a scheduled task for the index job</h3>
+<p>This is really easy to do. We just need to create another class where we get the index and rebuild it,</p>
+<p><script src="https://gist.github.com/beowulfdk/49151f8b3667ac8ecb6225ab063cccb6.js"></script></p>
+<p>and a task command in Sitecore that links to our newly create class and our execution method</p>
+<p><a class="fancybox" href="/files/2018/12/task_command.png" target="_blank"><img class="alignnone size-full wp-image-5017" src="/files/2018/12/task_command.png" alt="task_command" width="1104" height="325" /></a></p>
+<p>and &ndash; finally &ndash; a task schedule that links to our command and schedules when to run the task.</p>
+<p><a class="fancybox" href="/files/2018/12/task_schedule.png" target="_blank"><img class="alignnone size-full wp-image-5018" src="/files/2018/12/task_schedule.png" alt="task_schedule" width="1108" height="365" /></a></p>
+<p><strong>That's it!<strong> Now the external data should be successfully indexed in the custom field &amp; you can deliver it through Sitecore!<br />
+</strong></strong></p>

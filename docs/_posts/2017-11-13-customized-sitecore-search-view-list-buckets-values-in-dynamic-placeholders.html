@@ -1,0 +1,102 @@
+---
+layout: post
+status: publish
+published: true
+title: Customized Sitecore Search View - List Buckets Values in Dynamic Placeholders
+author:
+  display_name: Roland Brunner
+  login: rbrunner
+  email: roland.brunner@namics.com
+  url: https://www.namics.com/person/roland-brunner/
+author_login: rbrunner
+author_email: roland.brunner@namics.com
+author_url: https://www.namics.com/person/roland-brunner/
+wordpress_id: 4299
+wordpress_url: https://sitecore.namics.com/?p=4299
+date: '2017-11-13 13:43:46 +0100'
+date_gmt: '2017-11-13 12:43:46 +0100'
+categories:
+- Allgemein
+- Web Content Management
+- Development in Sitecore
+- Sitecore 8
+tags: []
+comments: []
+redirect_from:
+  - /2017/11/13/customized-sitecore-search-view-list-buckets-values-in-dynamic-placeholders/
+---
+<p>Many of you know this problem: We have a bucket containing items and we want to visualize the items in a list with all values and not only the standard properties like:</p>
+<ul>
+<li>Template</li>
+<li>Location</li>
+<li>Version</li>
+<li>Created</li>
+<li>By</li>
+<li>Language</li>
+</ul>
+<p>The magic words to do this, is "Dynamic Placeholder"!</p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_14-43-54.jpg"><img class="alignnone size-full wp-image-4306" src="/files/2017/11/2017-11-02_14-43-54.jpg" alt="2017-11-02_14-43-54" width="550" /></a></p>
+<p><!--more--></p>
+<h3>What we have</h3>
+<h4><strong>1. Template "Order Programme Form"</strong></h4>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_11-34-07.jpg"><img class="alignnone size-full wp-image-4303" src="/files/2017/11/2017-11-02_11-34-07.jpg" alt="2017-11-02_11-34-07" width="550" /></a></p>
+<p>The field "Bucketable" of the standard values of the template must be set to "true".</p>
+<h4><strong>2. Bucket containing items of template "Order Program Form"</strong></h4>
+<p></p>
+<p>With the following Settings:</p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_11-41-55.jpg"><img class="alignnone size-full wp-image-4304" src="/files/2017/11/2017-11-02_11-41-55.jpg" alt="2017-11-02_11-41-55" width="550" /></a></p>
+<ul>
+<li>"Is Bucket" to "true"</li>
+<li>
+"Persistant bucket filter" is the preset filter, which can't be changed in the Sitecore search.<br />
+You can separate the with a semicolon and the "+" means a logical AND.<br />
+I recommend: Set the location to the folder itself, otherwise it finds the items outside the folder too.<br />
+And filter on the template "Order Programme Form", otherwise other item types or folders could be found also.</li>
+<li>"Enabled views" is set to the view which we will create later in the next step. It should be set to this view as default.</li>
+</ul>
+<p>Here is how the Persistant bucket filter look like:</p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_14-43-40.jpg"><img class="alignnone size-full wp-image-4307" src="/files/2017/11/2017-11-02_14-43-40.jpg" alt="2017-11-02_14-43-40" width="550" /></a></p>
+<h3>What we have to do</h3>
+<h4><strong>1. Configuration File</strong></h4>
+<p><script src="https://gist.github.com/rbrunneratnamics/f67b0a82d1a01cff48f06987b4ba4d6e.js?file=OrderProgramme.config"></script></p>
+<ul>
+<li>root = ID of the folder containing the buckets</li>
+<li>template = ID of the "Order Programme Form" template</li>
+<li>maps = every field of "the Order Programme Form" template</li>
+<li>fieldId = ID of the matching field in the template</li>
+<li>dynamicViewName = must match the name of the DynamicPlaceholder in the view we want to create later</li>
+</ul>
+<p></p>
+<h4><strong>2. Custom Bucket View</strong></h4>
+<p>We create our own View: </p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_13-55-09.jpg"><img class="alignnone size-full wp-image-4324" src="/files/2017/11/2017-11-02_13-55-09.jpg" alt="2017-11-02_13-55-09" width="800" /></a> </p>
+<p>Under Settings/Buckets/Views we make a new View called "Order Programme View".<br />
+We can build the table view with plain HTML and thus control how the table should look like in the following three sections:</p>
+<ul>
+<li>Header</li>
+<li>Item</li>
+<li>Footer</li>
+</ul>
+<p></p>
+<p>Here are the three samples of the HTML code:</p>
+<p><script src="https://gist.github.com/rbrunneratnamics/f67b0a82d1a01cff48f06987b4ba4d6e.js?file=SystemSettingsBucketsViewsCustomHeaderTemplate.htm"></script></p>
+<p><script src="https://gist.github.com/rbrunneratnamics/f67b0a82d1a01cff48f06987b4ba4d6e.js?file=SystemSettingsBucketsViewsCustomItemTemplate.htm"></script></p>
+<ul>
+<li>Placeholders are SystemPlaceholders (for other available SystemPlaceholders take a look in the standard table view)</li>
+<li>DynamicPlaceholders are the placeholders from the configuration file</li>
+</ul>
+<p><script src="https://gist.github.com/rbrunneratnamics/f67b0a82d1a01cff48f06987b4ba4d6e.js?file=SystemSettingsBucketsViewsCustomFooterTemplate.htm"></script></p>
+<h4><strong>3. Custom Bucket Facet (Optional)</strong></h4>
+<p>We wanna filter our search also on the field "Lang"</p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_13-59-06.jpg"><img class="alignnone size-full wp-image-4337" src="/files/2017/11/2017-11-02_13-59-06.jpg" alt="2017-11-02_13-59-06" width="1200" /></a></p>
+<p>Under System/Settings/Buckets/Facets we create our own Facet: "Lang"</p>
+<p><a class="fancybox" href="/files/2017/11/2017-11-02_14-43-541.jpg"><img class="alignnone size-full wp-image-4338" src="/files/2017/11/2017-11-02_14-43-541.jpg" alt="2017-11-02_14-43-54" width="550" /></a></p>
+<p>When completing a search, there is now a new facet called "Lang".</p>
+<h4><strong>4. C# Code</strong></h4>
+<p>Model for the "maps" in OrderProgramme.config</p>
+<p><script src="https://gist.github.com/rbrunneratnamics/f67b0a82d1a01cff48f06987b4ba4d6e.js?file=ImportModel.cs"></script>&nbsp; </p>
+<p>In OrderProgramme.config we also declare a pipeline for "buckets.dynamicFields": &nbsp;<br />
+The source code for the configured pipeline:<br />
+<script src="https://gist.github.com/rbrunneratnamics/f67b0a82d1a01cff48f06987b4ba4d6e.js?file=CustomFetchDynamicFieldValues.cs"></script></p>
+<p>Please keep in mind to change to code where we get the configuration item to your own implementation.</p>
+<p>Voil&agrave;!</p>

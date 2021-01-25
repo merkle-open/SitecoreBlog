@@ -1,0 +1,74 @@
+---
+layout: post
+status: publish
+published: true
+title: Use this spreadsheet to visually analyse & tune your Sitecore cache sizes
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+excerpt: Let me share with you my magical "Sitecore cache.aspx analysis tool" for
+  easier and visual reporting Sitecore cache sizes
+wordpress_id: 5549
+wordpress_url: https://sitecore.namics.com/?p=5549
+date: '2019-03-27 11:13:51 +0100'
+date_gmt: '2019-03-27 10:13:51 +0100'
+categories:
+- Development in Sitecore
+- Caching
+- Sitecore 8
+- Sitecore 7
+- Sitecore 9
+- Logging
+tags:
+- deployment
+- logging
+- open source
+- Reporting
+comments:
+- id: 154141
+  author: Mark Lowe
+  author_email: info@marklowe.ch
+  author_url: http://sitecoreblog.marklowe.ch
+  date: '2019-03-27 18:31:20 +0100'
+  date_gmt: '2019-03-27 17:31:20 +0100'
+  content: This tool very cool. So much more readable than the cache.aspx page. Would
+    be awesome if you could make an .aspx version out of it.
+redirect_from:
+  - /2019/03/27/tool-for-visually-sizing-sitecore-caches/
+---
+<h4><strong>Caches are a crucial component of every Sitecore instance&nbsp;&ndash; not only&nbsp;for an excellent content authoring experience, but also regarding launching or delivering&nbsp;your Sitecore site with&nbsp;optimized&nbsp;loading times.</strong></h4>
+<p><!--more--><br />
+<h3>A little story about challenges with Sitecore cache sizing&hellip;</h3>
+<p>Even though there are many best-practices for Sitecore cache sizing available &ndash; including a <a href="https://doc.sitecore.com/legacy-docs/SC71/cms-tuning-guide-sc70-72-a4.pdf" target="_blank">comprehensive doc on that</a>&nbsp;&ndash; the optimal cache sizes for each environment and Sitecore instance can barely ever be sized appropriately right from the very beginning, resulting in a continuous optimization cycle. Additionally we might only touch those configurations once the Sitecore environment is in place for some time already and starts to show some signs of slowness here and there; only to find out&nbsp;that the use of the solution has probably grown quite a bit, whether in terms of visitors, or additional sites and marketers working in the system or simply the size of the database due to items, images and files.</p>
+<h3>How do you analyse Sitecore cache sizes today?</h3>
+<p><a class="fancybox" href="/files/2019/03/Sitecore-cache_apsx-admin-page-Screenshot.png" target="_blank"><img class="alignright wp-image-5555" style="float: right;" src="/files/2019/03/Sitecore-cache_apsx-admin-page-Screenshot-300x223.png" alt="Sitecore cache_apsx admin page Screenshot" width="200" height="149" /></a>So whether you are sizing the Sitecore caches initially, or you are in an operational mode already and want to see a cache "healthcheck" of your Sitecore solution, I guess&nbsp;you'll be using the famous <strong>cache.aspx admin page</strong>.</p>
+<ul>
+<li>(+) Pros of the cache.aspx page: you'll see each and every Sitecore cache with all relevant data.</li>
+<li>(&ndash;) Cons of the cache.aspx page: it's hard to read and interpret &ndash; especially when we talk like hundreds of different caches&hellip;</li>
+</ul>
+<h3>A better Sitecore cache size&nbsp;analysis to the rescue</h3>
+<h4 style="margin-bottom: 15px;"><strong>Let me share with you my magical "Sitecore cache.aspx analysis tool" :)</strong></h4>
+<p><a class="fancybox" href="/files/2019/03/Sitecore-cache-analysis-tool-Screenshot.png" target="_blank"><img class="alignnone wp-image-5554" src="/files/2019/03/Sitecore-cache-analysis-tool-Screenshot-e1553678368609.png" alt="Sitecore cache analysis tool Screenshot" width="550" height="332" /></a></p>
+<p>Already&nbsp;created some time ago &ndash; and heavily tested and used by our Sitecore specialists at Namics &ndash; the sheet&nbsp;is&nbsp;in a state I feel OK&nbsp;to share it. Sometimes it doesn't take a lot for improving or supporting little tasks, but this sheet definitely does it's job. And it's compatible with all Sitecore versions coming with the cache.aspx admin page.</p>
+<h4 style="margin-bottom: 10px;"><strong>TL;DR! I want to get my hands on it now</strong></h4>
+<ul>
+<li><strong>Microsoft Excel</strong> version: <a href="https://nam.to/sccachetoolxlsx">download file here</a></li>
+</ul>
+<h4 style="margin-bottom: 10px;"><strong>Here's a how to you use it</strong></h4>
+<div style="padding:77.75% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/326766969" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
+<p><script src="https://player.vimeo.com/api/player.js"></script></p>
+<ol>
+<li>Open&nbsp;the cache.aspx page of your Sitecore instance:&nbsp;[yourpage]/sitecore/admin/cache.aspx</li>
+<li>Grab your Sitecore's cache raw data by copy the text in the&nbsp;HTML cell from the top left to the very bottom right (attention: do<strong> not</strong>&nbsp;copy the column titles!)</li>
+<li>Open the "Sitecore&nbsp;cache.aspx analysis"-spreadsheet (or create a fresh copy)</li>
+<li>Select&nbsp;to the cell that indicates "Paste data here"</li>
+<li>Paste&nbsp;the copied cache raw data from the clipboard &ndash; preferably using "Insert values only" (unformatted)</li>
+</ol>
+<p>So long &ndash; happy cache sizes analysis!</p>
+<h4>&hellip;have feedback or found an issue?</h4>
+<p>Please just <a href="#respond">comment</a> below or <a href="https://www.linkedin.com/in/oliverraduner/">reach out to me</a> directly.</p>

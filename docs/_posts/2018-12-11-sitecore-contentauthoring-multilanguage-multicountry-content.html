@@ -1,0 +1,106 @@
+---
+layout: post
+status: publish
+published: true
+title: Content authoring excellence when handling multiple countries and languages
+  in Sitecore
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+excerpt: In part 2 of this series, we will do a deep-dive regarding the "<em>Sitecore
+  CMS users</em>" (content managers) and how to master their challenges for content
+  authoring multi-country and multi-language websites using the Sitecore Experience
+  platform.
+wordpress_id: 4909
+wordpress_url: https://sitecore.namics.com/?p=4909
+date: '2018-12-11 10:00:38 +0100'
+date_gmt: '2018-12-11 09:00:38 +0100'
+categories:
+- Web Content Management
+- Sitecore Experience CMS
+- Web Experience Manager
+- CMS-Usability
+- Tipps
+- Sitecore PowerShell Extensions
+- Solr
+tags:
+- Shared Source Module
+- multi-language
+- Page Editor
+- content editor
+- Customer Experience
+- experience editor
+- content management
+- content authoring
+comments: []
+redirect_from:
+  - /2018/12/11/sitecore-contentauthoring-multilanguage-multicountry-content/
+---
+<p>Following&nbsp;my previous post, in which I explained the&nbsp;<a href="/2018/12/07/global-multilanguage-multicountry-sites-with-sitecore/" target="_blank">conceptual basics&nbsp;&amp; recommended principles for building global&nbsp;multilingual websites</a>, we will do a deep-dive&nbsp;regarding your first type of stakeholder: the "<em>Sitecore CMS users</em>" (content managers) and how to&nbsp;master their&nbsp;challenges for&nbsp;content authoring multi-country and multi-language&nbsp;websites&nbsp;on the Sitecore Experience platform.</p>
+<h3><!--more-->What areas&nbsp;turn out to be challenging&nbsp;when adding multilingual content&nbsp;using Sitecore?</h3>
+<h4><strong>1) Using Sitecore's built-in language fallback mechanisms to one's advantage</strong></h4>
+<h4><strong>2) Cleverly setting up&nbsp;shared &amp; final page layouts for&nbsp;delivering pages in multiple language cultures</strong></h4>
+<h4><strong>3) Properly allowing the use of custom &ldquo;fake&rdquo; language cultures</strong></h4>
+<h4><strong>4) Mastering Solr search: making sure content in every language culture&nbsp;&ndash; also custom cultures &ndash; can be indexed &amp; delivered&nbsp;for searches</strong></h4>
+<h4><strong>5) Providing your content managers with additional&nbsp;tools to simplify&nbsp;their content authoring experience&nbsp;and managing translations</strong></h4>
+<h3>Let's go through these topics in detail</h3>
+<p><!--more--></p>
+<h4><strong>How does the Sitecore language fallback work</strong></h4>
+<p><img class=" size-full wp-image-5052 alignleft" style="float: left; margin: 5px 15px 15px 0px;" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-layouts-icon.png" alt="global-multilanguage-and-multicountry-websites-with-sitecore-layouts-icon" width="75" height="75" />There is an extensive official documentation by Sitecore about the language fallback mechanism &ndash; especially how to configure it: <a href="https://doc.sitecore.com/developers/91/sitecore-experience-management/en/enable-and-set-up-language-fallback.html" target="_blank">Enable and set up language fallback</a></p>
+<p>Simply explained, the language fallback allows inheriting&nbsp;or provisioning&nbsp;once added&nbsp;layout- or content-data&nbsp;from various language cultures with other cultures or versions of your pages and components. The following scheme shows how various cultures can be built to have a relation, and thus inheriting or displaying content, if it is not available in that particular version, but in one of it's relatives.</p>
+<p>[caption id="attachment_5050" align="alignnone" width="300"]<a class="fancybox" href="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-language-fallback-principle.png"><img class="size-medium wp-image-5050" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-language-fallback-principle-300x129.png" alt="Global multilanguage and multicountry websites with Sitecore - Language Fallback principle" width="300" height="129" /></a> <sup>Sitecore's language fallback principles simply explained</sup>[/caption]</p>
+<blockquote><p>Hint: once you identified all countries and languages you need to serve content in with your website (you should have this in a <a href="/2018/12/07/global-multilanguage-multicountry-sites-with-sitecore/" target="_blank">language concept document</a>), you should define these relations and fallback scenarios between the identified cultures.</p></blockquote>
+<p>&nbsp;</p>
+<h4><strong>Deciding on how to use <a href="https://doc.sitecore.com/developers/90/sitecore-experience-management/en/versioned-layouts.html" target="_blank">shared &amp; final layouts</a> and fields</strong></h4>
+<p><img class="alignleft size-full wp-image-5058" style="float: left; margin: 5px 15px 15px 0px;" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-shared-fields-icon.png" alt="global-multilanguage-and-multicountry-websites-with-sitecore-shared-fields-icon" width="75" height="75" />The key for this topic is to decide&nbsp;and act early: you will lay a major cornerstone with this decision for all your content managers &amp; your content authoring process!</p>
+<p>Basically you can ask yourself and discuss with stakeholders:</p>
+<blockquote><p>Will all webpages share the same layout ("design", placement of elements) across every language version&hellip;</p>
+<p>&hellip;or will we have individual arrangements of elements on pages, based on their target language/country/market?</p></blockquote>
+<p>For the former, use the so called "<em>Shared layout</em>". For the latter, you will need to work with the "<em>Final layout</em>". To simplify life for your content managers,&nbsp;use the Sitecore configuration to define the <a href="/2016/12/08/adventtipp8-sitecore8-final-layouts-shared-layouts/" target="_blank">shared or final layout</a> as the default "mode" they will work in!</p>
+<p>But it doesn't stop on that level: make smart use of the field-level &ldquo;Shared&rdquo;-setting in Sitecore! Shared means,&nbsp;that a field has the same value across all versions in all languages&nbsp;(remark: it will also overwrite the versioned / unversioned flag, in case you plan to use version-history for changes on a field level).</p>
+<p>[caption id="attachment_5051" align="alignnone" width="300"]<a class="fancybox" href="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-shared-fields.png"><img class="size-medium wp-image-5051" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-shared-fields-300x83.png" alt="Global multilanguage and multicountry websites with Sitecore - Shared fields" width="300" height="83" /></a> <sup>An example of a "Shared" field in Sitecore</sup>[/caption]</p>
+<p>So it is obvious to&nbsp;only use this setting for fields which hold language independent values. Such as e.g. a configuration parameter or an e-mail address. In case of doubt, don&rsquo;t&nbsp;enable this checkbox &ndash; because it will be a&nbsp;mess when your global content management teams start adding their content, and continuously overwriting each others filled-in values&hellip;</p>
+<h4><strong>Working with custom cultures in Sitecore</strong></h4>
+<p><img class="alignleft size-full wp-image-5053" style="float: left; margin: 5px 15px 15px 0px;" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-custom-cultures-icon.png" alt="global-multilanguage-and-multicountry-websites-with-sitecore-custom-cultures-icon" width="75" height="75" />By default, you can only add and work with language cultures&nbsp;in the Sitecore CMS,&nbsp;which are also registered in the underlaying Windows operating system. But it might happen, that you need to have a "special case" to deliver content to &ndash; this is where we talk about "custom cultures"; basically any combination of language and country parameters, which are not officially recognized for that particular country.&nbsp;Let me give you some examples:&nbsp;e.g. English for France, Spanish in the US,&nbsp;German in the Netherlands, and so on.</p>
+<p>Therefore you always need to register custom cultures in Windows first, before making them available in the Sitecore backend! Keep in mind: a culture not only specifies it's language and country relation, but also what time and date- plus number formats to use!</p>
+<p>In order to make custom cultures available for your website, you will need to&hellip;</p>
+<ol>
+<li>use a PowerShell script on the Windows&nbsp;OS-level to register&nbsp;them</li>
+<li>and also update Sitecore&rsquo;s <em>App_Config/LanguageDefinitions.config</em> (this is required&nbsp;since Sitecore 9.0)</li>
+<li>adding the language in the Sitecore backend under <em>/sitecore/system/languages</em> (or via the Control Panel using "<em>Add new language</em>")
+<p>[caption id="attachment_5057" align="alignnone" width="300"]<a class="fancybox" href="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-add-new-language.png"><img class="size-medium wp-image-5057" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-add-new-language-300x131.png" alt="Global multilanguage and multicountry websites with Sitecore - Add a new language" width="300" height="131" /></a> <sup>How to add new language cultures in Sitecore</sup>[/caption]</li>
+</ol>
+<p>&nbsp;</p>
+<h4><strong>Teaching Solr-search to understand your website's languages</strong></h4>
+<p><img class="alignleft size-full wp-image-5054" style="float: left; margin: 5px 15px 15px 0px;" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-solr-icon.png" alt="global-multilanguage-and-multicountry-websites-with-sitecore-solr-icon" width="75" height="75" />Not only when you do need to have custom cultures on your website, but also out of the box, there are some culprits with Solr search in order that it properly understands and (better) handles content in various languages. If you don't "help" Solr in terms of multiple cultures, you will see a lot of Solr exceptions in the log files, that could cause your&nbsp;pages to be not indexed at all or no search results showing up.</p>
+<ul>
+<li>There are some widely used, but missing languages in Solr out-of-the-box: Chinese (zh), Korean (ko), Polish (pl), Slovak (sk)</li>
+<li>There are&nbsp;some&nbsp;out-of-the-box&nbsp;supported cultures&nbsp;in Solr but with wrong language identifier: Czech (is "cz" => should be "cs"), Norwegian (is "no" => should be "nb")</li>
+<li>Consider that some language depending features in Solrwon't work out-of-the-box, such as Tokenizers (e.g.HMMChineseTokenizerFactory), Stopwords &amp; Stemmers (e.g. StempelPolishStemFilterFactory, &hellip;)</li>
+<li>As already mentioned: you have to introduce your custom cultures to Solr, too, by modifying it's&nbsp;managed-schema file.<br />
+Read more on that in this excellent post by my colleague, Fabian: <a href="/2018/11/26/adding-new-languages-to-sitecores-solr-indexes/" target="_blank">Adding new languages to Sitecore&rsquo;s Solr indexes</a></li>
+</ul>
+<blockquote style="margin-top: 25px;"><p>Hint: really keep this in mind, that your search solution &ndash; Solr in this case &ndash; does not *automagically* understand your content in all languages. We often see that customers freely add new languages in Sitecore, because it's fairly easy, but then search is suddenly broken/not working anymore&hellip;</p></blockquote>
+<p>&nbsp;</p>
+<h4><strong>Helpful tools for content&nbsp;authoring &amp; translations</strong></h4>
+<p><img class="alignleft size-full wp-image-5055" style="float: left; margin: 5px 15px 15px 0px;" src="/files/2018/12/global-multilanguage-and-multicountry-websites-with-sitecore-contentauthoring-icon.png" alt="global-multilanguage-and-multicountry-websites-with-sitecore-contentauthoring-icon" width="75" height="75" />When your content managers will face the challenge to work with multiple languages cultures in Sitecore, there are some helpful tools that can greatly increase content authoring efficiency &ndash;&nbsp;and thus you should plan implementing these.</p>
+<ul>
+<ul>
+<li><strong>automated content translation</strong> with your preferred external agencies</li>
+<li>the &ldquo;<strong>Language Checklist Report Tool</strong>&rdquo; available on the Sitecore Marketplace:&nbsp;<a href="https://marketplace.sitecore.net/Modules/S/Sitecore_Language_Checklist_Report_Tool.aspx" target="_blank">Sitecore_Language_Checklist_Report_Tool.aspx</a></li>
+<li>We at Namics built a public Sitecore module&nbsp;for <strong>easily &ldquo;Copy-Content-to-Languages&rdquo;</strong>:&nbsp;<a href="https://github.com/namics/SitecoreCopyPageToVersions" target="_blank">namics/SitecoreCopyPageToVersions</a><br />
+it allows e.g. copying whole page content from version en-US to en-GB, en-AU, etc. at once.</li>
+<li>If shared &amp; final layouts are both used,&nbsp;allow content managers to <strong>merge the final layout into the shared layout using the Sitecore PowerShell Extension</strong>, which comes with a <a href="https://doc.sitecorepowershell.com/appendix/common/merge-layout" target="_blank">Merge-Layout command</a>&nbsp;for that. Example code snippet:</li>
+</ul>
+</ul>
+<pre style="margin-top: 25px;">Get-ChildItem master:\content\Showcase\int -Recurse | Merge-Layout</pre>
+<p>&nbsp;</p>
+<h3>What's next?</h3>
+<p>In the next post of this series you will learn what steps to take for <strong><a href="/2018/12/19/sitecore-seo-international-targeting/">achieving </a><a href="/2018/12/19/sitecore-seo-international-targeting/">high&nbsp;international targeted SEO</a> (search engine optimizations)</strong>&nbsp;for global, multilingual websites delivered through the Sitecore Experience platform.</p>
+<h4><strong>Background story</strong></h4>
+<p>This October&nbsp;we &ndash; my colleague&nbsp;<a href="https://twitter.com/naibaf_net" target="_blank">Fabian Geiger</a>&nbsp;&amp;&nbsp;<a href="http://twitter.com/oliverattweetin" target="_blank">myself</a>&nbsp;&ndash; had the pleasure to hold a breakout session at the Sitecore Symposium 2018 in Orlando. This blog post is a summary and&nbsp;follow up&nbsp;from the knowledge shared&nbsp;for building globally focused websites based on the Sitecore Experience Platform, with multiple languages and country cultures. Consider this a non conclusive compilation of learnings and recommendations from our project work at&nbsp;<a href="https://www.namics.com/unternehmen/produkte-partnerschaften/sitecore/" target="_blank">Namics</a>.</p>

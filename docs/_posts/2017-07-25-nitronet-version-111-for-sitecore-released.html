@@ -1,0 +1,62 @@
+---
+layout: post
+status: publish
+published: true
+title: NitroNet and NitroNet for Sitecore 1.1.1 Released
+author:
+  display_name: Manuel Fischer
+  login: manfischer
+  email: manuel.fischer@namics.com
+  url: ''
+author_login: manfischer
+author_email: manuel.fischer@namics.com
+wordpress_id: 4119
+wordpress_url: https://sitecore.namics.com/?p=4119
+date: '2017-07-25 13:30:16 +0200'
+date_gmt: '2017-07-25 11:30:16 +0200'
+categories:
+- Allgemein
+- Development in Sitecore
+- Open Source
+- Sitecore 8
+- NitroNet
+tags:
+- NitroNet
+- Nitro
+- View Engine
+- Handlebars
+- Veil
+comments: []
+redirect_from:
+  - /2017/07/25/nitronet-version-111-for-sitecore-released/
+---
+<p><a class="fancybox" href="/files/2017/07/nitronet_logo_sitecore_blog.png"><img class="alignleft size-medium wp-image-4182" src="/files/2017/07/nitronet_logo_sitecore_blog-300x89.png" alt="nitronet_logo_sitecore_blog" width="300" height="89" /></a></p>
+<p>We at Namics are pleased to announce a new stable release of&nbsp;NitroNet and NitroNet for Sitecore.</p>
+<p>If you have never heard of NitroNet (for Sitecore) you can check out <a href="https://github.com/namics/NitroNet" target="_blank">this link</a> and <a href="https://github.com/namics/NitroNetSitecore" target="_blank">this one</a>.</p>
+<p>In the last 12 months we&nbsp;have gained more experience about how to work with NitroNet (for Sitecore) and our findings went straight into improvements for the two projects. And in the last weeks we did a great effort to test all these changes, to add some more important features and most importantly to extend, update and fix the documentation.<!--more--></p>
+<p><strong><span style="font-size: 20px;">Different NuGets for all your Needs</span></strong></p>
+<p>The&nbsp;main focus with NitroNet for Sitecore was to make it compatible with specific Sitecore versions. This was done because of possible API changes that&nbsp;Sitecore applies with&nbsp;new versions. For example there&nbsp;were made crucial changes to&nbsp;the caching API in Sitecore 8.2. You can now find your suitable NuGet on the basis of the suffix. If you work with the latest version of Sitecore then pick the NuGet&nbsp;package with the highest suffix number.</p>
+<p>So let's say you want NitroNet.Sitecore with Unity support. Then there you have currently two options:</p>
+<p><a class="fancybox" href="/files/2017/07/nitronet_sitecore_unitymodules.png"><img class="alignleft size-full wp-image-4149" src="/files/2017/07/nitronet_sitecore_unitymodules.png" alt="nitronet_sitecore_unitymodules" width="500" height="220" /></a></p>
+<p>With every new Sitecore release that involves breaking changes there will be&nbsp;created specific NuGets for it. In addition a Microsoft DependencyInjection NuGet was added for Sitecore 8.2. It is the recommended NuGet to install if you are using Sitecore 8.2 because the installation process is very easy and Sitecore 8.2 already ships with Microsoft DependencyIncjection support.</p>
+<p>If you want to read more about your installation options, <a href="https://github.com/namics/NitroNetSitecore/blob/master/docs/installation.md#step-2---install-nitronet-for-sitecore" target="_blank">click here</a>.</p>
+<p><strong><span style="font-size: 20px;">Improved Configuration</span></strong></p>
+<p>It is now possible to configure which file extensions NitroNet should respect and to exclude specific file paths from the file watchers of NitroNet with the help of regex:</p>
+<p><script src="https://gist.github.com/hombreDelPez/406172e9ad188ae607890b9a60c521f5.js"></script></p>
+<p>Now an example configuration is delivered with the NuGet too which you can take as a reference or basis for your own configuration. For further information about the config file <a href="https://github.com/namics/NitroNetSitecore/blob/master/docs/configuration.md#change-the-frontend-file-paths" target="_blank">click here</a>.</p>
+<p><strong><span style="font-size: 20px;">Greatly improved Documentation</span></strong></p>
+<p>Most of the work which was done for this release&nbsp;went into the documentation. A&nbsp;huge effort was made to make working with NitroNet (for Sitecore) as easy as possible for you.</p>
+<p>Also the focus of the documentation was shifted to working with a plain handlebars frontend. Because most of you will use a plain handlebars frontend and not <a href="https://github.com/namics/generator-nitro/" target="_blank">Nitro</a> which is extended handlebars. And despite the name, NitroNet is mainly a handlebars view engine and not only for use with a Nitro frontend. And if you want to work with your own customized handlebars frontend, it's very easy to register your own handlebars helpers in NitroNet. The instructions were added&nbsp;<a href="https://github.com/namics/NitroNet/blob/master/docs/configuration.md#optional-add-and-register-your-own-custom-helpers" target="_blank">here</a>.</p>
+<p>So feel free to check out the complete documentation of <a href="https://github.com/namics/NitroNet" target="_blank">NitroNet</a> and <a href="https://github.com/namics/NitroNetSitecore" target="_blank">NitroNet.Sitecore</a>.</p>
+<p><strong><span style="font-size: 20px;">Release Notes</span></strong></p>
+<p>You will find the complete release notes and upgrade instructions <a href="https://github.com/namics/NitroNetSitecore/releases/tag/1.1.1" target="_blank">here</a> (NitroNet) and <a href="https://github.com/namics/NitroNetSitecore/releases/tag/1.1.1" target="_blank">here</a> (NitroNet.Sitecore).</p>
+<p><strong><span style="font-size: 20px;">Contributing Members</span></strong></p>
+<p>Thanks to the following persons which helped to make this release possible:</p>
+<ul>
+<li><a href="https://github.com/NaibafCH" target="_blank">Fabian Geiger</a></li>
+<li><a href="https://github.com/hombreDelPez" target="_blank">Manuel Fischer</a></li>
+<li><a href="https://github.com/kobidor" target="_blank">Nicola Lenherr</a></li>
+<li><a href="https://github.com/kanelor" target="_blank">Matthias Gm&uuml;r</a></li>
+<li><a href="https://github.com/cassidydotdk" target="_blank">Mark Cassidy</a></li>
+<li><a href="https://github.com/daniiiol" target="_blank">Daniel Scherrer</a></li>
+</ul>

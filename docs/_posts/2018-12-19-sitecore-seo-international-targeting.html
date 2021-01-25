@@ -1,0 +1,184 @@
+---
+layout: post
+status: publish
+published: true
+title: Boosting international targeted SEO for your website using Sitecore
+author:
+  display_name: Oliver Raduner
+  login: oraduner
+  email: oliver.raduner@namics.com
+  url: https://www.namics.com/person/oliver-raduner/
+author_login: oraduner
+author_email: oliver.raduner@namics.com
+author_url: https://www.namics.com/person/oliver-raduner/
+excerpt: In this article we do a deep-dive focusing on how to achieve great international
+  targeted SEO by using the Sitecore Experience Platform‘s multilanguage capabilities.
+wordpress_id: 4910
+wordpress_url: https://sitecore.namics.com/?p=4910
+date: '2018-12-19 10:00:38 +0100'
+date_gmt: '2018-12-19 09:00:38 +0100'
+categories:
+- E-Commerce
+- Web Content Management
+- Mobile Web
+- Development in Sitecore
+- Sitecore Experience CMS
+- Sitecore 8
+- Sitecore 7
+- Tipps
+- Adventtipp
+- Sitecore 9
+- SEO
+tags:
+- SEO
+- Authoring
+- Shared Source Module
+- multi-language
+- content editor
+- digital marketing
+comments:
+- id: 153530
+  author: Aphrodite Rantou
+  author_email: aphrodite.rantou@namics.com
+  author_url: ''
+  date: '2018-12-19 12:57:49 +0100'
+  date_gmt: '2018-12-19 11:57:49 +0100'
+  content: "Hi Oliver,\r\n\r\nthank you for this interesting article, that's very
+    accurate. I would add the following 5 SEO hints:\r\n\r\n1. If working with different
+    subdomains, then it's very helpful to add the different properties in Google Search
+    Console (not only the sitemaps) and Google Analytics, so that the geographic targeting
+    is clearer and one can analyse his KPIs on a GEO-level so that he can put more
+    focus on a specific language/country based on its performance.\r\n\r\n2. Having
+    a solid Set up of clean hreflang-Tags is an absolute MUST but I'd also recommend
+    editors to be aware of the geographical / linguistic differences when writing
+    content internationally, especially when creating content for countries using
+    similar languages such as Austria, Switzerland and Germany or UK and USA.\r\n\r\n3.
+    URLs and translations: Sometimes, only the content has been translated but the
+    URLs not or only partly (folders, categories, path). It's very important that
+    when developing and URL strategy, the linguistic differences and different languages
+    are also reflected in the URLs, thus information architecture.\r\n\r\n4. Internal
+    Links / Cross Linking: I observed different international projects and saw that
+    sometimes, if there's no solid internal linking concept, German URLs falsely link
+    to Swiss URLs or even French ones. It's absolutely necessary that the internal
+    links are clean between the different GEO properties so that there's no cross-linking-chaos
+    (which is confusing for both users and bots). \r\n\r\n5. The geographic targeting
+    can be made even clearer when generating backlinks (Offpage SEO / Linkbuilding),
+    so when moving beyond Technical and Onpage SEO. It's important that German URLs
+    mostly get backlinks from thematically relevant German websites and Swiss URLs
+    mostly from thematically relevant Swiss Websites. Local SEO can be very helpful
+    for bots but also to find and lure the right users at the right online spots to
+    the right URL version!\r\n\r\nThank you again and good luck on your next Sitecore
+    projects!"
+- id: 153531
+  author: Oliver Raduner
+  author_email: oliver.raduner@namics.com
+  author_url: http://www.namics.com/menschen/mitarbeiter/uebersicht/zeige/oliver-raduner/
+  date: '2018-12-19 13:36:15 +0100'
+  date_gmt: '2018-12-19 12:36:15 +0100'
+  content: Great additions &ndash; also emphasizing again how important the right
+    content in the right place is. Thanks @Aphrodite!
+- id: 153562
+  author: Titles, Headings, Descriptions and Structured Data with Sitecore 9 and Razor
+    (SEO) &#8211; Sitecore
+  author_email: ''
+  author_url: https://sitecore.namics.com/2018/12/21/title-headings-structured-data-sc9-razor/
+  date: '2018-12-21 16:01:21 +0100'
+  date_gmt: '2018-12-21 15:01:21 +0100'
+  content: "[&#8230;] other things worth keeping an eye on like Sitemaps, Canonical
+    Links, URLs and so on, but that would go beyond the scope of this [&#8230;]"
+redirect_from:
+  - /2018/12/19/sitecore-seo-international-targeting/
+---
+<p><strong>Content is key for SEO&nbsp;&ndash; you already know this.&nbsp;But&nbsp;what&nbsp;does&nbsp;it take to&nbsp;help a search engine understand in&nbsp;what&nbsp;language content which pages are published in &ndash; and which target markets&nbsp;they&nbsp;are&nbsp;intended for?</strong></p>
+<p>The CMS backend of the Sitecore Experience Platform greatly supports efficient&nbsp;<a href="/2018/12/11/sitecore-contentauthoring-multilanguage-multicountry-content/">multilingual content management &amp; publishing</a>, so&nbsp;this blog post shall enable you to take a look&nbsp;at your website "<em>from an outside perspective</em>" in terms of delivering the right content to&nbsp;the&nbsp;external group of website stakeholder, the "<em>website visitor</em>" as I already introduced in&nbsp;a previous blog post&nbsp;explaining the&nbsp;<a href="/2018/12/07/global-multilanguage-multicountry-sites-with-sitecore/">conceptual basics&nbsp;&amp; recommended principles for building global&nbsp;multilingual websites</a>.</p>
+<h3><!--more-->How&nbsp;do Google, and Baidu, and &hellip; know, what language they&nbsp;are currently crawling on your website?</h3>
+<p>Think about it: for the website visitor we usually have a language-selector and -indicator&nbsp;on&nbsp;every webpage, so she or he can easily spot and change the content language of the webpage. But did you every ask yourself,</p>
+<blockquote><p>how does a search crawler actually know &amp; interpret the currently crawled webpage content in the correct language?</p></blockquote>
+<p>They don't&nbsp;scan a language selector flyout to find this, they can't read such an information somewhere in the footer of your website to understand this&hellip;</p>
+<p><strong>That's why we proactively need to help and enable search&nbsp;engines understanding our (multilingual) content!</strong></p>
+<p>If we don't do this, and we throw content in various languages at them, you will very likely<strong> see a mess in what language-version of your webpages turn up in search results</strong> from different country origins.</p>
+<h3>Key points for achieving a good international targeted SEO</h3>
+<p>In the following, I will go through&nbsp;3&nbsp;basic&nbsp;characteristics or relations&nbsp;which affect&nbsp;every single webpage &ndash; and what aspects of it are related and should be considered for achieving international targeted SEO.</p>
+<ol>
+<li>indicating language cultures in the <strong>page URL</strong></li>
+<li>adding content culture related directives in the <strong>HTML-markup</strong></li>
+<li>align the <strong>sitemap.xml</strong> file with every available page language version</li>
+</ol>
+<h4><strong>1. the page URL</strong></h4>
+<p><img class="alignright size-full wp-image-5142" style="float: right; margin: 5px 0px 50px 15px;" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-International-targeted-SEO-URL-icon.png" alt="Global multilanguage and multicountry websites with Sitecore - International targeted SEO - URL icon" width="75" height="75" />You have to indicate the intended content language (or language &amp; country of the content) in every web page&rsquo;s URL. There are different approaches possible, evaluate what best works for you and your website, and implement one of these schemes:</p>
+<ul>
+<li><strong>en</strong>.mysite.com</li>
+<li>mysite.com/<strong>de-de</strong>/</li>
+<li>mysite.com/?lang=<strong>ja-jp</strong></li>
+</ul>
+<h4><strong>2. the HTML-markup</strong></h4>
+<p><img class="alignright size-full wp-image-5140" style="float: right; margin: 5px 0px 15px 15px;" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-International-targeted-SEO-HTML-markup-icon.png" alt="Global multilanguage and multicountry websites with Sitecore - International targeted SEO - HTML-markup icon" width="75" height="75" />Besides indicating a webpage's language culture in the URL, you will also need to&nbsp;add *<em>hidden*</em>&nbsp;information on every page, indicating it's content language and country focus to search crawlers &ndash; so as related content in different languages (therefore preventing duplicate content warnings) and actually helping search crawler accessing your website from different locations on earth finding the relevant page in the right language.</p>
+<p>Therefore, in every page&rsquo;s HTML-header (markup), include the following technical directives:</p>
+<ul>
+<li>the <strong>language &amp; country code (ISO) and according URL</strong> the page is intended for</li>
+<li>references to all <strong>other language &amp; country versions of the same page</strong></li>
+<li>directives <strong>how to handle&nbsp;generic language-only</strong> requests</li>
+<li>an ultimate "fallback"&nbsp;using&nbsp;<strong>the &ldquo;x-default&rdquo;&nbsp;</strong>directive</li>
+</ul>
+<p>Check out example HTML-markup for all these mentioned topics in this GitHub Gist:&nbsp;<a href="https://nam.to/seosnippets" target="_blank">namics-gists/International targeting SEO code snippets</a></p>
+<h5><strong>alternate hreflang 2-char language-only cultures</strong></h5>
+<p>In a use case where&nbsp;you publish e.g. multiple English versions of the same page, for example "en-US", "en-AU", "en-CA" versions, etc. you must tell&nbsp;search engines what version you want to have for people where the &ldquo;country&rdquo;-part is not resolvable when they access your page.</p>
+<p>Therefore: if you use multiple cultures&nbsp;combining&nbsp;their corresponding ISO 3166 &amp;&nbsp;639-1 codes&nbsp;in the form of "language-country"-codes (e.g. "en-us", "fr-fr",&hellip;), make sure to also add references for&nbsp;all <em>*generic*</em> language-only versions&nbsp;pointing to the&nbsp;correct page url: e.g. &rdquo;de&rdquo;, &ldquo;en&rdquo;, &ldquo;fr&rdquo;, &ldquo;it&rdquo;, etc.:</p>
+<pre style="margin-bottom: 15px;"><link rel="alternate" hreflang="<strong>de</strong>" href="https://www.mysite.com/<strong>de-de</strong>" /></pre>
+<blockquote><p>The reason is, that the country is either resolved from a visitor's IP or his/her browser delivering this information &ndash; but this is not a 100% reliable information and can be spoofed.</p></blockquote>
+<h5><strong>x-default</strong></h5>
+<p>Don&rsquo;t forget to add an ultimate "fallback" consisting of the &ldquo;x-default&rdquo;&nbsp;directive! This applies in situations, where neither the language of the visitor nor the country can be resolved for displaying the appropriate culture version of a page:</p>
+<pre style="margin-bottom: 15px;"><link rel="alternate" hreflang="<strong>x-default</strong>" href="https://www.mysite.com<strong>/</strong>" /></pre>
+<blockquote><p>Note:&nbsp;these recommendations&nbsp;are all <strong>in addition</strong> to a <strong>canonical-URL</strong>&nbsp;to add in the markup for every single webpage, indication it's main URL including the culture information you assigned to it (even though the content of a /en-us/ and a /de-de/ page are the same, but translated, each version of it has a unique canonical-URL).</p></blockquote>
+<h4><strong>3. the sitemap.xml file</strong></h4>
+<p><img class="alignright size-full wp-image-5141" style="float: right; margin: 5px 0px 15px 15px;" src="/files/2018/12/Global-multilanguage-and-multicountry-websites-with-Sitecore-International-targeted-SEO-Sitemap-XML-icon.png" alt="Global multilanguage and multicountry websites with Sitecore - International targeted SEO - Sitemap XML icon" width="75" height="75" />I'm sure you have a basic understanding what the sitemap.xml is and what it is intended for. In terms of optimal international targeting, make sure to represent your website structure <strong>including language &amp; country information</strong> in the &ndash; or various &ndash; sitemap.xml files, too!</p>
+<ul>
+<li>add an individual sitemap.xml for every available language &amp; country version</li>
+<li>URLs must be absolute, contain language &amp; country information in their URL, and thus identical to the canonical URLs you render in the HTML-markup of each page</li>
+<li>Don&rsquo;t forget to manually add every sitemap.xml&nbsp;via the Google Search Console&hellip; and, if provided,&nbsp;do the same for other search crawlers, too</li>
+<li>To get lost with multiple sitemap.xml files for different cultures of your website, combine them into a master/overview xml-file directive</li>
+</ul>
+<p>Example culture-specific sitemap.xml content:</p>
+<p><script src="https://gist.github.com/namics-gists/2d8e101f4275ed69ea5a91213cf3f4f8.js?file=sitemap-home-de.xml" type="text/javascript"></script>Example master xml for combining multiple sitemap.xml files:<script src="https://gist.github.com/namics-gists/2d8e101f4275ed69ea5a91213cf3f4f8.js?file=sitemap-index.xml" type="text/javascript"></script></p>
+<p>Besides that, the same general rules, recommendations and most important, proper structure and content, for the sitemap.xml-files apply.</p>
+<h3>Sounds easy so far right? ;)</h3>
+<p>The big challenge comes up once you realise, that you want&nbsp;<strong>all these requirements to&nbsp;be dynamic &amp; happening&nbsp;automatically</strong> &ndash; by still being&nbsp;configurable &amp; editable to a certain point by&nbsp;your content&nbsp;managers!</p>
+<p>So here&rsquo;s there ground work to build it accordingly:</p>
+<h4><strong>Generating SEO-friendly, multi-language and -country supporting, URLs</strong></h4>
+<p>Make use and &ndash; if required &ndash; extend the Sitecore built-in Link Manager to achieve your goals:</p>
+<pre style="margin-bottom: 15px;"><linkManager defaultProvider="sitecore">
+  <providers>
+    <add name="sitecore" type="Sitecore.Links.LinkProvider, Sitecore.Kernel" 
+         addAspxExtension="false"
+         alwaysIncludeServerUrl="false" 
+         encodeNames="true" 
+         languageEmbedding="always" 
+         languageLocation="filePath"
+         lowercaseUrls="true"
+         shortenUrls="true" 
+         useDisplayName="true"
+         patch:instead="add[@name='sitecore']" />
+  </providers>
+</linkManager></pre>
+<p>Once you configured the Link Manager to your requirements, here are some use cases where and which culture-related URLs you can output:</p>
+<pre style="margin-bottom: 25px;">// Get the UrlOptions from settings
+var urlOptions = _linkManager.GetDefaultUrlOptions();
+
+// Set language
+urlOptions.Language = language;
+
+// Optional: Include server url for XML sitemap or alternate links
+urlOptions.AlwaysIncludeServerUrl = true;
+
+// Generate url. Best practice: Use BaseLinkManager
+var url = _linkManager.GetItemUrl(item, urlOptions);</pre>
+<h3>Making your life easier: grab a free in-depth checklist</h3>
+<p>You can grab an extensive Excel checklist regarding international targeted SEO to-dos &amp; sitemap.xml optimizations of the same regard:</p>
+<ul>
+<li>Check if your website fulfils all requirements: <a href="https://nam.to/seotargetingchklst" target="_blank">SEO &ndash; International targeting &ndash; Checklist.zip</a></li>
+</ul>
+<blockquote><p>If you are interested in boosting your website's SEO and need support in working through this checklist, feel free to <a href="https://www.namics.com/dienstleistungen/marketing-operations/" target="_blank">get in touch with</a> us!</p></blockquote>
+<h3>What's next?</h3>
+<p>In the next post of this series you will learn how you can <strong><a href="/2019/01/03/delivering-multilingual-content-to-visitors-using-sitecore/">identify the language and country origin of a visitor&nbsp;on your&nbsp;website</a></strong> and how the&nbsp;Sitecore Experience platform helps delivering the right content to the right audience.</p>
+<h4><strong>Background story</strong></h4>
+<p>This October&nbsp;we &ndash; my colleague&nbsp;<a href="https://twitter.com/naibaf_net" target="_blank">Fabian Geiger</a>&nbsp;&amp;&nbsp;<a href="http://twitter.com/oliverattweetin" target="_blank">myself</a>&nbsp;&ndash; had the pleasure to hold a breakout session at the Sitecore Symposium 2018 in Orlando. This blog post is a summary and&nbsp;follow up&nbsp;from the knowledge shared&nbsp;for building globally focused websites based on the Sitecore Experience Platform, with multiple languages and country cultures. Consider this a non conclusive compilation of learnings and recommendations from our project work at&nbsp;<a href="https://www.namics.com/unternehmen/produkte-partnerschaften/sitecore/" target="_blank">Namics</a>.</p>

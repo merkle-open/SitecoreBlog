@@ -1,0 +1,116 @@
+---
+layout: post
+status: publish
+published: true
+title: Sitecore & Lucene search auto-complete using NGram
+author:
+  display_name: Fabian Geiger
+  login: fgeiger
+  email: fabian.geiger@namics.com
+  url: ''
+author_login: fgeiger
+author_email: fabian.geiger@namics.com
+wordpress_id: 3849
+wordpress_url: https://sitecore.namics.com/?p=3849
+date: '2016-12-20 16:00:23 +0100'
+date_gmt: '2016-12-20 15:00:23 +0100'
+categories:
+- Allgemein
+- Suche
+- Development in Sitecore
+- Sitecore 8
+- Sitecore 7
+- Adventtipp
+tags: []
+comments:
+- id: 151021
+  author: Neel
+  author_email: n_kachhla@wearefriday.com
+  author_url: ''
+  date: '2018-01-16 13:13:32 +0100'
+  date_gmt: '2018-01-16 12:13:32 +0100'
+  content: "Hi Fabian,\r\n\r\nFirstly, thanks for writing this post. It all makes
+    sense, however, I am having trouble resolving line 25 in your LuceneProviderExtensions
+    class. I am unable to create the LinqToLuceneIndex class. Is there anything I
+    am missing? This is being created for Sitecore 8.2. Any help is appreciated.\r\n\r\nThanks
+    in advance, Neel"
+- id: 151022
+  author: Fabian Geiger
+  author_email: fabian.geiger@namics.com
+  author_url: ''
+  date: '2018-01-16 13:34:53 +0100'
+  date_gmt: '2018-01-16 12:34:53 +0100'
+  content: "Hi Neel,\r\n\r\nThere were some usings missing at the beginning of the
+    code. I've updated the Gist accordingly. Now, it should compile just fine. Thank
+    you for pointing that out."
+- id: 151024
+  author: Neel
+  author_email: n_kachhla@yahoo.co.uk
+  author_url: ''
+  date: '2018-01-16 18:58:28 +0100'
+  date_gmt: '2018-01-16 17:58:28 +0100'
+  content: "Hi Fabian,\r\n\r\nThank you for your quick response! That fixed it for
+    me! (after getting the nuget package for the LuceneProvider)\r\n\r\nThanks again!
+    \r\nNeel"
+- id: 153755
+  author: Mat
+  author_email: stanwaysoftware@yahoo.co.uk
+  author_url: ''
+  date: '2019-01-16 13:02:52 +0100'
+  date_gmt: '2019-01-16 12:02:52 +0100'
+  content: Why is step 4 required? how does creating an n-gram'ed field affect the
+    non n-gram-ed searches? Thanks
+- id: 153756
+  author: Fabian Geiger
+  author_email: fabian.geiger@namics.com
+  author_url: ''
+  date: '2019-01-16 18:32:01 +0100'
+  date_gmt: '2019-01-16 17:32:01 +0100'
+  content: "Hi Mat,\n\nStep 4 is required if you want to use ngram fields in Lucene
+    combined with Sitecore's Lucene provider. The provider lets you only define one
+    analyzer per field which is then used for both indexing and querying. For most
+    fields this works fine but not for an ngram field. The creation of ngrams must
+    only be done during indexing. If this would happen during querying then our searches
+    end up looking like this: \n<code>smartsearch_ac:\"sit ite site tec itec sitec
+    eco teco iteco siteco cor ecor tecor itecor sitecor ore core ecore tecore itecore
+    sitecore roc ock rock cks ocks rocks\"</code> \nSuch a search query will never
+    find you any documents. The extension method in step 4 opens the door to bypass
+    the query generation for all your ngram fields. Instead of letting Sitecore's
+    Lucene provider generate the query for those special fields, you now have the
+    possibility to do it your own.\nIf you need any further assistance then give me
+    some insights on your current situation and I am glad to help you there.\n\nCheers,
+    Fabian"
+redirect_from:
+  - /2016/12/20/adventtipp-20-sitecore-lucene-search-auto-complete-using-ngram/
+---
+<p>This article is for all of you who are stuck with Lucene and want to implement a proper auto-complete search with Sitecore. A quick note before we start: I highly recommend to use <em>Solr</em> as search engine of choice nonetheless. It makes life much more easier, especially in terms of maintainability of your application and the additional features it brings to the table. Ehab ElGindy wrote a nice and simple <a href="http://www.ehabelgindy.com/sitecore-7-solr-search-auto-complete-using-ngram/">tutorial</a> on how to implement an auto-complete search with Sitecore and <em>Solr</em>. Most of the following content is based on his writing, so please check it out.</p>
+<p>As you possibly all know, wildcard queries are evil. This applies to good old sql as well as <em>Lucene</em> and <em>Solr</em> (which is based on <em>Lucene</em>). Besides the fact that you might get odd search results, the much more important part of this message is that, based on how your index looks like, you will experience almost always a performance penalty. This is where <em>n-grams</em> come into play which let you perform wildcard searches but on a much better speed. For more information on how <em>n-grams</em> work, please follow <a href="https://cwiki.apache.org/confluence/display/solr/Filter+Descriptions#FilterDescriptions-EdgeN-GramFilter">this article</a>. By using <em>Solr</em> you can define a new field type and set your preferred tokenizers and filters as you want in the <em>schema.xml</em>. As you might have noticed in Ehab ElGindy's article, you always define an analyzer which is executed on indexing and one that is performed on querying. In most cases both analyzers use the same tokenizers and filters. However, in our case we only want to apply n-gramming on indexing. If you would perform Ehab ElGindy's search by using the term "sitecore rocks" as your query parameter, <em>Lucene</em> would perform the following query:</p>
+<p><code>smartsearch_ac:sitecore smartsearch_ac:rocks<br />
+</code><br />
+Imagine we would enable n-gramming on querying in the same circumstances, the resulting <em>Lucene</em> query would look like this:</p>
+<p><code>smartsearch_ac:"sit ite site tec itec sitec eco teco iteco siteco cor ecor tecor itecor sitecor ore core ecore tecore itecore sitecore roc ock rock cks ocks rocks"<br />
+</code><br />
+This is essentially why we never want to use n-gramming while querying. The problem is that, by using <em>Lucene</em> as our search provider, we don't have a nice <em>schema.xml</em> where we can configure our indexing and querying behaviour as we want. <em>Sitecore.Content</em> has quite decent configuration options, but we are only able to assign one analyzer per field. There is no difference between indexing and querying. Therefore we need to use some tricks in order to achieve our goal.</p>
+<p><strong>1. Create your n-gram analyzer</strong><br />
+<script src="https://gist.github.com/NaibafCH/efd9e5599d938fa991fd5710678cc68e.js"></script>We need to create an analyzer which builds those <em>n-grams</em>. Do not use the <em>Sitecore.ContentSearch.LuceneProvider.Analyzers.NGramAnalyzer</em> for the purpose of auto-complete search as this creates shingles which are needed in other use cases. Please see the following <a href="https://cwiki.apache.org/confluence/display/solr/Filter+Descriptions#FilterDescriptions-ShingleFilter">article</a> if you are interested in that.</p>
+<p><strong>2. Use a Computed field to create a copy of the title using the new data type</strong><br />
+<script src="https://gist.github.com/NaibafCH/4c6c28dc2eb97aa423bf3a1c2637d0f3.js"></script>Our computed field is mostly the same as Ehab ElGindy's one. I updated it for Sitecore 8.x. This step is somewhat optional. You can also reference a Sitecore field in step 3 directly.</p>
+<p><code lang="xml"><br />
+<fields hint="raw:AddComputedIndexField"><br />
+	<field fieldName="smartsearch">YourNamespace.AutoCompleteTitle, YourAssembly</field><br />
+</fields><br />
+</code></p>
+<p>Add your computed field to the Sitecore configuration.</p>
+<p><strong>3. Configure your n-gram analyzer</p>
+<p><code lang="xml"><br />
+<fieldNames hint="raw:AddFieldByFieldName"><br />
+	<field fieldName="smartsearch" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" type="System.String" settingType="Sitecore.ContentSearch.LuceneProvider.LuceneSearchFieldConfiguration, Sitecore.ContentSearch.LuceneProvider"><br />
+		<analyzer type="YourNamespace.EdgeNgramAnalyzer, YourAssembly" /><br />
+	</field><br />
+</fieldNames><br />
+</code></p>
+<p></strong>Add a field with the same name as your computed field to the <em>AddFieldByFieldName</em>-section in the configuration file and assign our <em>EdgeNgramAnalyzer</em> to that field.</p>
+<p><strong>4. Prevent n-gramming in your search</strong><br />
+Up to this point we used well known features of <em>Sitecore.ContentSearch</em> and the indexing part is all done. Now, we need to prevent n-gramming in our searches. Therefore we are going to do some work with the search provider itself. Back when Sitecore 7 was released, <a href="https://community.sitecore.net/technical_blogs/b/sitecore_7_development_team/posts/sitecore-7-getting-access-to-the-provider">Sitecore talked about</a> how you can get access to their search provider. It is a powerful way to enhance the capabilities of <em>Sitecore.ContentSearch</em>. I took this approach and created a generic extension method which you can use in your search code.</p>
+<p><script src="https://gist.github.com/NaibafCH/4c8ac2ca423ccc2ae23ef5645ef267c9.js"></script>The interesting thing we need to examine here is the parameter <em>searchBehaviour</em>. It lets you pass a delegate which takes in a <em>Lucene</em> query object. This object gets created by Sitecore's search provider and you have the chance here to extend or alter it by using native <em>Lucene API</em> code. Let's see in the next step how such a delegate might look like.</p>
+<p><strong>5. Write the search query</strong><script src="https://gist.github.com/NaibafCH/a2b880db22834666a2f73803c00969f2.js"></script>The <em>Search</em> method looks like ordinary code we would write to implement a simple search. However, we use our extension method from step 4 here instead of the parameter-less <em>GetResults</em> method. In the <em>CreateQuery</em> method we implement a function which creates a query for our computed field "smartsearch". Notice that we use the <em>StandardAnalyzer</em> here in order to tokenize multi-word strings. Afterwards we add our query to the one that was created by Sitecore's search provider. In practice you want to use the standard <em>Linq</em> methods in combination with the <em>PredicateBuilder</em> for non-<em>ngram</em>-fields and the extension method's function parameter for ngram-fields.</p>

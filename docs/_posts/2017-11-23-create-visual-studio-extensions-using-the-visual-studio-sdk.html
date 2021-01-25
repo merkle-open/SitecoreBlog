@@ -1,0 +1,189 @@
+---
+layout: post
+status: publish
+published: true
+title: Create Visual Studio extensions using the Visual Studio SDK
+author:
+  display_name: Najmeddine Ayadi
+  login: nayadi
+  email: najmeddine.ayadi@namics.com
+  url: ''
+author_login: nayadi
+author_email: najmeddine.ayadi@namics.com
+wordpress_id: 4404
+wordpress_url: https://sitecore.namics.com/?p=4404
+date: '2017-11-23 07:56:22 +0100'
+date_gmt: '2017-11-23 06:56:22 +0100'
+categories:
+- Allgemein
+tags:
+- ".NET"
+- c#
+- VSIX
+- Visual Studio
+comments: []
+redirect_from:
+  - /2017/11/23/create-visual-studio-extensions-using-the-visual-studio-sdk/
+---
+<p>Visual Studio plugins and extensions&nbsp;are kind of tools which could make our work easier and much more efficient. With the VSIX Project Templates in Visual Studio SDK, we are able to extend the functionality of Visual Studio and to create own features. Every developer using Visual Studio could implement tools according to his needs.</p>
+<div>In this article we will create an extension, which provide the possibility to create links next to a comment in the Visual Studio Editor.</div>
+<div>The created links are&nbsp;depending on configured terms and key words, which gives the developer some kind of an extended functionality to make the daily business easier and to save precious time.</div>
+<div>We will see at first how to create an extension for Visual Studio, then how to work with this Extension.</div>
+<p><!--more--></p>
+<div></div>
+<h3><strong>1. How to create a Visual Studio Extension</strong></h3>
+<div>
+<div>With the VSIX Project Templates in Visual Studio SDK, we are able to extend the functionality of Visual Studio and to create own features. Every developer using Visual Studio could implement tools according to his needs.</div>
+<div>So, open Visual Studio, create a new Solution of type VSIX Project</div>
+<div><a class="fancybox" href="https://frontend.namics.com/files/2017/11/AddEditorExtensibility.png"><img class="alignnone size-medium wp-image-1071" src="https://frontend.namics.com/files/2017/11/AddEditorExtensibility-300x208.png" alt="AddEditorExtensibility" width="300" height="208" /></a></div>
+<div>Right click on the new created project and click "Add new item", open the node "Installed" -> "Visual C# Items" -> "Extensibility" and select "Editor".</div>
+<div><a class="fancybox" href="https://frontend.namics.com/files/2017/11/CreateVSIXProject.png"><img class="alignnone size-medium wp-image-1072" src="https://frontend.namics.com/files/2017/11/CreateVSIXProject-300x209.png" alt="CreateVSIXProject" width="300" height="209" /></a></div>
+<div>Within the Editor Extensibility template we could add an "Editor Classifier", an&nbsp;"Editor Margin", an&nbsp;"Editor Viewport Adornment" or an "Editor Text Adornment" item, in this article we will use the "Editor Text Adornment" item to write something directly in the editor. To read more about the other items, please see the annotation next to the selected item on the "Add New Item" window.</div>
+</div>
+<div>
+<div></div>
+<div>After selecting "Editor Text Adornment", two classes will be created&nbsp;by this item.</div>
+<div></div>
+<div>
+<div>
+<div>internal sealed class TextAdornment1</div>
+<div>internal sealed class TextAdornment1TextViewCreationListener</div>
+</div>
+<div></div>
+<div>Within the class "TextAdornment1.cs" is the handler for OnLayoutChanged event implemented per default.</div>
+<div></div>
+<div>
+<div>internal void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)</div>
+<div>{</div>
+<div>&nbsp; &nbsp; &nbsp; foreach (ITextViewLine line in e.NewOrReformattedLines)</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp;{</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.CreateVisuals(line);</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp; }</div>
+<div>}</div>
+<div></div>
+<div>
+<div>We have now the possibility to iterate over the lines which have been changed. Instead of calling</div>
+<div></div>
+<div>
+<div>this.CreateVisuals(line);</div>
+<div></div>
+<div>
+<div>We can call our own methods to read for example the content of a line.</div>
+<div>Finally, after building the project, an VSIX file will be created in debug/release folder, this file can be added to Visual Studio as an extension.</div>
+</div>
+<div></div>
+<h3><strong>2. Url Writer Extension</strong></h3>
+<h4><strong>2.1 Functionality</strong></h4>
+<div></div>
+<div>With the "Url Writer Extension", we can configure the extension the way, that every time we write&nbsp;the key word "search" and the term "vsextension" within a comment between two #. The extension will look up in the configuration, which Url has been assigned to the key word "search". After getting the Url, the extension will add the term to this Url and write it in the Visual Studio Editor next to the comment. So the extension will write the generated Url next to the comment.</div>
+<div>
+<div></div>
+<div>class Program</div>
+<div>{</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp;static void Main(string[] args)</div>
+<div>&nbsp; &nbsp; &nbsp; {</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var test = "something"; // Tets comment #search:vsextension#<a href="http://www.google.ch/search?q=vsextension">http://www.google.ch/search?q=vsextension</a></div>
+<div>&nbsp; &nbsp; &nbsp; }</div>
+<div>}</div>
+</div>
+<div>Please note: Spaces within the term will be replaced with "+".</div>
+</div>
+<h4><strong>2.2 Configuration</strong></h4>
+<div>All the user settings of this extension are saved in the application settings.</p>
+<div>
+<div>Those settings need to be configured to get this extension running.</div>
+<ul>
+<li>Regex (string): this setting contains the regex pattern to extract the expression between the delimiter.</li>
+<li>Delimiter (char): With the delimiter, the extension knows which part of the line should be extracted and treated.</li>
+<li>Seperator (char): the seperator is the seperation between the key word and the term, which will be added to the url assigned to key word</li>
+<li>CommandCollection (StringCollection): This collection is kind of key-value collection, but each key-value pair is a string with key word and term seperated by the same configured seperator. Concretly, the key is the key word (e.g. search) and the value is an url (e.g. "http://www.google.ch/search?q=")</li>
+</ul>
+<p><a class="fancybox" href="https://frontend.namics.com/files/2017/11/CommandTermExample.png"><img class="alignnone size-medium wp-image-1074" src="https://frontend.namics.com/files/2017/11/CommandTermExample-300x67.png" alt="CommandTermExample" width="300" height="67" /></a></p>
+</div>
+<h4><strong>2.3 Configuration Window</strong></h4>
+<div>This extension contains a configuration interface to make it easier for users to edit the application setting at runtime.</div>
+<div>To call this window, enter #config# within a comment. The extension will react to this command and open the configuration window.</div>
+<div></div>
+</div>
+<div><a class="fancybox" href="https://frontend.namics.com/files/2017/11/ConfigurationWindow.png"><img class="alignnone size-medium wp-image-1075" src="https://frontend.namics.com/files/2017/11/ConfigurationWindow-300x245.png" alt="ConfigurationWindow" width="300" height="245" /></a></div>
+<div></div>
+<div>
+<div>The "Add" button add the entered new command term to the list bellow. If you want to remove some old commands, just select the command to remove and click on "Remove".</div>
+<div>After closing the window, all values will be saved in the application settings and from now on they are available.</div>
+</div>
+<div></div>
+<h3><strong>3. Implementation</strong></h3>
+<div>
+<div>Now we will take a look into the code of this extension.</div>
+<div>
+<div>First we will handle the OnLayoutChanged event within "TextAdornment1.cs", in the method</div>
+<div></div>
+<div>
+<div>internal void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)</div>
+</div>
+<div></div>
+<div>In TextViewLayoutChangedEventArgs are all changed lines of Visual Studio Editor, this event will be&nbsp;occurred&nbsp;every time the&nbsp;content&nbsp;of a line in the editor is changed.</div>
+<div>Here we need to iterate over those lines to handle every change happens, so we can get an instance of the object BusinessUnit which contains all logic to read lines, extract the key words and create the urls.</div>
+<div>BusinessUnit have the method</div>
+<div></div>
+</div>
+<div>
+<div>public string CreateUrl(ITextViewLine line)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var comment = CheckCodeLine(line);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (string.IsNullOrEmpty(comment)) return string.Empty;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!comment.ToLower().Equals("config"))</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return GetDictionaryEntry(comment);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var configurationWindow = new ConfigurationController(_configurationModel);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_configurationModel = configurationWindow.ShowConfigurationWindow();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "config";</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (Exception ee)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw ee;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+</div>
+<div>
+<div>
+<div>So we call for each changed line this method.</div>
+<div></div>
+<div>
+<div>internal void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(_businessUnit==null) _businessUnit=new BusinessUnit();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach (ITextViewLine line in e.NewOrReformattedLines)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var url = _businessUnit.CreateUrl(line);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (string.IsNullOrEmpty(url)) continue;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (url.Equals("config"))</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line.Snapshot.TextBuffer.Delete(Span.FromBounds(line.Extent.End-("#config#").Length, line.Extent.End));</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!string.IsNullOrEmpty(url)) line.Snapshot.TextBuffer.Insert(line.Extent.End, url);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (Exception ee)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+</div>
+<div></div>
+<div>This method checks if the line has a term which match the configured regex pattern, and checks if the user has add the term #config#, in this case the method will call the configuration window.</div>
+<div>After reading the term #config# the extension will delete it, in order to avoid that the extension open the configuration window every time you start Visual Studio and somewhere a comment contains the term #config#.</div>
+</div>
+<div></div>
+<div>You will find this extension&nbsp;in GitHub&nbsp;<a href="https://github.com/Najem2008/UrlWriterPlugIn.git">UrlWriterPlugin</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,150 @@
+---
+layout: post
+status: publish
+published: true
+title: Federated Authentication in Sitecore 9 using ADFS 2016
+author:
+  display_name: mcekic
+  login: mcekic
+  email: marko.cekic@namics.com
+  url: ''
+author_login: mcekic
+author_email: marko.cekic@namics.com
+excerpt: In this blog you will find out how to configure Sitecore 9 to allow federated
+  authentication with ADFS 2016 using OpenID Connect protocol and how to map some
+  ADFS user attributes into Sitecore user profile.
+wordpress_id: 4694
+wordpress_url: https://sitecore.namics.com/?p=4694
+date: '2019-03-04 08:57:56 +0100'
+date_gmt: '2019-03-04 07:57:56 +0100'
+categories:
+- Sitecore 9
+- Azure PaaS
+- Federated Authentication
+tags:
+- Sitecore 9
+- Federated Authentication
+- ADFS 2016
+comments: []
+redirect_from:
+  - /2019/03/04/federated-authentication-in-sitecore-9-using-adfs-2016/
+---
+<p>In one project, we had an opportunity to explore federated authentication in Sitecore 9 using Active Directory Federation Services (ADFS). We used Sitecore 9 deployed as Microsoft Azure PaaS, and we set up Windows Server 2016 virtual machine in Azure as ADFS server. ADFS 2016 fully supports&nbsp;OpenID Connect authorization protocol and we decided to test it. Here are the steps you need to do, to make it work.</p>
+<h3>ADFS Configuration</h3>
+<p>On Windows Server, from server manager open ADFS Management Console (Tools -> AD FS Management).</p>
+<ul>
+<li>Right click on&nbsp;<strong>Application Groups</strong>&nbsp;and add new application group.</li>
+<li>In the first step of&nbsp;<strong>Add Application Group Wizard</strong>, enter the name of the group, description and for the template choose&nbsp;<strong>Server application accessing a web API</strong>, and click Next.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/001.png"><img class="alignnone size-medium wp-image-4699" src="/files/2018/06/001-300x195.png" alt="001" width="300" height="195" /></a></p>
+<ul>
+<li>On&nbsp;<strong>Server application tab</strong>, enter the&nbsp;<strong>Redirect URI</strong>&nbsp;of your Sitecore CM instance and add it to the list. Note the&nbsp;<strong>Client Identifier</strong>&nbsp;that was generated. It will be used later.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/002.png"><img class="alignnone size-medium wp-image-4701" src="/files/2018/06/002-300x192.png" alt="002" width="300" height="192" /></a></p>
+<ul>
+<li>On&nbsp;<strong>Configure Application Credentials</strong>&nbsp;tab, choose Generate a shared secret. Copy the secret and save it, because you will not be able to access it anymore. However, this secret will not be required for the rest of configuration process and will not be used in Open ID authentication.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/003.png"><img class="alignnone size-medium wp-image-4702" src="/files/2018/06/003-300x195.png" alt="003" width="300" height="195" /></a></p>
+<ul>
+<li>On&nbsp;<strong>Configure Web API</strong>&nbsp;tab, for&nbsp;<strong>Identifier</strong>&nbsp;enter the same&nbsp;<strong>Client Identifier</strong>&nbsp;that was generated in step 2.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/004.png"><img class="alignnone size-medium wp-image-4704" src="/files/2018/06/004-300x261.png" alt="004" width="300" height="261" /></a></p>
+<ul>
+<li>On&nbsp;<strong>Choose Access Control Policy&nbsp;</strong>tab, don't change anything. The Policy should be "Permit everyone".</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/0051.png"><img class="alignnone size-medium wp-image-4707" src="/files/2018/06/0051-300x261.png" alt="005" width="300" height="261" /></a></p>
+<ul>
+<li>On&nbsp;<strong>Configure Application Permissions</strong>&nbsp;tab, add&nbsp;<strong>openid</strong>&nbsp;and&nbsp;<strong>allatclaims</strong>&nbsp;to&nbsp;<strong>Permitted scopes.</strong></li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/006.png"><img class="alignnone size-medium wp-image-4708" src="/files/2018/06/006-300x259.png" alt="006" width="300" height="259" /></a></p>
+<ul>
+<li>Review the Summary screen and complete the configuration.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Customize claims to send Active Directory Attributes</strong></p>
+<p>From the&nbsp;ADFS Management Console, go to Application Groups and open the properties of previously created application group. Select Web API application and click on Edit. Go to the&nbsp;<strong>Issuance Transform Rules</strong>&nbsp;tab.</p>
+<p><a class="fancybox" href="/files/2018/06/007.png"><img class="alignnone size-medium wp-image-4710" src="/files/2018/06/007-268x300.png" alt="007" width="268" height="300" /></a></p>
+<p>To send Active Directory group as a claim:</p>
+<ul>
+<li>Add new rule, and for the&nbsp;<strong>Claim rule template</strong>&nbsp;choose&nbsp;<strong>Send Group Membership as a Claim</strong></li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/008.png"><img class="alignnone size-medium wp-image-4711" src="/files/2018/06/008-300x245.png" alt="008" width="300" height="245" /></a></p>
+<ul>
+<li>On the&nbsp;<strong>Configure Rule tab</strong>, enter the name for the rule, browse for the Active Directory user group you would like to send as a claim, and define the outgoing claim type and value.</li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/009.png"><img class="alignnone size-medium wp-image-4712" src="/files/2018/06/009-300x244.png" alt="009" width="300" height="244" /></a></p>
+<ul>
+<li>Click Finish to complete the Wizard.</li>
+</ul>
+<p>To send country, location, email address, department and user's display name:</p>
+<ul>
+<li>Add new rule, and for the&nbsp;<strong>Claim rule template</strong>&nbsp;choose&nbsp;<strong>Send Claims Using a Custom Rule</strong></li>
+</ul>
+<p><a class="fancybox" href="/files/2018/06/010.png"><img class="alignnone size-medium wp-image-4714" src="/files/2018/06/010-300x243.png" alt="010" width="300" height="243" /></a></p>
+<ul>
+<li>On&nbsp;the&nbsp;<strong>Configure Rule tab</strong>, enter the name for the rule, and for the Custom rule add:</li>
+</ul>
+<p>&nbsp;</p>
+<p><script src="https://gist.github.com/marko-cekic/8f33cb84637ade9f27d285dec35d6fb7.js"></script></p>
+<h3>Sitecore Configuration</h3>
+<ul>
+<ul>
+<li>On your Sitecore server, go to \App_Config\Include\Examples folder of your Sitecore instance. Copy Sitecore.Owin.Authentication.Enabler.config.example file and paste it to \App_Config\Include\Custom folder (or it's appropriate subfolder). Remove the .example extension. This config file enables federated authentication.</li>
+</ul>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<li>Add a custom patch configuration file to \App_Config\Include\Custom folder (or it's appropriate subfolder), to include your other federated authentication configurations:<script src="https://gist.github.com/marko-cekic/904de2cda3faafd349ceadabd0c9d177.js"></script></p>
+<p>Here are the explanations of various sections of the file:</li>
+</ul>
+<p>&nbsp;</p>
+<ul>
+<ol>
+<li>configuration/sitecore/settings:
+<ul>
+<li>ClientId - The&nbsp;client identifier&nbsp;of your registered Sitecore application in&nbsp;ADFS</li>
+<li>ADFSDiscoveryDoc - url of ADFS open id endpoint</li>
+<li>PostLogoutRedirectURI - Sitecore logout page</li>
+<li>RedirectURI -&nbsp;the page the user should be redirected to after login</li>
+</ul>
+</li>
+<li>configuration/sitecore/pipelines/owin.identityProviders/processor - the type of the processor to use for authentication. This processor will be explained later.</li>
+<li>configuration/sitecore/federatedAuthentication/identityProviders/identityProvider
+<ul>
+<li>id - choose the id for identity provider (e.g. ADFS). This id will be referenced later in config file and in the custom processor as well.</li>
+<li>caption - the text that will be displayed on identity provider button on Sitecore login page.</li>
+<li>domain - sitecore domain (sitecore).</li>
+<li>icon - the icon for identity provider button.</li>
+</ul>
+</li>
+<li>configuration/sitecore/federatedAuthentication/identityProviders/transformations - contains transformations that are needed for authentication process.
+<ul>
+<li>Idp Claim - defines the identity provider claim that will be sent from ADFS during authentication process.</li>
+<li>Transform to Sitecore&nbsp;Author Role - transformation of ADFS role to sitecore\Author role.</li>
+</ul>
+</li>
+<li>configuration/sitecore/federatedAuthentication/propertyInitializer - contains mappings from ADFS user data to Sitecore user properties.</li>
+</ol>
+<li>Add the following nuget packages to your Visual Studio solution:
+<ol>
+<li>Microsoft.Owin.Security.OpenIdConnect</li>
+<li>Sitecore.Owin</li>
+<li>Sitecore.Owin.Authentication</li>
+</ol>
+</li>
+<li>Add a class for custom identity provider processor to your Visual Studio solution:<br />
+<script src="https://gist.github.com/marko-cekic/e46669a8d8b97acc39c71c97e526f1dc.js"></script></p>
+<ol>
+<ol>
+<li>The class must be named the same as in the section configuration/sitecore/pipelines/owin.identityProviders/processor of custom patch configuration file (e.g. CustomADFSIdentityProvider).</li>
+</ol>
+</ol>
+<p>&nbsp;
+</li>
+<li>The class must inherit from Sitecore.Owin.Authentication.Pipelines.IdentityProviders.IdentityProvidersProcessor.</li>
+<li>IdentityProviderName used in the class must be the same as identity provider id from the config file (e.g. ADFS).</li>
+<li>The class must override the ProcessCore method.</li>
+<li>If you don't have a valid SSL certificate for your ADFS server, you won't be able to authenticate your Sitecore with ADFS. Add this line to the constructor of the&nbsp;CustomADFSIdentityProvider to enable authentication with invalid ADFS certificate:<script src="https://gist.github.com/marko-cekic/2b2211a3a63c87a6d17e7bcdd691293c.js"></script></li>
+</ul>
+<p>After all this, go to he login screen of your Sitecore instance. Below the standard username and password fields, there should be a new button with the caption "Sign-in with ADFS". Click on this button will start the federated authentication process with ADFS.</p>
+<p><a class="fancybox" href="/files/2019/03/login-screen.png"><img class="alignnone size-medium wp-image-5539" src="/files/2019/03/login-screen-300x289.png" alt="login screen" width="300" height="289" /></a></p>

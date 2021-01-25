@@ -1,0 +1,166 @@
+---
+layout: post
+status: publish
+published: true
+title: How to create a simple SXA component
+author:
+  display_name: Najmeddine Ayadi
+  login: nayadi
+  email: najmeddine.ayadi@namics.com
+  url: ''
+author_login: nayadi
+author_email: najmeddine.ayadi@namics.com
+wordpress_id: 5292
+wordpress_url: https://sitecore.namics.com/?p=5292
+date: '2019-01-02 10:45:13 +0100'
+date_gmt: '2019-01-02 09:45:13 +0100'
+categories:
+- Allgemein
+- Sitecore Experience CMS
+- Sitecore 9
+tags:
+- Sitecore 9
+- SXA
+comments: []
+redirect_from:
+  - /2019/01/02/how-to-create-a-simple-sxa-component/
+---
+<p>SXA contains the Toolbox feature, which provides Authors the possibility to drag and drop several components in order to add it to pages in the Experience Editor.&nbsp;You can also create a custom component and use it in the Toolbox like the out of the box components.</p>
+<p>In this Blog post we will create a simple text image component and add it to the Toolbox.&nbsp;SXA uses the Repository Pattern to make the code cleaner, more maintainable and easier to change the model determination over dependency injection.</p>
+<div></div>
+<p><!--more--></p>
+<div>
+<p>We name the text image component "e.g. SXA Component" and should have the fields:</p>
+<ul>
+<li><em>Title</em>: single text field</li>
+<li><em>Subtitle</em>: single text field</li>
+<li><em>Rich Text Editor</em>: RTE Field</li>
+<li><em>Image</em>: Image Field</li>
+</ul>
+</div>
+<div>
+<p>First we create a Template, name it "e.g. SxaComponentBase" and we define the fields mentioned above.</p>
+</div>
+<div>&nbsp;<a class="fancybox" href="/files/2019/01/Image.png"><img class="alignnone size-medium wp-image-5296" src="/files/2019/01/Image-300x169.png" alt="Image" width="300" height="169" /></a></div>
+<div>
+<div>
+<p>If you use Glassmapper or similar mapper, create the model of the&nbsp;template.</p>
+<p>After that we need:</p>
+</div>
+<div>
+<p>-&nbsp;<strong>ViewModel</strong>: inherits from RenderingModelBase</p>
+<p>-&nbsp;<strong>Repository Interface</strong></p>
+<p>-&nbsp;<strong>Repository</strong>: inherits from the repository interface</p>
+</div>
+<div>
+<p>As already mentioned, SXA use the Repository Pattern, we will use also this Pattern. For that, we create an interface and name it "<strong>ISxaComponentRepository</strong>". Create a class "<strong>SxaComponentRepository</strong>" and inherit from "<strong>ISxaCompoentRepository</strong>".</p>
+</div>
+<div>
+<p>The next code snippets are kind of an approach and you can use it like an example.</p>
+<p><strong>View Model</strong></p>
+</div>
+<div><code>namespace MySxaComponent.Feature.Models<br />
+{<br />
+     public class TextImageViewModel: RenderingModelBase<br />
+     {<br />
+          //ITextImageTemplate is the model of the created template<br />
+          public ITextImageTemplate TextImageBaseTemplate { get; set; }</p>
+<p>          //you can also here add properties as needed<br />
+     }<br />
+} </code></div>
+<p><strong>Repository Interface</strong></p>
+</div>
+<div>
+<div><code>namespace MySxaComponent.Feature.Repositories<br />
+{<br />
+     public interface ITextImageRepository<br />
+     {<br />
+          IRenderingModelBase GetViewModel();<br />
+     }<br />
+}<br />
+</code></p>
+<div></div>
+<div><strong><strong>Repository</strong></strong></div>
+<div>
+<div><code>namespace MySxaComponent.Feature.Repositories<br />
+{<br />
+      public class TextImageRepository: ModelRepository, ITextImageRepository<br />
+      {<br />
+          public override IRenderingModelBase GetModel()<br />
+          {<br />
+               var viewModel = new SxaComponentModel();<br />
+               FillBaseProperties(viewModel);<br />
+               return viewModel;<br />
+          }<br />
+      }<br />
+}</code></div>
+<div></div>
+<div><strong><strong>Controller</strong></strong></p>
+<div>
+<p>After that, create a Controller and name it "e.g. SxaComponentController", it is important that the controller inherit from StandardController or from a class which inherit from StandardController, in this example we will inherit from the VariantsController.</p>
+</div>
+</div>
+<div>
+<div><code>public class TextImageController:VariantsController<br />
+{<br />
+       private readonly ITextImageRepository _textImageRepository;<br />
+       public SxaComponentController(ITextImageRepository textImageRepository)<br />
+       {<br />
+            _textImageRepository= textImageRepository;<br />
+       }<br />
+       protected override object GetModel()<br />
+       {<br />
+            return _textImageRepository.GetViewModel();<br />
+       }<br />
+}<br />
+</code></p>
+<div></div>
+<div><strong><strong>View</strong></strong></div>
+<div>
+<div>
+<code></p>
+<div @Html.Sxa().Component("component sxa component", Model.Attributes)>
+<div class="component-content">
+<div class="m-text-image" data-t-name="text-image-left">
+<div class="row">
+<div class="m-text-image__text col-xs-12">
+<div class="m-text-image__title">@Model.TextImageBaseTemplate.TitleField.Render()</div>
+<div class="m-text-image__title">@Model.TextImageBaseTemplate.SubtitleField.Render()</div>
+<div class="a-rich-text">
+                                               @Model.TextImageBaseTemplate.DescriptionField.Render()
+                                        </div>
+</p></div>
+<div class="m-text-image__image-container col-xs-12 col-sm-8 col-sm-offset-2 col-md-offset-0 col-md-8">
+<div class="m-text-image__image">
+                                               <img src="@Model.TextImageBaseTemplate.ImageField.Value" />
+                                        </div>
+<p class="m-text-image__description">@Model.TextImageBaseTemplate.DescriptionField.Render()</p>
+</p></div>
+</p></div>
+</p></div>
+</p></div>
+</p></div>
+<p></code>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<p>Now we created a controller, repository, view and its view model. After that we assign the created controller TextImageController to a controller rendering in Sitecore. Here is important to know that SXA resolve the path to the view file using the name of the rendering, so if you name the controller rendering like the view file, you don't have to assign the view file to the rendering, SXA will do it for you, as long as the name of the rendering is matching the name of view file</p>
+</div>
+<div></div>
+<div></div>
+</div>
+<div>&nbsp;<a class="fancybox" href="/files/2019/01/chrome_2018-11-28_09-27-34.png"><img class="alignnone wp-image-5295" src="/files/2019/01/chrome_2018-11-28_09-27-34-300x203.png" alt="chrome_2018-11-28_09-27-34" width="300" height="203" /></a></div>
+<div>
+<div>
+<div></div>
+<p>The Toolbox will show this rendering according to the allowed renderings within the placeholder used on current page and according to the folder structure under the rendering folder.</p>
+</div>
+<div>
+For example:<br />
+Page A contains the placeholder "PlaceholderA", the allowed renderings are "/sitecore/layout/Renderings/Feature/<strong>Content</strong>/RenderingA" and&nbsp;"/sitecore/layout/Renderings/Feature/<strong>Product</strong>/RenderingB", SXA will check the renderings allowed in "PlaceholderA" and add it to the Toolbox, the sections will be the name of the parent folders, in this case "RenderingA" will be showed within the section "<strong>Content</strong>" and "RenderingB" will be showed within the section "<strong>Product</strong>"</p>
+<p>Now you should be able to find your created SXA Component in the Toolbox and with Drag and Drop you can add it to the placeholder used in your page.</p>
+</div>
+</div>

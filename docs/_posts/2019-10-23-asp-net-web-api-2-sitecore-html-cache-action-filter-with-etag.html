@@ -1,0 +1,66 @@
+---
+layout: post
+status: publish
+published: true
+title: ASP.NET Web API 2 - Sitecore HTML Cache Action Filter with ETag
+author:
+  display_name: pnazarov
+  login: pnazarov
+  email: ''
+  url: ''
+author_login: pnazarov
+wordpress_id: 5877
+wordpress_url: https://sitecore.namics.com/?p=5877
+date: '2019-10-23 15:34:53 +0200'
+date_gmt: '2019-10-23 13:34:53 +0200'
+categories:
+- Web Content Management
+- Development in Sitecore
+- Sitecore Experience CMS
+- Sitecore 9
+tags: []
+comments: []
+redirect_from:
+  - /2019/10/23/asp-net-web-api-2-sitecore-html-cache-action-filter-with-etag/
+---
+<p>[caption id="attachment_5890" align="alignnone" width="300"]<a class="fancybox" href="/files/2019/10/nesa-by-makers-IgUR1iX0mqM-unsplash.jpg"><img class="size-medium wp-image-5890" src="/files/2019/10/nesa-by-makers-IgUR1iX0mqM-unsplash-300x200.jpg" alt="You do not need to write this code every time ..." width="300" height="200" /></a> <span style="vertical-align: inherit;"><span style="vertical-align: inherit;">You do not need to write this code every time ...</span></span>[/caption]</p>
+<p><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Nowadays, almost every Sitecore solution needs a custom Web API endpoint implementation. </span><span style="vertical-align: inherit;">One of the common web API uses cases when a front-end component needs to be dynamically rendered at the client-side (eg a browser page). </span><span style="vertical-align: inherit;">However, there could be some challenging factors of the back-end implementation:</span></span></span></p>
+<ol>
+<li style="font-weight: 400;"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">The Web API response data needs to be presented in JSON format.</span></span></span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">The Web API response data is calculated based on multiple Sitecore items.<br />
+</span></span></span><span style="vertical-align: inherit;"><span style="font-weight: 400;"><span style="vertical-align: inherit;">- The data evaluation is expensive in the performance perspective so it has to be cached.<br />
+</span></span><span style="font-weight: 400;"><span style="vertical-align: inherit;">- The data cache needs to be invalidated when the corresponding Sitecore items are changed.</span></span></span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">The data to be transferred over the network only the data has been changed, otherwise, the client-side cached version of it will be used.</span></li>
+</ol>
+<h3>The Solution</h3>
+<p><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">To serve the data in JSON format via Web API endpoint, it is possible to use </span></span></span><a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/getting-started-with-aspnet-web-api/tutorial-your-first-web-api"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">ASP.NET Web API 2</span></span></span></a><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">. </span><span style="vertical-align: inherit;">Therefore, no significant challenges here.</span></span></span></p>
+<p>To cache the data Sitecore HTML Cache can be used. Sitecore HTML Cache invalidates automatically by Sitecore (normally, on Publish). In this case, the Controller Action would need to produce the data and let Sitecore HTML Cache store it. However, it would be good to remove the cache storage responsibility from the Controller Action. In addition, it would be necessary to avoid Controller Action execution if the data already exists in the cache. Luckily,&nbsp; ASP.NET Web API 2 Action Filter attributes exist that can help to do this. The Action Filter attribute has two handlers:</p>
+<ul>
+<li style="font-weight: 400;"><b><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">OnActionExecuting </span></span></b><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">- allows accessing the current request context, including the request parameter object (s) and terminate the request with a custom response without going ahead with the Controller Action execution.</span></span></span></li>
+<li style="font-weight: 400;"><b><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">OnActionExecuted </span></span></b><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">- allows accessing the response result in the cache.</span></span></span></li>
+</ul>
+<p><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">To address the redundant data transfer between the server and the client, </span></span></span><a href="https://en.wikipedia.org/wiki/HTTP_ETag"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">HTTP ETag</span></span></span></a><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> mechanism can be used which allows producing </span></span></span><a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#3xx_Redirection"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">304 Not Modified</span></span></span></a><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> HTTP response. </span><span style="vertical-align: inherit;">Again, </span></span></span><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">A </span></span></span><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">SP.NET Web API 2 </span></span></span><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">can help to solve this.&nbsp;</span></span></span></p>
+<p><i><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">HTTP ETag </span></span></span></i><i><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">mechanism, including Sitecore HTML Cache, can be applied in a generic way to any controller using Action Filter attributes.</span></span></span></i></p>
+<h3><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">The Code</span></span></h3>
+<p><!--more--><script src="https://gist.github.com/peter-nazarov-namics-com/a980032c070465e5f305117a52a68a35.js"></script></p>
+<h3><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Usage Example</span></span></span></span></span></span></span></span></h3>
+<p><script src="https://gist.github.com/peter-nazarov-namics-com/859a93aad9e0ddc165b35bcd0310d118.js"></script></p>
+<h3><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Implementation Notes</span></span></span></span></h3>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">SitecoreHtmlCacheAttribute can be used in a generic way to any controller Action which returns JSON data.</span></span></span>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">The implementation can be tweaked to handle other (non-JSON) data format.</span></span></span></li>
+</ul>
+</li>
+<li style="font-weight: 400;"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Constructor Parameters</span></span></span>
+<ul>
+<li style="font-weight: 400;"><b><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">cacheControlMaxAgeSeconds </span></span></b><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">- depending on the client-side Web API request handling mechanism, it may be useful to set the constructor parameter to a non-zero value to avoid the client (e.g. browser) making multiple Web API requests within a small time interval (e.g. 5 seconds).</span></span></span></li>
+</ul>
+</li>
+<li style="font-weight: 400;"><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Overriding Methods</span></span></span>
+<ul>
+<li style="font-weight: 400;"><b><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">GetCacheKeyPrefix </span></span></b><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">- controls the cache key construction logic which allows implementing a custom caching policy, for example creating separate cache records depending on the request parameter value.</span></span></span></li>
+<li style="font-weight: 400;"><b><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">SetDataResponseHeaders </span></span></b><span style="font-weight: 400;"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">- &nbsp;can be used to change the response HTTP header content.</span></span></span></li>
+</ul>
+</li>
+</ul>
