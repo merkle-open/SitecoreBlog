@@ -76,57 +76,53 @@ redirect_from:
 <p>The following list shows configurations of languages that are missing in the managed schema provided by Sitecore 9. Just put them inside the root <schema> element. Please keep in mind that this list is far from complete. There are many other languages which could potentially be added. The <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html">Solr documentation</a> offers you a comprehensive guide of the available options.<br />
 The samples below contain configurations which worked for us so far. That being said, there are probably even better configurations out there. If you have some suggestions for improvement, then please let me know in the comments.</p>
 <p><strong>Chinese</strong></p>
-<p><code><br />
-<fieldType name="text_zh" class="solr.TextField" positionIncrementGap="100"><br />
-	<analyzer><br />
-		<tokenizer class="org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory" /><br />
-		<filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_zh.txt" /><br />
-		<filter class="solr.PorterStemFilterFactory"/><br />
-	</analyzer><br />
-</fieldType></p>
-<p><dynamicField name="*_t_zh" type="text_zh" indexed="true" stored="true"/><br />
-</code></p>
+<p><pre><code>&lt;fieldType name="text_zh" class="solr.TextField" positionIncrementGap="100">
+	&lt;analyzer>
+		&lt;tokenizer class="org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory" />
+		&lt;filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_zh.txt" />
+		&lt;filter class="solr.PorterStemFilterFactory"/>
+	&lt;/analyzer>
+&lt;/fieldType>
+
+&lt;dynamicField name="*_t_zh" type="text_zh" indexed="true" stored="true"/>
+</code></pre></p>
 <p>For chinese we used the <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html#LanguageAnalysis-HMMChineseTokenizer">HMMChineseTokenizerFactory</a>. If you apply this configuration to the schema you will probably end up with the following error message when restarting the Solr service:</p>
 <p><em>org.apache.solr.common.SolrException:org.apache.solr.common.SolrException: Could not load conf for core sitecore_master_index: Can't load schema C:\...\managed-schema: Plugin init failure for [schema.xml] fieldType "text_zh": Plugin init failure for [schema.xml] analyzer/tokenizer: Error loading class 'solr.HMMChineseTokenizerFactory'</em></p>
 <p>In Solr 6+ this tokenizer is not enabled by default. Therefore you need to add the following line to the solrconfig.xml for all of the cores you want to use this tokenizer.</p>
-<p><code></p>
-<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex=".*\.jar" />
-</code></p>
+<p><pre><code>&lt;lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex=".*\.jar" />
+</code></pre></p>
 <p><strong>Korean</strong></p>
-<p><code><br />
-<fieldType name="text_ko" class="solr.TextField" positionIncrementGap="100"><br />
-	<analyzer><br />
-		<tokenizer class="solr.StandardTokenizerFactory" /><br />
-		<filter class="solr.CJKWidthFilterFactory" /><br />
-		<filter class="solr.LowerCaseFilterFactory" /><br />
-		<filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ko.txt" /><br />
-		<filter class="solr.CJKBigramFilterFactory" /><br />
-	</analyzer><br />
-</fieldType><br />
-</code></p>
+<p><pre><code>&lt;fieldType name="text_ko" class="solr.TextField" positionIncrementGap="100">
+	&lt;analyzer>
+		&lt;tokenizer class="solr.StandardTokenizerFactory" />
+		&lt;filter class="solr.CJKWidthFilterFactory" />
+		&lt;filter class="solr.LowerCaseFilterFactory" />
+		&lt;filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ko.txt" />
+		&lt;filter class="solr.CJKBigramFilterFactory" />
+	&lt;/analyzer>
+&lt;/fieldType>
+</code></pre></p>
 <p>For Korean we used the <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html#LanguageAnalysis-CJKBigramFilter">CJKBigramFilterFactory</a>. Keep in mind that Lucene 7.4 introduced a specific Korean tokenizer called <a href="https://lucene.apache.org/core/7_4_0/analyzers-nori/org/apache/lucene/analysis/ko/KoreanTokenizerFactory.html">KoreanTokenizerFactory</a> which has been adapted by Solr 7.5. Looks like we are going to use this in a future version of Sitecore.</p>
 <p><strong>Polish</strong></p>
-<p><code><br />
-<fieldType name="text_pl" class="solr.TextField" positionIncrementGap="100"><br />
-	<analyzer><br />
-		<tokenizer class="solr.StandardTokenizerFactory"/><br />
-		<filter class="solr.LowerCaseFilterFactory"/><br />
-		<filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_pl.txt" /><br />
-		<filter class="org.apache.lucene.analysis.stempel.StempelPolishStemFilterFactory"/><br />
-	</analyzer><br />
-</fieldType></p>
-<p><dynamicField name="*_t_pl" type="text_pl" indexed="true" stored="true"/><br />
-</code></p>
+<p><pre><code>&lt;fieldType name="text_pl" class="solr.TextField" positionIncrementGap="100">
+	&lt;analyzer>
+		&lt;tokenizer class="solr.StandardTokenizerFactory"/>
+		&lt;filter class="solr.LowerCaseFilterFactory"/>
+		&lt;filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_pl.txt" />
+		&lt;filter class="org.apache.lucene.analysis.stempel.StempelPolishStemFilterFactory"/>
+	&lt;/analyzer>
+&lt;/fieldType>
+
+&lt;dynamicField name="*_t_pl" type="text_pl" indexed="true" stored="true"/>
+</code></pre></p>
 <p>The <a href="https://lucene.apache.org/solr/guide/6_6/language-analysis.html#LanguageAnalysis-Polish">StempelPolishStemFilterFactory</a> is also not enabled out-of-the-box in Solr 6+. The trick we used for Chinese also enables this tokenizer.</p>
 <h3>Misconfigured languages</h3>
 <p>There are two languages which aren't properly configured in the managed schema of Sitecore 9. In order for these languages to work you need to change the language suffix of the dynamicField element's <em>name</em> attribute.</p>
 <p><strong>Czech</strong></p>
-<p><code><br />
-old: <dynamicField name="*_t_cz" type="text_cz" indexed="true" stored="true"/><br />
-new: <dynamicField name="*_t_cs" type="text_cz" indexed="true" stored="true"/><br />
-</code></p>
+<p><pre><code>old: &lt;dynamicField name="*_t_cz" type="text_cz" indexed="true" stored="true"/>
+new: &lt;dynamicField name="*_t_cs" type="text_cz" indexed="true" stored="true"/>
+</code></pre></p>
 <p><strong>Norwegian</strong></p>
-<p><code><br />
-old: <dynamicField name="*_t_no" type="text_no" indexed="true" stored="true"/><br />
-new: <dynamicField name="*_t_nb" type="text_no" indexed="true" stored="true"/><br />
-</code></p>
+<p><pre><code>old: &lt;dynamicField name="*_t_no" type="text_no" indexed="true" stored="true"/>
+new: &lt;dynamicField name="*_t_nb" type="text_no" indexed="true" stored="true"/>
+</code></pre></p>
