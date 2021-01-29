@@ -1,7 +1,9 @@
 ---
 short_name: fgeiger
 name: Fabian Geiger
-position: Software Architect
+function: Software Architect
 ---
+
+{% avatar NaibafCH size=200 %}
 
 Experience with Sitecore since 2012.
