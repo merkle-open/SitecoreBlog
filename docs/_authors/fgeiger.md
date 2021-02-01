@@ -1,4 +1,5 @@
 ---
+title: Fabian Geiger
 short_name: fgeiger
 name: Fabian Geiger
 function: Software Architect
