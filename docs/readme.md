@@ -26,7 +26,7 @@ Next up, open the created file and edit the following [Front Matter](https://jek
 
 - title
 - date
-- categories: Use one or two of the [existing categories](https://sitecore.namics.com/categories.json). If you can't find an appropriate category for your post there then introduce a new one in your file. It will be automatcially added to the list of exiisting categories.
+- categories: Use one or two of the [existing categories](https://sitecore.namics.com/categories.json). If you really can't find an appropriate category for your post there then introduce a new one in your file. It will be automatically added to the list of exiisting categories.
 - tags: Add as many tags as you want. They should additionally describe the contents of your post (e.g. used framework or tools). As a source of inspiration you can also have a look at the [tags](https://sitecore.namics.com/tags.json) that other authors have defined previously.
 - author: Use a combination of your first name's first character and your last name here (e.g. Fabian Geiger -> fgeiger)
 
