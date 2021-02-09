@@ -10,15 +10,15 @@ tags:
 - Windows
 author: fgeiger
 ---
-Last week I tried to spin up my first Sitecore instance on AKS. During the process I ran into the problem that the init jobs weren't able to pull images from Sitecore's container registry. Both pods (mssql-init and solr-init) logged the following error:
+Last week I tried to spin up my first Sitecore instance on AKS using the [latest Container Deployment Package](https://github.com/Sitecore/container-deployment/releases/tag/sxp%2F10.0.1.004842.266) provided by Sitecore. During the process I ran into the problem that the init jobs weren't able to pull images from Sitecore's container registry. Both pods (mssql-init and solr-init) logged the following error:
 
 > Failed to pull image "scr.sitecore.com/sxp/sitecore-xp1-solr-init:10.0-ltsc2019": rpc error: code = Unknown desc = Error response from daemon: Get https://scr.sitecore.com/v2/: x509: certificate signed by unknown authority
 
 On the local machine this message normally means that your Docker is running in Linux container mode. Switching to Windows container mode fixes the problem. If you see this error on AKS then it probably means that the init jobs run on the Linux node. There are two potential options how to fix this problem.
 
-## Option 1: Node selector
+## Option 1: Use a node selector
 
-Add a [node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) to the init yaml files. This node selector ensures that the init pods get created on Windows nodes only:
+Add a [node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) to the init yaml files (mssql-init.yaml and solr-init.yaml). This node selector ensures that those pods get created on Windows nodes only:
 
 {% highlight yaml %}
 spec:
@@ -26,6 +26,12 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/os: windows
+{% endhighlight %}
+
+Make sure you re-apply the init jobs again as described in the "Installation Guide for Production Environment with Kubernetes":
+
+{% highlight powershell %}
+kubectl apply -f ./init/
 {% endhighlight %}
 
 Thanks to Mihály Árvai for pointing out this solution.
@@ -44,7 +50,7 @@ Afterwards you can apply the init jobs again as described in the "Installation G
 kubectl apply -f ./init/
 {% endhighlight %}
 
-When both pods ´mssql-init´ and ´solr-init´ are in state "Completed" you can resume the Linux node again (multiple pods might get created before that due to errors):
+When both pods ´mssql-init´ and ´solr-init´ are in state "Completed" you can resume the Linux node again (multiple pods might get created before that, due to errors):
 
 {% highlight powershell %}
 kubectl uncordon <Linux node name>
