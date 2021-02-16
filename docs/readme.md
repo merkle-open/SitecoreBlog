@@ -42,6 +42,10 @@ Put images or single files which you want to share in blog posts into the [files
 
 Jekyll uses the [Liquid](https://jekyllrb.com/docs/liquid/) templating language to process templates. This gives you the possibility to apply simple logic to your posts if needed. Liquid is available in both HTML and Markdown files. There are very useful filters and tags which let you easily embed code or create internal links.
 
+#### Updating CSS
+
+You can update the default `minima` theme: <https://github.com/jekyll/minima#customizing-templates>.
+
 #### Code snippets
 
 For embedding code in blog posts you have two possibilities. You can either use the Liquid-tag [`highlight`](https://jekyllrb.com/docs/liquid/tags/) which automatically converts code into a nicely highlighted HTML structure during build. The other possibility would be to embed a gist into the post by using the Liquid-tag [`gist`](https://github.com/jekyll/jekyll-gist). Gists are probably more suited to complex code which you want to maintain over a longer time period as they have a version history.
