@@ -4,10 +4,10 @@ status: publish
 published: true
 title: ASP.NET Web API 2 - Enable Sitecore Context Session State
 author:
-  display_name: pnazarov
-  login: pnazarov
-  email: ''
-  url: ''
+display_name: pnazarov
+login: pnazarov
+email: ''
+url: ''
 author_login: pnazarov
 wordpress_id: 5895
 wordpress_url: https://sitecore.namics.com/?p=5895
@@ -18,21 +18,47 @@ categories:
 tags: []
 comments: []
 redirect_from:
-  - /2019/10/24/asp-net-web-api-2-enable-sitecore-context-session-state/
+- /2019/10/24/asp-net-web-api-2-enable-sitecore-context-session-state/
 ---
-<p>[caption id="attachment_5900" align="alignnone" width="200"]<a class="fancybox" href="/files/2019/10/christian-fregnan-ewiYQxLTGEU-unsplash.jpg"><img class="size-medium wp-image-5900" src="/files/2019/10/christian-fregnan-ewiYQxLTGEU-unsplash-200x300.jpg" alt="How do I bring that big thing back into the context?" width="200" height="300" /></a> How do I bring that big thing back into the context?[/caption]</p>
-<p><a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/getting-started-with-aspnet-web-api/tutorial-your-first-web-api"><span style="font-weight: 400;">ASP.NET Web API 2</span></a><span style="font-weight: 400;"> is designed as a stateless Web API framework, therefore, the visitor session context is not automatically created on each web request. Normally, for a Sitecore solution, it is necessary to enable Sitecore Context session-dependent features/data in some or even most of Web API calls context.</span></p>
+<p>
+  <a class="fancybox" href="/files/2019/10/christian-fregnan-ewiYQxLTGEU-unsplash.jpg">
+    <img class="size-medium wp-image-5900" src="/files/2019/10/christian-fregnan-ewiYQxLTGEU-unsplash-200x300.jpg"
+      alt="How do I bring that big thing back into the context?" width="200" height="300" />
+  </a>
+</p>
+<p><a
+    href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/getting-started-with-aspnet-web-api/tutorial-your-first-web-api"><span
+      style="font-weight: 400;">ASP.NET Web API 2</span></a><span style="font-weight: 400;"> is designed as a stateless
+    Web API framework, therefore, the visitor session context is not automatically created on each web request.
+    Normally, for a Sitecore solution, it is necessary to enable Sitecore Context session-dependent features/data in
+    some or even most of Web API calls context.</span></p>
 <h3><span style="font-weight: 400;">The Solution</span></h3>
-<p><span style="font-weight: 400;">One of the options is to create Web API Route which would automatically enable session state for all Web API calls that are made via this route. To be clear, we are basically looking for enabling a regular ASP.NET session state in the context of ASP.NET Web API 2 calls.</span></p>
+<p><span style="font-weight: 400;">One of the options is to create Web API Route which would automatically enable
+    session state for all Web API calls that are made via this route. To be clear, we are basically looking for enabling
+    a regular ASP.NET session state in the context of ASP.NET Web API 2 calls.</span></p>
 <p>The solution option which we consider in this specific case has the following implementation approach:</p>
 <ol>
-<li style="font-weight: 400;"><span style="font-weight: 400;">Register a new route using ASP.NET Web API 2 - a dedicated route for the session-context-enabled Web API calls handling.</span></li>
-<li style="font-weight: 400;"><span style="font-weight: 400;">Retrieve the new route&rsquo;s object using a regular ASP.NET and enrich it with a request handler that creates a regular ASP.NET session state context.</span></li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Register a new route using ASP.NET Web API 2 - a
+      dedicated route for the session-context-enabled Web API calls handling.</span></li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Retrieve the new route&rsquo;s object using a regular
+      ASP.NET and enrich it with a request handler that creates a regular ASP.NET session state context.</span></li>
 </ol>
 <h3><span style="font-weight: 400;">The Code</span></h3>
-<p><!--more--></p>
+<p>
+  <!--more-->
+</p>
 <p><span style="font-weight: 400;">The set of C# classes:</span></p>
-<p><script src="https://gist.github.com/peter-nazarov-namics-com/f43cbcc3fd1c2df8e2dccb97b5456123.js"></script><span style="font-weight: 400;">Enable the Web API Route Registration code execution at Sitecore start-up by the following Sitecore config include file:</span><script src="https://gist.github.com/peter-nazarov-namics-com/8f6bf4ec7e5611dcab4fe5fe6613d6bf.js"></script></p>
+<p>
+  <script src="https://gist.github.com/peter-nazarov-namics-com/f43cbcc3fd1c2df8e2dccb97b5456123.js"></script><span
+    style="font-weight: 400;">Enable the Web API Route Registration code execution at Sitecore start-up by the following
+    Sitecore config include file:</span>
+  <script src="https://gist.github.com/peter-nazarov-namics-com/8f6bf4ec7e5611dcab4fe5fe6613d6bf.js"></script>
+</p>
 <h3><span style="font-weight: 400;">Implementation Notes</span></h3>
-<p><span style="font-weight: 400;">With this approach, it is possible to segregate the stateless and the session-context-enabled Web API calls by a specific route (the route path prefix). The session context existence will depend on which Web API route is used to make the Web API Controller Action call.&nbsp;</span></p>
-<p><span style="font-weight: 400;">This may not be an ideal solution when you would like to specify the session context existence as a pre-requisite for a specific Controller Action. In that case, you may rather consider implementing the session state context enablement with an Action Filter attribute, with which you can decorate a Controller Action or even the whole Controller class.</span></p>
+<p><span style="font-weight: 400;">With this approach, it is possible to segregate the stateless and the
+    session-context-enabled Web API calls by a specific route (the route path prefix). The session context existence
+    will depend on which Web API route is used to make the Web API Controller Action call.&nbsp;</span></p>
+<p><span style="font-weight: 400;">This may not be an ideal solution when you would like to specify the session context
+    existence as a pre-requisite for a specific Controller Action. In that case, you may rather consider implementing
+    the session state context enablement with an Action Filter attribute, with which you can decorate a Controller
+    Action or even the whole Controller class.</span></p>
