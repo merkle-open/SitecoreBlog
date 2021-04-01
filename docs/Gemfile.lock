@@ -262,6 +262,7 @@ PLATFORMS
 DEPENDENCIES
   github-pages (~> 211)
   jekyll-feed (~> 0.6)
+  jekyll-sitemap
   kramdown-parser-gfm
   minima (~> 2.0)
   tzinfo (~> 1.2)
@@ -269,4 +270,4 @@ DEPENDENCIES
   wdm (~> 0.1.0)
 
 BUNDLED WITH
-   2.2.6
+   2.2.15
