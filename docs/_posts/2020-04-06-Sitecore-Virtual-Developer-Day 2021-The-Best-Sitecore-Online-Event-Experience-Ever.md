@@ -1,8 +1,16 @@
 ---
-layout: post
+title:  "Sitecore Virtual Developer Day 2021 – The Best Sitecore Online Event Experience Ever"
+date:   2021-03-06 23:00 +0100
+categories:
+- Sitecore
+tags:
+- AKS
+- Kubernetes
+- Docker
+- Windows
+-Azure
+author: pnazarov
 ---
-
-# **Sitecore Virtual Developer Day 2021 – The Best Sitecore Online Event Experience Ever!**
 
 **Social Media Tags: #SitecoreVDD, #SitecoreVirtualDay**
 
