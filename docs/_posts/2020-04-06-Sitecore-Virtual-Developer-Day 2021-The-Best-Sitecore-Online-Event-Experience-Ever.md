@@ -1,5 +1,5 @@
 ---
-title:  "Sitecore Virtual Developer Day 2021 – The Best Sitecore Online Event Experience Ever"
+title:  "Sitecore Virtual Developer Day 2021 – The Best Sitecore Online Event Experience Ever!"
 date:   2021-03-06 23:00 +0100
 categories:
 - Sitecore
