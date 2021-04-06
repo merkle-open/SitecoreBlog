@@ -8,7 +8,7 @@ tags:
 - Kubernetes
 - Docker
 - Windows
--Azure
+- Azure
 author: pnazarov
 ---
 
