@@ -8,6 +8,9 @@ tags:
 - Goals
 author: shauck
 ---
+
+![alt text](../files/2021/04/dartboard-hitting-goal.jpg "Hitting a goal")
+
 ## Challenge
 
 Within Sitecore server-side tracking is already well documented. Without any adaptations we can easily add goals to [certain pages](https://doc.sitecore.com/users/93/sitecore-experience-platform/en/associate-a-goal-with-an-item.html) or [Sitecore Forms submit actions](https://doc.sitecore.com/users/93/sitecore-experience-platform/en/working-with-submit-actions.html).
