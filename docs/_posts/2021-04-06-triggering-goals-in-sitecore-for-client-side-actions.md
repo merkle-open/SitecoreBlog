@@ -10,6 +10,7 @@ author: shauck
 ---
 
 ![alt text](../files/2021/04/dartboard-hitting-goal.jpg "Hitting a goal")
+
 Photo by <a href="https://unsplash.com/@enginakyurt?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">engin akyurt</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
 
