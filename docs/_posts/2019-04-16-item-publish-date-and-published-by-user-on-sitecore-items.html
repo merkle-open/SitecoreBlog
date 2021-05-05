@@ -80,13 +80,13 @@ And again: before you add the new section to the Sitecore system section as base
 <h3>Keeping everything in-sync</h3>
 <p>Don't forget to add the original Sitecore system section to the Unicorn sync &ndash; excluding it's children.</p>
 <p>Unfortunately, there is no transparent sync possible if there are excludes for the children (at least to-date). So you have to run a Unicorn sync manually if you deploy this to another solution.</p>
-<p><script src="https://gist.github.com/namics-gists/1454cf5110e27db8c2da8ef21d9489fd.js"></script>If you use unicorn sync in general, it's mandatory to add a&nbsp;<em>fieldFilter</em> for the two new fields. Otherwise any publish on an item will lead to a changed <em>yml-file</em> of this or any related items, which then will be committed to your git/versioning tool. That's why we add the two fields as <em>fieldFilter</em> to the Unicorn config. Now, every item in Sitecore should have this two new fields in the "Statistics" section.</p>
+<p><script src="https://gist.github.com/merkle-sitecore-gists/1454cf5110e27db8c2da8ef21d9489fd.js"></script>If you use unicorn sync in general, it's mandatory to add a&nbsp;<em>fieldFilter</em> for the two new fields. Otherwise any publish on an item will lead to a changed <em>yml-file</em> of this or any related items, which then will be committed to your git/versioning tool. That's why we add the two fields as <em>fieldFilter</em> to the Unicorn config. Now, every item in Sitecore should have this two new fields in the "Statistics" section.</p>
 <h3>Time to create a custom PublishItemProcessor</h3>
 <p>Configure a custom <em>PublishItemProcessor</em>-pipeline:</p>
 <ul>
 <li>Sitecore.Publishing.Pipelines.PublishItem.PublishItemProcessor</li>
 </ul>
-<p>The original code from Mike, in our test solution, resulted in a problem that a new language version "de-DE" would be created with the "Published" and "Published by" values. And we do not want this to happen &ndash; unless such a item version already existed before the publish ;) Or it could be that this behaviour is a problem of our Sitecore 8.0 Initial version. Anyhow, here's a fixed code snippet overcoming this side effect:<script src="https://gist.github.com/namics-gists/d663e76d20694aad814656f2cfe46aa3.js"></script></p>
+<p>The original code from Mike, in our test solution, resulted in a problem that a new language version "de-DE" would be created with the "Published" and "Published by" values. And we do not want this to happen &ndash; unless such a item version already existed before the publish ;) Or it could be that this behaviour is a problem of our Sitecore 8.0 Initial version. Anyhow, here's a fixed code snippet overcoming this side effect:<script src="https://gist.github.com/merkle-sitecore-gists/d663e76d20694aad814656f2cfe46aa3.js"></script></p>
 <p>Compared to Mike's script, I enhanced it in order to allow it to get the right language-version-combination which will be updated on a publish.</p>
 <p>The code is executing the following list of priorities:</p>
 <ol>
@@ -96,7 +96,7 @@ And again: before you add the new section to the Sitecore system section as base
 </ol>
 <h3>Patching the original PublishItemProcessor</h3>
 <p>Go ahead an add the&nbsp;<em>PublishItemProcessor</em> after the <em>UpdateStatistics PublishItemProcessor</em> in a new patch config file:</p>
-<p><script src="https://gist.github.com/namics-gists/6eb0d4fa3530edb908b2c1fe798c46be.js"></script></p>
+<p><script src="https://gist.github.com/merkle-sitecore-gists/6eb0d4fa3530edb908b2c1fe798c46be.js"></script></p>
 <p>The <em>PublishItemProcessor</em> sets the publishing statistics on the newly added fields on the item in both, the source and target databases, and only if the publishing fields exist on the published item!</p>
 <h3>That's it &ndash; we now have additional publish details when publishing items!</h3>
 <p>Now, every item publish results in saving the Sitecore username to the "Published by" and the current timestamp to the "Published" fields in the statistics section.</p>

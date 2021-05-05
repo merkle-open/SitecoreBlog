@@ -41,18 +41,18 @@ redirect_from:
 <blockquote style="padding-bottom: 10px;"><p>Additional Arguments is based on <a href="https://handlebarsjs.com" target="_blank">Handlebar.js's</a> concept of&nbsp;<a href="https://handlebarsjs.com/#literals" target="_blank" rel="noopener">Literals</a>. The feature allows you to pass literal values to a helper. For NitroNet it has been extended to not only handle static values, but also support dynamic properties resolved from the current context.</p></blockquote>
 <h4><strong>Let's have a look at an example setup for Additional Arguments</strong></h4>
 <p>To manage the behaviour more granularly, a new setting has been added to <em>nitro-config.json</em>.<br />
-<script src="https://gist.github.com/namics-gists/88466b1db25669337cdb703fd5178eb6.js"></script><script src="https://gist.github.com/namics-gists/60062dd18fc45e98965ecab286ce162e.js"></script><script src="https://gist.github.com/namics-gists/e6c44c0b87a048a25ca6296bdf619907.js"></script><br />
+<script src="https://gist.github.com/merkle-sitecore-gists/88466b1db25669337cdb703fd5178eb6.js"></script><script src="https://gist.github.com/merkle-sitecore-gists/60062dd18fc45e98965ecab286ce162e.js"></script><script src="https://gist.github.com/merkle-sitecore-gists/e6c44c0b87a048a25ca6296bdf619907.js"></script><br />
 The <em>AdditionalArgumentsParsingMode</em>-Setting has&nbsp;3 modes. For this introduction we look at the result of the given setup under the different modes.</p>
 <ol>
 <li><strong>AdditionalArgumentsParsingMode:None<br />
 </strong>If the setting isn't present or set to "<em>none</em>", the behaviour is exactly as you know it. "<em>modifier</em>" and "<em>decorator</em>" are ignored and the subcomponent model gets passed as it is. This mode exists to ensure backward compatibility. If you don't want your HTML to be affected by the Additional Arguments feature, this is the mode to go.</p>
-<p><script src="https://gist.github.com/namics-gists/ca79b936a18408e1c0129c790ef1111c.js"></script></li>
+<p><script src="https://gist.github.com/merkle-sitecore-gists/ca79b936a18408e1c0129c790ef1111c.js"></script></li>
 <li><strong>AdditionalArgumentsParsingMode:StaticLiteralsOnly</strong><br />
 In this mode only static values, i.e. strings, numbers, true, false, null and undefined are parsed and passed to the subcomponent together with the model. Additional Arguments always overwrite values set on the subcomponent model. As you can see the additional argument "<em>modifier</em>" is ignored.</p>
-<p><script src="https://gist.github.com/namics-gists/ceaca64854a816eb29b09638356c2305.js"></script></li>
+<p><script src="https://gist.github.com/merkle-sitecore-gists/ceaca64854a816eb29b09638356c2305.js"></script></li>
 <li><strong>AdditionalArgumentsParsingMode:Full<br />
  </strong>All additional arguments are resolved. The modifier is resolved from the <em>ParentComponentModel</em>, meaning it results in a value "<em>parent-default</em>" which is then passed to the subcomponent.</p>
-<p><script src="https://gist.github.com/namics-gists/da7f43f7541ce6c3f9f58f6954dbf84b.js"></script></li>
+<p><script src="https://gist.github.com/merkle-sitecore-gists/da7f43f7541ce6c3f9f58f6954dbf84b.js"></script></li>
 </ol>
 <h4>More information on this new feature</h4>
 <p>The complete documentation of this feature is on the official GitHub repositories</p>
