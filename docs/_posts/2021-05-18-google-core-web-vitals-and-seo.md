@@ -91,10 +91,6 @@ As you can see, the rendering of the two slowest components takes **almost 70%**
 
 Changing this to a lazy-initialized property accessor fixed the issue with pretty much zero risk, and the component disappeared from the Hot Spots. 
 
-Graphical user interface, application
-
-Description automatically generated 
-
 ![alt text](../files/2021/05/hot-spots-post-fix.png "Hot Spots after the quick fix")
 > Figure 7: Hot Spots after the quick fix 
 
