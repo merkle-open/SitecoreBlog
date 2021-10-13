@@ -33,12 +33,16 @@ We assume you are an insurance company and sell 3 different insurance products o
 ![alt text](../files/2021/10/goal.png "Setting up a goal in Sitecore")
  
 Let us now assume that - on average - 2 in every 100 website visitors buy an insurance on your website; your _value per visit_ is therefore 2. Note how this simple value does a multitude of things:
-•	It is directly tied to business value and therefore more suited to evaluate the performance of your website than classical KPIs like _visitors_, _unique visitors_, _bounce rate_ etc.
-•	It measures the success of your website in a tangible and consistent way throughout _all_ pages 
-•	It gives you a baseline that you can use to measure how changes in your content influence the success of your website
-Let us now assume that you decide to experiment a bit and replace a car insurance teaser on your homepage with a household insurance teaser. It is probable that this change will increase the number of household insurances purchased, while decreasing the number of car insurances sold. How do you put those changes in relation to determine whether the experiment is successful? You don’t have to, the engagement value – or rather the value per visit – does it for you:
-•	If the value per visit increases, you sell more insurances overall
-•	If the value per visit decreases, you sell less insurances overall
+
+*	It is directly tied to business value and therefore more suited to evaluate the performance of your website than classical KPIs like _visitors_, _unique visitors_, _bounce rate_ etc.
+*	It measures the success of your website in a tangible and consistent way throughout _all_ pages 
+*	It gives you a baseline that you can use to measure how changes in your content influence the success of your website
+
+Let us now assume that you decide to experiment a bit and replace a car insurance teaser on your homepage with a household insurance teaser. It is probable that this change will increase the number of household insurances purchased, while decreasing the number of car insurances sold. How do you put those changes in relation to determine whether the experiment is successful? You don’t have to, the engagement value – or rather the value per visit – does it for you: 
+
+* If the value per visit increases, you sell more insurances overall
+*	If the value per visit decreases, you sell less insurances overall
+
 Note that there might very well be some additional cross-effects that you did not account for, like an increase or decrease in the sales of the third insurance type. The power of the engagement value is how it breaks down the complexity of user behavior into a simple numeric value that allows a qualified conclusion about your experiments – measured across your whole website.
 
 ## How to use the engagement value
@@ -50,20 +54,20 @@ When you run an A/B – or multivariate test, Sitecore will assess its success b
 ![alt text](../files/2021/10/test-result.png "A test result in Sitecore")
  
 You can determine from that test result that
-1.	There are 2 variations on this page
+1.	There are 2 variations on this page  
 _Experience 1_ and _Original_
-2.	The _Experience 1_ looks like it performs slightly better
+2.	The _Experience 1_ looks like it performs slightly better  
 It has a _trailing value/visit_ of 107.76, which is a 2.33% improvement over the Original
-3.	The _Confidence_ is 63.82%
+3.	The _Confidence_ is 63.82%  
 This is not statistically relevant, meaning it is quite possible that the uplift is by chance. You would need to let this test run longer to increase the confidence and be certain that the engagement value increase can be attributed to the alternate content in this test
 
 ## Personalization
 When using personalization, you can create a test and utilize the engagement value exactly as in A/B – tests to measure success. Note that none of the conditions find their way into the test, only the resulting displayed variants. In other words, it does not matter _why_ a visitor saw a certain variant, only whether the variant he saw influenced the trailing value/visit.
 
-### Analytics
+## Analytics
 As the engagement value is the most important KPI in Sitecore XP, it is expected that it appears all over the Sitecore Analytics. Note that this value correlates to business value, which makes Sitecore Analytics very business focused.
 
-## Profiling
+### Profiling
 Sitecore can tell you which profiles are contributing most to your engagement value.
 
 ![alt text](../files/2021/10/profile-overview.png "Pattern matches overview in Sitecore")
@@ -96,18 +100,18 @@ I mentioned earlier that the engagement value is calculated for each contact, so
 If you look at this list, one visitor stands out: With a high engagement value of 700 and 38 visits so far. This visitor seems to be a very good candidate to hand over to your sales department to follow up on.
 
 ## Conclusion
-For me, the engagement value is one of the most powerful concepts of Sitecore. It focuses heavily on business value, is easy to use and simplifies complex tasks like evaluating the success of a test or campaign to a simple number comparison. It can be used consistently throughout your whole website to assess the value of your content **and** your contacts and supports your marketers in focusing on the right aspects of your online presence. Whether you can use the Sitecore Marketing features correctly depends on whether you understand the engagement value.
+For me, the engagement value is one of the most powerful concepts of Sitecore. It focuses heavily on business value, is easy to use and simplifies complex tasks like evaluating the success of a test or campaign to a simple number comparison. It can be used consistently throughout your whole website to assess the value of your content **and** your contacts, and supports your marketers in focusing on the right aspects of your online presence. Whether you can use the Sitecore Marketing features correctly depends on whether you understand the engagement value.
 
 ## FAQ
 Use this FAQ to verify your understanding of the engagement value or come back if you have a question.
 
 #### Why would I use something like the engagement value when I can look at each goal separately?
-The idea of the engagement value is to get a holistic view over the effects of your content changes. When you look at separate goals it is easy to neglect unintended negative side effects that your changes might incur elsewhere. In addition, your marketers might not know or understand all the goals of your website, so having a simple numeric value simplifies the evaluation of your experiments.
+The idea of the engagement value is to get a holistic view over the effects of your content changes. When you look at separate goals it is easy to neglect unintended negative side effects that your changes might incur elsewhere. In addition, your marketers might not know or understand all the goals of your website, so having a single numeric value simplifies the evaluation of your experiments.
 
 #### Do I have to use the engagement value?
 No, you can always look at each goal separately. Note that this might complicate the use of Sitecore Analytics and some other built-in functionality.
 
-#### I have 2 products with very different profits. How do I reflect that in Sitecore?
+#### I sell 2 products with very different profits. How do I reflect that in Sitecore?
 You should define 2 separate goals with different engagement scores that are relative to the business value, e.g., 100 engagement points for the more profitable product and 60 for the less profitable one.
 
 #### I have added a new product to my offering that has a higher profit than any other, but my most engaging goal has already 100 points. What should I do?
@@ -121,6 +125,9 @@ You should start by creating goals for visitor actions with the highest business
 
 #### I also want to increase the engagement value when visitors visit my product pages. Is that a problem?
 No, in general you can also define goals and increase the engagement value for passive events, such as viewing a page. Try not to pollute your environment with too many of these goals since it increases complexity and might impact the significance of your engagement value. Make sure to give passive events (like viewing a page) a much lower engagement value than active events (like buying something or registering for a newsletter).
+
+#### I can see from the analytics that most of my visitors' engagement value is collected through navigating the site instead of buying products. What should I do?
+It is very tempting to define goals and increase engagement value for every customer action on your website. Note that the sum of all of these engagement values can easily outweigh the contribution of goals with _real_ business value. If this is the case, reduce the engagement values for passive action goals or remove them completely.
 
 #### I replaced a generic teaser on my home page with a product promotion, but my value/visit declined. How is that possible?
 Promoting a certain product often leads to reduced visibility of other products. A decline in value/visit indicates that the uplift in the sales of the promoted product does not compensate for the reduced sales of other products.
