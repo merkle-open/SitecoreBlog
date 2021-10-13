@@ -18,13 +18,13 @@ author: mklimmasch
 ![alt text](../files/2021/10/dashboard.png "The Sitecore Analytics dashboard")
 
 # The engagement value: What it is and how to use it
-One of the most interesting concepts of Sitecore XP is the engagement value. Many marketers struggle with understanding engagement value and its benefits. This article will outline what the engagement value is, how it is determined, what distinguishes it from classical metrics (like visits and impressions) and how you can use it to measure site performance and identify leads.
+One of the most interesting concepts of Sitecore XP is the _engagement value_. Many marketers struggle with understanding engagement value and its benefits. This article will outline what the engagement value is, how it is determined, what distinguishes it from classical metrics (like visits and impressions) and how you can use it to measure site performance and identify leads.
 
 ## What is the engagement value?
-The engagement value is the single most important KPI in the Sitecore Experience Platform and measures the engagement of a contact with your website. It is a numeric score that aggregates for each contact over time, based on business goals defined by your organization. In general: The higher the engagement value, the better.
+The engagement value is the single most important KPI in the Sitecore Experience Platform and measures the _engagement_ of a contact with your website. It is a numeric score that aggregates for each contact over time, based on business goals defined by your organization. In general: **The higher the engagement value, the better.**
  
 ## How is the engagement value calculated?
-The engagement value is an integer that aggregates for each contact over time. The most common way of increasing the engagement value is to create a goal in Sitecore and assign it to an action, like visiting a certain page or submitting a form. The engagement value of a contact tells you how valuable this contact is for your organization, while the value per visit (= average change in engagement value per website visit) tells you how successful your website is in achieving your business goals.
+The engagement value is an integer that aggregates for each contact over time. The most common way of increasing the engagement value is to create a _goal_ in Sitecore and assign it to an action, like visiting a certain page or submitting a form. The engagement value of a contact tells you how valuable this contact is for your organization, while the _value per visit_ (= average change in engagement value per website visit) tells you how successful your website is in achieving your business goals.
 
 ## Why would you need the engagement value?
 Let’s look at a few examples and compare how the engagement value behaves compared to classical metrics.
@@ -32,9 +32,9 @@ We assume you are an insurance company and sell 3 different insurance products o
 
 ![alt text](../files/2021/10/goal.png "Setting up a goal in Sitecore")
  
-Let us now assume that - on average - 2 in every 100 website visitors buy an insurance on your website; your value per visit is therefore 2. Note how this simple value does a multitude of things:
-•	It is directly tied to business value and therefore more suited to evaluate the performance of your website than classical KPIs like visitors, unique visitors, bounce rate etc.
-•	It measures the success of your website in a tangible and consistent way throughout all pages 
+Let us now assume that - on average - 2 in every 100 website visitors buy an insurance on your website; your _value per visit_ is therefore 2. Note how this simple value does a multitude of things:
+•	It is directly tied to business value and therefore more suited to evaluate the performance of your website than classical KPIs like _visitors_, _unique visitors_, _bounce rate_ etc.
+•	It measures the success of your website in a tangible and consistent way throughout _all_ pages 
 •	It gives you a baseline that you can use to measure how changes in your content influence the success of your website
 Let us now assume that you decide to experiment a bit and replace a car insurance teaser on your homepage with a household insurance teaser. It is probable that this change will increase the number of household insurances purchased, while decreasing the number of car insurances sold. How do you put those changes in relation to determine whether the experiment is successful? You don’t have to, the engagement value – or rather the value per visit – does it for you:
 •	If the value per visit increases, you sell more insurances overall
@@ -45,20 +45,20 @@ Note that there might very well be some additional cross-effects that you did no
 I mentioned earlier that the engagement value is the most important KPI in Sitecore XP, so it is no surprise that it appears in many different places throughout Sitecore. Let’s have a look. 
 
 ### A/B – Testing
-When you run an A/B – or multivariate test, Sitecore will assess its success based on the Trailing value/visit, which is the average collected engagement value after being exposed to the test. The logic behind this is: If there is a significant engagement value difference between the variations of your content, it can be attributed to the content the visitors see. Consider this test result:
+When you run an A/B – or multivariate test, Sitecore will assess its success based on the _trailing value/visit_, which is the average collected engagement value **after** being exposed to the test. The logic behind this is: If there is a significant engagement value difference between the variations of your content, it can be attributed to the content the visitors see. Consider this test result:
 
 ![alt text](../files/2021/10/test-result.png "A test result in Sitecore")
  
 You can determine from that test result that
 1.	There are 2 variations on this page
-Experience 1 and Original
-2.	The Experience 1 looks like it performs slightly better
-It has a Trailing value/visit of 107.76, which is a 2.33% improvement over the Original
-3.	The Confidence is 63.82%
+_Experience 1_ and _Original_
+2.	The _Experience 1_ looks like it performs slightly better
+It has a _trailing value/visit_ of 107.76, which is a 2.33% improvement over the Original
+3.	The _Confidence_ is 63.82%
 This is not statistically relevant, meaning it is quite possible that the uplift is by chance. You would need to let this test run longer to increase the confidence and be certain that the engagement value increase can be attributed to the alternate content in this test
 
 ## Personalization
-When using personalization, you can create a test and utilize the engagement value exactly as in A/B – tests to measure success. Note that none of the conditions find their way into the test, only the resulting displayed variants. In other words, it does not matter why a visitor saw a certain variant, only whether the variant he saw influenced the trailing value/visit.
+When using personalization, you can create a test and utilize the engagement value exactly as in A/B – tests to measure success. Note that none of the conditions find their way into the test, only the resulting displayed variants. In other words, it does not matter _why_ a visitor saw a certain variant, only whether the variant he saw influenced the trailing value/visit.
 
 ### Analytics
 As the engagement value is the most important KPI in Sitecore XP, it is expected that it appears all over the Sitecore Analytics. Note that this value correlates to business value, which makes Sitecore Analytics very business focused.
@@ -96,7 +96,7 @@ I mentioned earlier that the engagement value is calculated for each contact, so
 If you look at this list, one visitor stands out: With a high engagement value of 700 and 38 visits so far. This visitor seems to be a very good candidate to hand over to your sales department to follow up on.
 
 ## Conclusion
-For me, the engagement value is one of the most powerful concepts of Sitecore. It focuses heavily on business value, is easy to use and simplifies complex tasks like evaluating the success of a test or campaign to a simple number comparison. It can be used consistently throughout your whole website to assess the value of your content and your contacts and supports your marketers in focusing on the right aspects of your online presence. Whether you can use the Sitecore Marketing features correctly depends on whether you understand the engagement value.
+For me, the engagement value is one of the most powerful concepts of Sitecore. It focuses heavily on business value, is easy to use and simplifies complex tasks like evaluating the success of a test or campaign to a simple number comparison. It can be used consistently throughout your whole website to assess the value of your content **and** your contacts and supports your marketers in focusing on the right aspects of your online presence. Whether you can use the Sitecore Marketing features correctly depends on whether you understand the engagement value.
 
 ## FAQ
 Use this FAQ to verify your understanding of the engagement value or come back if you have a question.
