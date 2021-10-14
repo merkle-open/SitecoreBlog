@@ -102,6 +102,8 @@ If you look at this list, one visitor stands out: With a high engagement value o
 ## Conclusion
 For me, the engagement value is one of the most powerful concepts of Sitecore. It focuses heavily on business value, is easy to use and simplifies complex tasks like evaluating the success of a test or campaign to a simple number comparison. It can be used consistently throughout your whole website to assess the value of your content **and** your contacts, and supports your marketers in focusing on the right aspects of your online presence. Whether you can use the Sitecore Marketing features correctly depends on whether you understand the engagement value.
 
+If you need help in setting up your goals and utilize engagement value, check out the Merkle DACH offering regarding Sitecore: https://merkleinc.ch/en/services/sitecore
+
 ## FAQ
 Use this FAQ to verify your understanding of the engagement value or come back if you have a question.
 
