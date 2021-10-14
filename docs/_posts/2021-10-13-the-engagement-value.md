@@ -111,6 +111,9 @@ The idea of the engagement value is to get a holistic view over the effects of y
 #### Do I have to use the engagement value?
 No, you can always look at each goal separately. Note that this might complicate the use of Sitecore Analytics and some other built-in functionality.
 
+#### What distinguishes the engagement value from classic metrics like visits, pages per visit, visit duration and bounce rate?
+Compared to those classic metrics, the engagement value is much more abstract and business focused. While marketers would have to "translate" how these very concrete metrics relate to your business value, the engagement value measures it directly.
+
 #### I sell 2 products with very different profits. How do I reflect that in Sitecore?
 You should define 2 separate goals with different engagement scores that are relative to the business value, e.g., 100 engagement points for the more profitable product and 60 for the less profitable one.
 
