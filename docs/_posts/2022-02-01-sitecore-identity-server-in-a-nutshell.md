@@ -82,6 +82,7 @@ Example configuration:
 ```
 
 ##### Custom Data
+
 | Tag | Description |
 | ----------- | ----------- |
 | ClientId | Client identifier which is configured in Active Directory (ADFS Application) |
@@ -340,17 +341,23 @@ In the following chapter I will briefly go trough the creation of the project an
 
 To create the plugin which connects the Active Directory using OpenIdConnect, you have to follow the steps below:
 
-1. Create a Class Library project targeting .NET Standard 2.0 framework
+**1. Create Class Library project**
 
-2. Add Sitecore-Identity Nuget source (https://sitecore.myget.org/F/sc-identity/api/v3/index.json)
+Create a Class Library project targeting .NET Standard 2.0 framework.
+
+**2. Add Sitecore-Identity Nuget source**
+
+Nuget Source: (https://sitecore.myget.org/F/sc-identity/api/v3/index.json)
 
 ![alt text](../files/2022/02/nuget-configuration.png "Add Sitecore-Identity Nuget Source")
 
-3. Install required Nuget packages
+**3. Install required Nuget packages**
 
 ![alt text](../files/2022/02/installed-nuget-packages.png "Installed Nuget packages")
 
-4. Create global.json file at the root of the project. It is necessary to specify the version of the package. Be aware, that the version defined in the json-file need to be the same like the version defined in plugin manifest, which we will create afterwards.
+**4. Create global.json** 
+
+Create global.json file at the root of the project. It is necessary to specify the version of the package. Be aware, that the version defined in the json-file need to be the same like the version defined in plugin manifest, which we will create afterwards.
 
 ```JSON
 {
@@ -360,7 +367,9 @@ To create the plugin which connects the Active Directory using OpenIdConnect, yo
 }
 ```
 
-5. Bring down the code for your plugin to connect to Active Directory using OpenIdConnect
+**5. Write the code for the plugin**
+
+Bring down the code for your plugin to connect to Active Directory using OpenIdConnect. Therefore we have to crate the following classes:
 
 **Models**
 
@@ -462,7 +471,9 @@ namespace IdentityProvider.Adfs
 
 That's it for the Class Library.
 
-6. The second part of the solution is a .NET Web Application in order to deploy the files locally. The only thing we have to do here is to build up the folder structure I showed in the very start of the blogpost and add all files to it.
+**6. Add .Net Web Application for local deployment** 
+
+The second part of the solution is a .NET Web Application in order to deploy the files locally. The only thing we have to do here is to build up the folder structure I showed in the very start of the blogpost and add all files to it.
 
 In order to copy the Assembly from our previous created Class Library to our "Deployment Project", we placed a Build Event into the Class Library project. We used xcopy to copy the builded assembly to our folder.
 
