@@ -9,8 +9,9 @@ tags:
 - OrderCloud
 author: cmeiselbach
 ---
+![alt text](../files/2022/02/sugde-virtualmeeting-0222.jpg "SUGDE Virtual Meeting February 2022")
 
-In 2022, Sitecore events started for me on February 10th with the 3rd virtual meeting of the Sitecore Usergroup Germany (SUGDE). This time with a smaller number of topics, but the ones that were presented were really in-depth and complex.
+In 2022, Sitecore events started for me on February 10th with the 3rd virtual meeting of the [Sitecore Usergroup Germany (SUGDE)](https://www.sitecore-usergroup.de/). This time with a smaller number of topics, but the ones that were presented were really in-depth and complex.
 
 ## Topics
 
@@ -18,7 +19,7 @@ In 2022, Sitecore events started for me on February 10th with the 3rd virtual me
 * A first look into Sitecore CDP by Katharina Luger from Merkle Germany GmbH
 
 ## Sitecore OrderCloud - An Introduction
-Friederike ([Blog](https://blog.comspace.de/author/friederike/), [Twitter](https://twitter.com/ilovesitecore)) presented us with one of the newest additions to the Sitecore world: [OrderCloud](https://ordercloud.io/). The product comesg from the Minneapolis company Four51 and was bought by Sitecore in March 2021. It is used by large and highly distributed businesses and brands like 3M, AT&T, Ford, Starbucks, and Subway. Overall, currently mainly for US-customers and their specific market needs.
+Friederike ([Blog](https://blog.comspace.de/author/friederike/), [Twitter](https://twitter.com/ilovesitecore)) presented us with one of the newest additions to the Sitecore world: [OrderCloud](https://ordercloud.io/). The product comes from the Minneapolis company Four51 and was bought by Sitecore in March 2021. It is used by large and highly distributed businesses and brands like 3M, AT&T, Ford, Starbucks, and Subway. Overall, currently mainly for US-customers and their specific market needs.
 
 ### Platform overview
 
@@ -64,7 +65,7 @@ There are a bunch of features to be used. For example:
 * Visibility of Products and Catalogues for Buyer Groups
 * Pricing policies & rules, such as price breaks based on quantity ordered
 * Fulfillment Automation with Supplier Order Management, Payment methods, Email notification and others.
-* Omni-Channel integration were OrderCloud works as a backbone commerce application.
+* Omni-Channel integration where OrderCloud works as a backbone commerce application.
 * Extentable via webhooks or events triggered
 
 OrderCloud can be accessed via API clients for both your own and third-party solutions.
@@ -73,7 +74,7 @@ OrderCloud can be accessed via API clients for both your own and third-party sol
 
 ### Conclusion
 
-Overall, OrderCloud is not a system that you're going to implement for mid-size shops and the typical need, that nearly everything is prepared. It's more of a framework for creating large integrations with multiple services around it. For example, the Portal Dashboard doesn't come with an editor-friendly UI for managing product data, etc. Systems like OrderCloud are mainly used as middleware, product configurations are done in other systems.
+Overall, OrderCloud is not a system that you're going to implement for mid-size shops and the typical need, where nearly everything is prepared. It's more of a framework for creating large integrations with multiple services around it. For example, the Portal Dashboard doesn't come with an editor-friendly UI for managing product data, etc. Systems like OrderCloud are mainly used as middleware, product configurations are done in other systems.
 
 
 ## A first look into Sitecore CDP
