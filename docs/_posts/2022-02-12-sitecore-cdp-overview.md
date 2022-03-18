@@ -75,7 +75,7 @@ Again, as for the Experiments, Experiences will be consistent across all deliver
 
 Wait, why offer**s**, why is that plural?\
 Because Sitecore CDP comes as CDP or as CDP & Personalize.\
-So, the components that look to work so well together, are all available **only** when you use CDP + Personalize. I know what you think and yes, I do agree.\
+So, the components that look to work so well together, are all available **only** when you use CDP + Personalize. I know what you think and yes, I do agree.
 ### Sitecore CDP
 ![CDP Only](../files/2022/02/12/only-cdp.jpg){: width="100%"}
 
