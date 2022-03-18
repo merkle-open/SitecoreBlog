@@ -65,7 +65,7 @@ Experimentation gives the possibility to the Business to create hypothesis and l
 ## The experiences
 ![Data](../files/2022/02/12/experience-animated.gif){: width="100%"}
 
-Experiences enable the Business to deliver the best actions and personalization tailored on a single customer, based its data, business information. The outcome is published consistently across all channels 
+Experiences enable the Business to deliver the best actions and personalization tailored on a single customer, based on its data, business information. The outcome is published consistently across all channels 
 and the Business.\
 Like to the experiments, the Business can use almost no-code templates to publish variations (same restriction applies, if we use very custom templates).\
 Again, as for the Experiments, Experiences will be consistent across all delivery channels anywhere, including progressive profiling banners, alerts, push notifications, and emails.
