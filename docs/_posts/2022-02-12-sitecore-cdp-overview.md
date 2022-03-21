@@ -3,7 +3,7 @@ layout: post
 title:  "Sitecore CDP Overview - Data and Experiment"
 crawlertitle: "sitecore cdp overview data and experiment"
 summary:  "A quick overview on Sitecore CDP - Data and Experiment"
-date:   2022-02-12 12:00:00 +0100
+date:   2022-03-21 12:00:00 +0100
 categories: ['sitecore']
 tags: ['sitecore-cdp']
 author: acelin
