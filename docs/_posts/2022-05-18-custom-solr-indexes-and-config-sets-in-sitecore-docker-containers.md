@@ -1,5 +1,5 @@
 ---
-title:  "Custom solr indexes and config sets in Sitecore Docker containers"
+title:  "Custom Solr indexes and config sets in Sitecore Docker containers"
 date:   2022-05-18 16:00 +0100
 categories:
 - DevOps
@@ -319,7 +319,7 @@ Place this script at /docker/build/solr-init/custom/New-SolrCollection.ps1
 
 ## Set a new entry point
 
-Last step is to add Custom-Start.ps1 as the new entry point for the solr-init container. Therefore we need to customize the Dockerfile of the corresponding image.
+Last step is to add Custom-Start.ps1 as the new entry point for the `solr-init` container. Therefore we need to customize the Dockerfile of the corresponding image.
 
 {% highlight dockerfile %}
 # escape=`
