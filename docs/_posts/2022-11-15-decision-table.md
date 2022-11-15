@@ -1,5 +1,5 @@
 ---
-title:  "Sitecore JSS Update"
+title:  "Sitecore - Lead your project into the right direction with a decision table"
 date:   2022-11-15 12:00:00 +0100
 categories:
 - CMS
@@ -11,7 +11,7 @@ author: aklein
 ---
 
 ![Project Decision Table](../files/2022/11/decision-tables.jpg  "Project Decision Table of merkleinc.com")
-# Sitecore - Navigate your project into the right direction with a decision table
+# Sitecore - Lead your project into the right direction with a decision table
 
 One of the things I have learned over the last twelve years in software development of web projects: Don't underestimate the effort and work around the actual implementation process.
 
