@@ -108,6 +108,7 @@ Please note this is only an example, there is no requirement for being accurate 
 |2022/01/01|Content Migration Strategy|DOE|How do we migrate data from one env to another? For example testing purposes?|Content related data can be individually taken from PROD to other environements (as long there is no customer and/or sensitive data) by Sitecore Package Manager and Install Wizard. There could also DB backups prepared with correction scripts related to environment.|OPEN|---|---|---|
 |---|---|---|---|---|---|---|---|---|
 
+(PO = Product Owner, EA = Enterprise Architect, SA = Software Architect, IT = Information Technology Department, M = Marketing, SEO = SEO Specialist, FE = Frontend Engineer, BE = Backend Engineer, CISO = Chef Information Security Officer/Office, DOE = DevOps Engineer)
 
 There is usually enough space below the table for further comments and details of a specific topic! Or links to related detail pages can be added in addition.
 
