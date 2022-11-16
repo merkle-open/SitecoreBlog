@@ -13,7 +13,7 @@ author: aklein
 # Sitecore - Update Sitecore Next.js JSS solution from 19.0.2 to 20.0.3
 
 For the first time, nothing stands in the way of updating to a newer JSS version, in case that the version is supported by the Sitecore XM/XP version.
-In the case of 19.0.2 to 20.0.3, this is the case. However, for the first time, a plan belongs to every Sitecore update.
+This is the case for the update 19.0.2 to 20.0.3. However, for the first time, a plan belongs to every Sitecore update.
 
 ## Expected plan:
 - Check the changelog of Sitecore: https://github.com/Sitecore/jss/blob/dev/CHANGELOG.md
