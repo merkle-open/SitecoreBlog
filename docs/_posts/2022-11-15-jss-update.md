@@ -17,7 +17,7 @@ This is the case for the update 19.0.2 to 20.0.3. However, for the first time, a
 
 ## Expected plan:
 - Check the changelog of Sitecore: https://github.com/Sitecore/jss/blob/dev/CHANGELOG.md
-- Scaffolding of a new Next.js app on most recent version. For later comparision.
+- Scaffolding of a new Next.js app on most recent version. For later comparison.
 - Creating a folder with a feature update GIT branch. Here we make our first update attempts and can compare the differences directly with the current branch folder.
 - Expected doings
   - Backend: Sitecore XM/XP solution
