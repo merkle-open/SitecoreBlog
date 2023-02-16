@@ -15,7 +15,7 @@ author: tdias
 
 ---
 
-![alt text](../files/2023/02/15/image_0.png "Header Image Words Translation")
+![alt text](../files/2023/02/15/image0.png "Header Image Words Translation")
 
 Sitecore is an excellent content management solution that enables users to create, edit, collaborate, publish, and store digital content. One of the most used and praised out of the box features is the multi-language support for content editing. This of course implies that content needs to be translated with internal or external client resources.  
 
@@ -43,14 +43,14 @@ To create a Translation resource is also quite straightforward:
 6. Select a <strong>“Pricing tier”</strong>. The <strong>"Free F0"</strong> tier is fine for testing. 
 7. Click <strong>“Review + create”</strong> and then <strong>Create</strong>
 
-![alt text](../files/2023/02/15/image_1.jpg "Create Azure Resource")
+![alt text](../files/2023/02/15/image1.jpg "Create Azure Resource")
 
 After the translator resource is created, we need to get the connection details. We will need them to call the translation service from code later.
 1.	Navigate to the Translator resource in the Azure portal
 2.	Click on the <strong>Keys and Endpoint</strong> menu
 3.	Copy the <strong>Key</strong> (Any of the two generated will do) , the <strong>Location/Region</strong> and <strong>TextTranslation</strong>  URL of the Web API. 
 
-![alt text](../files/2023/02/15/image_2.jpg "Azure Resource Key")
+![alt text](../files/2023/02/15/image2.jpg "Azure Resource Key")
 
 # Step 2 - UI To Manage Translations inside Sitecore’s backend
 One of the coolest aspects about Sitecore XP, is that it’s quite flexible when it comes to extending and customizing its features. To guide the content editors through the translation process we decided to create a custom Sitecore command and button that opens a SPEAK UI dialog. 
@@ -63,15 +63,15 @@ Our SPEAK Dialogue will consist of 3 parts
 
 On part one we present the content tree for the user to select the item to translate. We will then pick up all the custom text fields of the selected items.
 
-![alt text](../files/2023/02/15/image_3.jpg "Select items to translate")
+![alt text](../files/2023/02/15/image3.jpg "Select items to translate")
 
 On the second part we display as source the languages where the selected items already have a version (English for the example we show below). All the other languages that are configured to be supported and don’t have a translation yet, show as selectable. The process will create a version for every selected language to store the output of the automatic translation.
 
-![alt text](../files/2023/02/15/image_4.jpg "Select source and target languages")
+![alt text](../files/2023/02/15/image4.jpg "Select source and target languages")
 
 Finally, the last part shows the result of the translation and summarizes each item and field that has been processed.
 
-![alt text](../files/2023/02/15/image_5.jpg "Select source and target languages")
+![alt text](../files/2023/02/15/image5.jpg "Select source and target languages")
 
 # Step 3 - Process the machine translations
 Now that we have our Translator resource on the Azure portal and a UI to collect translation requirements from the content editors, we have everything we need to start translating content automatically from the Sitecore backend.
