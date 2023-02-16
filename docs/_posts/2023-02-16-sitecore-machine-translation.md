@@ -17,7 +17,7 @@ author: tdias
 
 ![alt text](../files/2023/02/15/image_0.png "Header Image Words Translation")
 
-Sitecore is an excellent Content manager solution that enables users to create, edit, collaborate, publish, and store digital content. One of the most used and praised out of the box features is the multi-language support for content editing. This of course implies that content needs to be translated with internal or external client resources.  
+Sitecore is an excellent content management solution that enables users to create, edit, collaborate, publish, and store digital content. One of the most used and praised out of the box features is the multi-language support for content editing. This of course implies that content needs to be translated with internal or external client resources.  
 
 The market provides some excellent human translation services that integrate directly with Sitecore to facilitate this task. But with the evolution of computing power and AI (Artificial Intelligence) technology, we have reached a point where machine translations have enough quality to be also considered given that also have other very interesting advantages.  
 
