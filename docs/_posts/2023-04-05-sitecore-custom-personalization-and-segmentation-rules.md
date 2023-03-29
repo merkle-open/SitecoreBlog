@@ -12,7 +12,7 @@ tags:
 - Sitecore Segmentation Rules
 author: tcanyalcin
 ---
-![alt text](..\files\2023\04\05\melanie-deziel-U33fHryBYBU-unsplash.jpg "Audience")
+![alt text](../files/2023/04/05/melanie-deziel-U33fHryBYBU-unsplash.jpg "Audience")
 
 Photo by <a href="https://unsplash.com/@storyfuel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Melanie Deziel</a> on <a href="https://unsplash.com/photos/U33fHryBYBU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   
@@ -24,20 +24,20 @@ Personalization rules are used to create conditional renderings to personalize a
 
 First, we need to create a new Tag, that will serve as a section in Rule Editor, under /sitecore/system/Settings/Rules/Definitions/Tags:
 
-![alt text](..\files\2023\04\05\1-tags.png "Tags")
+![alt text](../files/2023/04/05/1-tags.png "Tags")
 
 Then, we need to create a new Element Folder with the same name under /sitecore/system/Settings/Rules/Definitions/Elements:
 
-![alt text](..\files\2023\04\05\2-elements.png "Elements")
+![alt text](../files/2023/04/05/2-elements.png "Elements")
 
 Under this new Element Folder, there is a Default item under Tags, we need to select our custom Tag here. We need to do the same for /sitecore/system/Settings/Rules/Conditional Renderings/Tags/Default. So that we can use this item while content editing.
 After that, we can start adding new rules under Element Folder:
 
-![alt text](..\files\2023\04\05\3-element-Folder.png "Element Folder")
+![alt text](../files/2023/04/05/3-element-Folder.png "Element Folder")
 
 Text is what user is going to see when they opened Rule Editor. Here we mention that they can use Sitecore's own String Operator (defined under /sitecore/system/Settings/Rules/Definitions/String Operators):
 
-![alt text](..\files\2023\04\05\4-string-operation.png "String Operation")
+![alt text](../files/2023/04/05/4-string-operation.png "String Operation")
 
 Then we use our parameter name 'accountname' that we are going to use for comparison in the code. 
 We created these conditions for both custom facets and also Sitecore's own Contact Facets.
