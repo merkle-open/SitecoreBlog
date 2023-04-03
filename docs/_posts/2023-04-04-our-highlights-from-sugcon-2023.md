@@ -14,23 +14,27 @@ author: jdosenovic
 
 ![alt text](../files/2023/04/04/sugcon-malaga.png "Our highlights from SUGCON 2023")
 
-Only a year after the successful event in Budapest, SUGCON Europe 2023, the European User Conference of Sitecore, was held in one of the world’s oldest cities, Malaga in Spain. Within the magnificent Convention Center found around Meliá Costa del Sol, 2 days were packed with lots of sessions about all current topics around Sitecore. This was the 8th User Group Conference in Europe and we are so happy we were able to meet the Sitecore Community again in real life.
-Sessions included community speakers and members of the Sitecore product and development teams. The goal of the conference was to share knowledge through the whole community, which includes beginner and advanced-level topics and presentations. The one-and-a-half-day agenda might seem exhausting as it was packed & tight, but was worth it!
+Only a year after the successful event in Budapest, SUGCON Europe 2023, the European User Conference of Sitecore, was held in one of the world’s oldest cities: Malaga in Spain. Within the magnificent Convention Center, found around Meliá Costa del Sol, two days were packed with lots of sessions about all current topics around Sitecore. 
 
-![alt text](../files/2023/04/04/merkle-sitecore.png "Our highlights from SUGCON 2023")
+This was the 8th User Group Conference in Europe and we are so happy we were able to meet the Sitecore Community again in real life.
 
-Total of eight members of Merkle's Sitecore Squad from four different countries boarded planes to Malaga, joining 300 other Sitecore MVPs and experts. These are our highlights from the event. 
+Sessions included community speakers and members of the Sitecore product and development teams. The goal of the conference was to share knowledge through the whole community, which includes beginner and advanced-level topics and presentations. The one-and-a-half-day agenda might seem exhausting as it was packed and tight, but it was worth it!
+
+![alt text](../files/2023/04/04/merkle-sitecore.png "Merkle Sitecore team at SUGCON 2023")
+
+Total of eight members of Merkle's Sitecore Squad from four different countries boarded planes to Malaga, joining 300 other Sitecore MVPs and experts. These are <b>our highlights</b> from the event.
 
 # DAY ONE
 Day one started with Key Note by Sitecore's Chief Product Officer Dave O'Flanagan and a video-call greetings from Sitecore's CEO, Steve Tzikakis. It was nice to hear Steve's visionary approach as he leads Sitecore to greater heights. We are super thankful to Dave for joining us in person for the second year in a raw to provide an update on the company's product strategy and for highlighting key focus for the next year! It was interesting to hear his speech on how it's not enough to have great products, but also how important it is to promote them and put them on the market.
 
 ## Life at the Edge with Vercel and Next.js
 The opening presentation from the main sponsors of the event was a solid insight on how this stack allows developers to create dynamic web experiences at scale and instantly deploy them to a fully-managed, auto-scaling Global Edge Network. Javi Velasco showed us how Vercel and Next.js are helping developers create faster, more personalized, and more reliable web experiences. 
-
-Once the separate sessions started, our team tried to split in a way we would cover all the presentations. Here's what we gathered.
+___
+Once the separate sessions started, our team tried to split in a way we would cover most of the presentations. Here's what we collected.
+___
 
 ## Innovations in Deploy
-Andy Cohen introduced deploys on XM Cloud. ALl new available things are shown, such as environment variables (no integrations with KeyVault or any of the like, yet). It was shown that now, when triggering a deploy, the CM and the RH are separated, so if you only change one, you'll only deploy one. There is also a tab where you can check all your environments, current code source, and option to promote branches. Nice.
+Andy Cohen introduced deploys on XM Cloud. All new available things are shown, such as environment variables (no integrations with KeyVault or any of the like, yet). It was shown that now, when triggering a deploy, the CM and the RH are separated, so if you only change one, you'll only deploy one. There is also a tab where you can check all your environments, current code source, and option to promote branches. Nice.
 
 ## Accelerate website builds with Headless SXA and XM Cloud
 Special kudos go to presentation by Martin Miles. There is a [blog post](https://blog.martinmiles.net/post/ultimate-guide-to-XM-Cloud) which completely covers the presentation and is a great starting point to XM Cloud. We highly recommend it!
@@ -40,7 +44,7 @@ The message we took home from the presentation by Steven Davis was: Only use Ord
 <span style="display:block;text-align:center">![alt text](../files/2023/04/04/ordercloud-modularity.jpg "How OrderCloud Supports Modularity")</span>
 
 ## Connecting Customer Experience: Why Composability is Key to Integrated CX session
-One of the highlights from the first day was the session by Daniel Delay. He started the presentation by explaining the challenges that Digital Marketers face today (So many channels, so many technologies with so many different responsibilities) and gave an overview on how Sitecore marketing products evolved over time
+One of the highlights from the first day was the session by Daniel Delay. He started the presentation by explaining the challenges that Digital Marketers face today (so many channels, so many technologies with so many different responsibilities) and gave an overview on how Sitecore marketing products evolved over time
 
 * Sitecore OMS → Online Marketing Suite
 * Sitecore DMS → Digital Marketing System
@@ -58,15 +62,15 @@ In order to make a bridge between old and new Sitecore products, Daniel illustra
 
 Daniel also exposed his perspective on the benefits of the composable approach such as faster time to value, best-of-breed approach, customer centric, flexibility to integrate with existing marketing stack, specifically tailored end solution and technology freedom.
 
-Finally, he explain why Sitecore connect is the key on this ecosystem and how it will enable Marketers to have a better view of who their customers are (365 customer view).
+Finally, he explained why Sitecore connect is the key in this ecosystem and how it will enable Marketers to have a better view of who their customers are (365 customer view).
 
 ## Hacking Sitecore
-Thomas Stern's session went about how many CVE's there are that are related to Sitecore. Good links to check are: https://www.cve.org/ and https://cve.mitre.org/. It was showed how one could go about exploiting one of those CVE's, as one of them has been discovered by the speaker himself. Most of them should be hard to accomplish, as they need to have firewall down, or have some admin account details, or even both. Anyway, if you're under Sitecore 9 you should take extra care and check the links above.
+Thomas Stern's session was about how many CVEs there are that are related to Sitecore. Good links to check are: https://www.cve.org/ and https://cve.mitre.org/. It showed how one could go about exploiting one of those CVEs, as one of them has been discovered by the speaker himself. Most of them should be hard to accomplish, as they need to have firewall down, or have some admin account details, or even both. Anyway, if you're under Sitecore 9, you should take extra care and check the links above.
 
-Take away from the session was, of course, every Sitecore version under 10.1 should be updated because it has multiple security holes (especially solr).
+Takeaway from the session was, of course, that every Sitecore version under 10.1 should be updated because it has multiple security holes (especially solr).
 
 ## 5 Content Hub hidden gems to level up your integration project
-Presentation for Content Hub Developers highlighting some features and showing some tips and tricks.
+During his presentation for Content Hub Developers, Szymon Kuzniak highlighted some features and showed some tips and tricks.
 
 * Usage of transformations instead of renditions:
 Transformations are transient versions of images that can be generated on the fly (while renditions are persistent). Note that transformations only support smart crop or center crop.
@@ -76,7 +80,7 @@ You can integrate and subscribe to an Azure message bus to debug content hub
 
 
 ## Crafting rock-solid secure composable Sitecore SaaS-based applications 
-This is not Sitecore specific presentation it is applicable to every Saas application and things you should consider to have secured solution.
+Vasiliy Fomichev gave a non-Sitecore specific presentation, since it's actually applicable to every SaaS application and things you should consider to have secured solution.
 Having application in cloud and publicly available raises additional security threats and on slides you can find recopies to avoid them.
 
 * Implement Front Door to reduce traffic
@@ -120,11 +124,11 @@ How to deploy?
 Create packages and use them!
 
 ## XM Cloud and Content Hub One Battle Royale 
-Rick Bauer and Richard Seal showed interesting comparison of XM Cloud and Content Hub ONE features and approaches with a predictable outcome: they cannot be easily compared because they are intended for very difference use cases. Content Hub ONE seems to have very limited features, the obvious one being missing multilanguage support.
+Rick Bauer and Richard Seal showed interesting comparison of XM Cloud and Content Hub ONE features and approaches with a predictable outcome: they cann't be easily compared because they are intended for very difference use cases. Content Hub ONE seems to have very limited features, the obvious one missing is multilanguage support.
 
 
 ## Award Ceremony and Community Quiz Night
-Huge congratulations to all the MVPs! It's amazing to see how diverse the community is and how many of you there is each year! Keep on rocking and thank you for all the help you're providing us throught the year.
+Huge congratulations to all the MVPs! It's amazing to see how diverse the community is and how many of you there is each year! Keep on rocking and thank you for all the help you're providing us throughout the year.
 
 After all the insights we heard about Sitecore, we can't go on without mentioning the stars of the first night, Rodrigo Peplau & Sebastian Winter. What a performance! Thank you for putting the smiles on our faces. It was a delight to listen to you and made us feel happy to be part of this community. We would love to have those versions of the songs in our playlists.
 
@@ -134,24 +138,24 @@ Special congrats to Merkle's Sitecore Solutions Director, Markus Klimmasch for g
 
 # DAY TWO
 
-Day 2 started early in the morning with the Insight to the Content Hub ONE. It was a great awakening to a new day after an exiting evening spent with the community members!
+Day two started early in the morning with the Insight to the Content Hub ONE. It was a great awakening to a new day after an exiting evening spent with the community members!
 
 ## The new Sitecore meets (or beats) the old Sitecore...
 This theatrical introduction to XM Cloud by Klaus Petersen and Pushpaganan Nagarajan was truly enjoyable. Everything that was discussed can also be read in [Martin Miles' blog post](https://blog.martinmiles.net/post/ultimate-guide-to-XM-Cloud). 
 
 ## Migrating advanced Sitecore implementations to XM Cloud
 
-If you consider moving to XM cloud or you want to see direction where Sitecore is going with new products, this was a very useful presentation.
-In photos below you can find map between old XP functionality and new product which are not part of XM cloud so if you need that functionality you need to redesign solution to use new product before migration
+If you consider moving to XM cloud, or you want to see direction where Sitecore is going with new products, this was a very useful presentation.
+In photos below you can find map between old XP functionality and new products which are not part of XM cloud so, if you need that functionality, you need to redesign solution to use new product before migration.
 
 * Use JSS Next.js instead of old MVC
-* Use GraphQL instead of custom content resolver (since content resolver behave differently, resolved at publish time instead of runtime)
+* Use GraphQL instead of custom content resolver (since content resolver behaves differently, resolved at publish time instead of runtime)
 * Calculate Delta before starting migration to better define migration plan
 
 <span style="display:block;text-align:center">![alt text](../files/2023/04/04/Not-In-XM-Cloud-technically.jpg "Not-In-XM-Cloud Technically")</span>
 <span style="display:block;text-align:center">![alt text](../files/2023/04/04/Not-In-XM-Cloud-functionally.jpg "Not-In-XM-Cloud Functionally")</span>
 
-Benefits of migration
+Benefits of migration:
 
 * Upgrade to newer versions
 * Better architecture
@@ -274,10 +278,10 @@ They used the crawler for indexing, but if they could do it again they would use
 Sitecore Search currently doesn't offer an SDK or embeddable widgets which creates quite a bit of work for the integration into the frontend. However, this is on Sitecore's roadmap.
 
 ## Virtual Closing Keynote by Scott Hanselman
-Last, but definitely not least, we would like to give kudos to whoever organized Virtual Closing Keynote and to Scott Hanselman himself. What an inspiring and motivating session that was, wow! There are so many notes we took with us that it deserves it's own blog post, but one of the most important ones would be: <b>"Find a mentor! You're never to old to get a good advice!"</b>
+Last, but definitely not least, we would like to give kudos to whoever organized Virtual Closing Keynote and to Scott Hanselman himself. What an inspiring and motivating session that was, wow! There are so many notes we took with us that it deserves it's own blog post, but one of the most important ones would be: <b>"Find a mentor! You're never too old to get a good advice!"</b>
 
 <span style="display:block;text-align:center">![alt text](../files/2023/04/04/believe-in-you.jpg "Scott Hanselman Believe in yourself")</span>
 
-## Summary
+# Summary
 Attending SUGCON Europe 2023 was an exciting experience for Merkle's Sitecore squad! It was a privilege to be a part of one of the largest Sitecore events, where we had the chance to meet with the most brilliant minds in our industry. Our team felt incredibly grateful to be part of such a talented and knowledgeable community. Thank you to all the organizers, speakers and sponsors for making this event possible.
 We are looking forward to next year's conference. Hasta la próxima!
