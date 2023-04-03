@@ -35,9 +35,23 @@ After that, we can start adding new rules under Element Folder:
 
 ![alt text](../files/2023/04/05/3-element-Folder.png "Element Folder")
 
-Text is what user is going to see when they opened Rule Editor. Here we mention that they can use Sitecore's own String Operator (defined under /sitecore/system/Settings/Rules/Definitions/String Operators):
+Text is what user is going to see when they opened Rule Editor. The brackets contain four comma separated positional parameters:
+
+1. operatorid, accountname: The name of the property that the parameter sets in the .NET class that implements the
+condition
+2. StringOperator: Which user interface to activate when user clicks, could be anything available under /sitecore/system/Settings/Rules/Definitions/Macros or could be an empty string
+3. URL paramaters for user interface activated by previous macro parameter, empty in our cases since we are using String Operators
+4. compares to, specific value: The text that is displayed if user does not select any value for the parameter
+
+String Operator (defined under /sitecore/system/Settings/Rules/Definitions/String Operators):
 
 ![alt text](../files/2023/04/05/4-string-operation.png "String Operation")
+
+accountname becomes the parameter in the condition: 
+
+```C#
+public string AccountName { get; set; }
+```
 
 Then we use our parameter name 'accountname' that we are going to use for comparison in the code. 
 We created these conditions for both custom facets and also Sitecore's own Contact Facets.
@@ -188,7 +202,9 @@ we have to keep it simple and use the following:
 ```C#
 contact.Personal().FirstName != null && contact.Personal().FirstName != string.Empty
 ```
-This is because the Sitecore predicate engine is throwing an error 'YourLinqIsTooStrongException' in Rule Editor and basically wants us to write simplified code here.
+This is because the Sitecore predicate engine is throwing an error 'YourLinqIsTooStrongException' in Rule Editor and basically wants us to write simplified code here. 
+
+There is a list of methods/operators from Sitecore available here [link](https://doc.sitecore.com/xp/en/developers/100/sitecore-experience-platform/supported-methods-and-operators-for-xconnect-search.html)
 
 ### PII Sensitive Data
 
