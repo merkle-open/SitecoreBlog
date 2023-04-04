@@ -7,6 +7,10 @@ categories:
 tags:
 - sitecore
 - sugcon
+- XM Cloud
+- Sitecore Search
+- Migration
+- Content Hub
 author: jdosenovic
 ---
 
