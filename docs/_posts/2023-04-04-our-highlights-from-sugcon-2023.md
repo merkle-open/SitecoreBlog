@@ -14,8 +14,6 @@ tags:
 author: jdosenovic
 ---
 
-## Our highlights from SUGCON 2023
-
 ![alt text](../files/2023/04/04/sugcon-malaga.png "Our highlights from SUGCON 2023")
 
 Only a year after the successful event in Budapest, SUGCON Europe 2023, the European User Conference of Sitecore, was held in one of the world’s oldest cities: Malaga in Spain. Within the magnificent Convention Center, found around Meliá Costa del Sol, two days were packed with lots of sessions about all current topics around Sitecore. 
@@ -69,7 +67,7 @@ Daniel also exposed his perspective on the benefits of the composable approach s
 Finally, he explained why Sitecore connect is the key in this ecosystem and how it will enable Marketers to have a better view of who their customers are (360° customer view).
 
 ## Hacking Sitecore
-Thomas Stern's session was about how many CVEs there are that are related to Sitecore. Good links to check are: https://www.cve.org/ and https://cve.mitre.org/. It showed how one could go about exploiting one of those CVEs, as one of them has been discovered by the speaker himself. Most of them should be hard to accomplish, as they need to have firewall down, or have some admin account details, or even both. Anyway, if you're under Sitecore 9, you should take extra care and check the links above.
+Thomas Stern's session was about how many CVEs there are that are related to Sitecore. Good links to check are: [www.cve.org](https://www.cve.org/) and [cve.mitre.org](https://cve.mitre.org/). It showed how one could go about exploiting one of those CVEs, as one of them has been discovered by the speaker himself. Most of them should be hard to accomplish, as they need to have firewall down, or have some admin account details, or even both. Anyway, if you're under Sitecore 9, you should take extra care and check the links above.
 
 Takeaway from the session was, of course, that every Sitecore version under 10.1 should be updated because it has multiple security holes (especially solr).
 
@@ -287,6 +285,6 @@ Last, but definitely not least, we would like to give kudos to whoever organized
 Attending SUGCON Europe 2023 was an exciting experience for Merkle's Sitecore squad! It was a privilege to be a part of one of the largest Sitecore events, where we had the chance to meet with the most brilliant minds in our industry. Our team felt incredibly grateful to be part of such a talented and knowledgeable community. Thank you to all the organizers, speakers and sponsors for making this event possible.
 
 
-If you want to read more abour our team and partnership with Sitecore, don't hesitate to visit our page and contact Merkle: https://merkleinc.ch/angebot/sitecore 
+If you want to read more abour our team and partnership with Sitecore, don't hesitate to visit [our page](https://merkleinc.ch/angebot/sitecore) and contact Merkle. 
 
 We are looking forward to next year's conference. Hasta la próxima!
