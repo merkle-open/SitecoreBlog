@@ -39,23 +39,23 @@ Finally, Marcello gave some great examples of quirky edge cases and pitfalls esp
 
 ## Sitecore Connect: the next product
 
-The third presentation was an introduction to Sitecore Connect by Anna Bründel.
+The third presentation was an introduction to [Sitecore Connect](https://www.sitecore.com/blog/digital-transformation/what-is-sitecore-connect) by Anna Bründel.
 
 First, she gave an overview of all the new terms that come with Sitecore Connect, which helped me a lot in making more sense of the product. However, I will surely need a couple of rereads of the documentation to memorize the complete terminology. :)
 
 But by far the most interesting part was seeing Sitecore Connect in action. Anna presented her PoC on how she connected an Order Cloud shop to an order fulfillment tool, which included bidirectional communication between both systems. She showed how a custom connection can be added to Sitecore Connect.
 
-Adding to this demo, Christian Hahn then presented some more complex workflows with Sitecore Connect, also with a live demo of how he implemented a comment section moderation tool that automatically flags and reports harmful comments by integrating Open AI via Sitecore Connect.
+Adding to this demo, Christian Hahn then presented some more complex workflows with Sitecore Connect, also with a live demo of how he implemented a [comment section moderation tool](https://platform.openai.com/docs/guides/moderation/overview) that automatically flags and reports harmful comments by integrating Open AI via Sitecore Connect.
 
 ## XM Cloud Components in Action
 
-And last but definitely not least was Sebastian Winter with his presentation on XM Cloud Components.
+And last but definitely not least was Sebastian Winter with his presentation on [XM Cloud Components](https://www.youtube.com/watch?v=xeJ0X2aAyrg).
 
 The tool is currently in the early access phase, so it was awesome to see some hands-on live demos, of which we got a lot thankfully.
 
 Components will give marketers the power to easily create new components to use in XM Cloud, without the need to write any code. The creation process looked very simple, and in a few clicks, we saw how a hero component was put together. I am looking forward to getting some firsthand experience with this feature as soon as it is released.
 
-## Wrapup
+## Wrap-up
 All in all, it was a fantastic day. I learned a lot, and I especially enjoyed meeting so many people from across or even beyond the country.
 
 Again, a big thank you to the SUGDE organizers for bringing us all together, and until next time.
