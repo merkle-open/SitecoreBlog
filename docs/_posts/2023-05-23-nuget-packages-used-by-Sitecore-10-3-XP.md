@@ -1,5 +1,5 @@
 ---
-title: "nuget-packages used by Sitecore 10.3 XP"
+title: "NuGet-Packages used by Sitecore 10.3 XP"
 date: 2023-05-23 16:00:00 +0100
 categories:
 - Sitecore
