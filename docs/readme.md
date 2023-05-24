@@ -18,6 +18,7 @@ If you decided on the file format then copy one of the following predefined temp
 Replace the "YYYY-MM-DD" part with the intended publish date (e.g. 2021-01-28). Then replace the "name-of-post" part with the intended name of the post. Please keep in mind that this name will be part of the URL of your post. Therefore, for best SEO results follow those simple guidelines:
 
 - Always use dashes (-) instead of blanks ( )
+- Do not use dots (.) in file names, use also dashes (-) instead
 - Incorporate the main keywords which you want the post to be found for in search engines
 - Just by reading this name, the visitor should get a good understanding of what the post is about
 - Keep it as short as possible
