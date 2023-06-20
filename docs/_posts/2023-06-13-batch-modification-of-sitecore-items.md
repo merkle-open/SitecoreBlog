@@ -63,7 +63,7 @@ Another great feature is the replacement of text in all fields of items recursiv
 
 ![alt text](../files/2023/06/13/07%20Replace%20Text%20Original.png "Screenshot: Example of text to be replaced")
 
-Apply the same steps to get to the Search Operations, then choose the option _Search and replace_. In the new window, replace the text before the _pipe_ (|) with the text you want to find and after the pipe with the text you want to replace it with. In my case that translates to
+Apply the same steps to get to the Search Operations, then choose the option _Search and replace_. In the new window, replace the text before the _pipe_ (\|) with the text you want to find and after the pipe with the text you want to replace it with. In my case that translates to
 
     that should be replaced|that has been replaced
 
