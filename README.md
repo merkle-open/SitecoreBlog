@@ -3,7 +3,7 @@ From this repository we serve you additional data and downloadable content from 
 
 ### Stay up-to-date with developments, hints and insights in the Sitecore-verse by following us
 
-…on our [Merkle Sitecore Blog](https://sitecore.namics.com/?utm_source=github&utm_medium=readme&utm_campaign=ourfuture_superstars)
+…on our [Merkle Sitecore Blog](https://sitecore.merkle.com/?utm_source=github&utm_medium=readme&utm_campaign=ourfuture_superstars)
 
 
 # Interested to join our fabulous .NET team at Merkle?
