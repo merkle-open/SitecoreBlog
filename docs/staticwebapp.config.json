@@ -1,10 +1,10 @@
 {
     "forwardingGateway": {
         "requiredHeaders": {
-            "X-Azure-FDID": "${{ secrets.AZURE_FRONTDOOR_ID }}"
+            "X-Azure-FDID": "4f92c597-5a53-4c0e-9031-a81baf034c20"
         },
         "allowedForwardedHosts": [
-            "${{ secrets.BLOG_DOMAIN }}"
+            "sitecore.merkle.com"
         ]
     }
 }
