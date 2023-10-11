@@ -1,0 +1,10 @@
+{
+    "forwardingGateway": {
+        "requiredHeaders": {
+            "X-Azure-FDID": "${{ secrets.AZURE_FRONTDOOR_ID }}"
+        },
+        "allowedForwardedHosts": [
+            "${{ secrets.BLOG_DOMAIN }}"
+        ]
+    }
+}
