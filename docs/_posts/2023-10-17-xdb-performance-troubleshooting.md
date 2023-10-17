@@ -1,6 +1,6 @@
 ---
 title: "xDB Performance Troubleshooting"
-date: 2023-09-20 16:00:00 +0100
+date: 2023-10-17 00:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -9,7 +9,7 @@ tags:
 - xDB
 author: javelar
 ---
-![alt text](../files/2023/09/20/header.jpg "Header")
+![alt text](../files/2023/10/17/header.jpg "Header")
 
 Photo by panumas nikhomkhai: https://www.pexels.com/@cookiecutter/ 
   
@@ -37,12 +37,12 @@ ORDER BY Count DESC
 
 It’s expected that most contacts will have less than 1k interactions. According to Sitecore support, contacts with more than 1K interactions can be considered suspicious. They are probably not a real user but a bot or another automated process instead. These can significantly contribute with a lot of invalid data and need to be purged from the xDB.
 
-![alt text](../files/2023/09/20/suspiciouscontacts.jpg "suspicious xDB contacts")
+![alt text](../files/2023/10/17/suspiciouscontacts.jpg "suspicious xDB contacts")
 
 
 ### Clean xDB of suspicious contacts
 
-If you stumble upon contacts that raise suspicions about their authenticity, it's essential to take action you should either delete the contact or at least get rid of the excessive amount of interactions.
+If you stumble upon contacts that raise suspicions about their authenticity, it's essential to take action. You should either delete the contact or at least get rid of the excessive amount of interactions.
 You can easily do this by using the xConnect API. Bellow there is a quick code snipped that demonstrates how to do it. Sitecore also has the whole process documented [here](https://doc.sitecore.com/xp/en/developers/103/sitecore-experience-platform/deleting-contacts-and-interactions-from-the-xdb.html)
 
 {% highlight ruby %}
@@ -93,14 +93,14 @@ delete FROM [xdb_collection].[ContactIdentifiersIndex] where ContactId = '<conta
 
 Finally, after cleaning up xDB, you should [reindex the xDB search index](https://doc.sitecore.com/xp/en/developers/103/sitecore-experience-platform/rebuilding-the-xdb-search-index.html).
  
-### Defragmenting xDB 
+### Defragmenting xDB
 
-Having contacts with excessive interactions are also very likely to fragment your database. If your fragmentation index is high – like on the image bellow - you will need to reorganize or rebuild the DBs indexes.
+Having contacts with excessive interactions are also very likely to fragment your database indexes. If your have several indexes with high fragmentation – as seen on the image bellow - you will need to reorganize or rebuild the DBs indexes.
 
-![alt text](../files/2023/09/20/indexes.jpg "xDB Indexes")
+![alt text](../files/2023/10/17/indexes.jpg "xDB Indexes")
 
 
-There are several ways to do this. The following [link](https://www.sqlshack.com/how-to-identify-and-resolve-sql-server-index-fragmentation) provides an excellent guide on how to check and address fragmentation
+There are several ways to do this. The following [link](https://www.sqlshack.com/how-to-identify-and-resolve-sql-server-index-fragmentation) provides an excellent guide on how to check and address fragmentation.
 
 ### Enable AUTO_UPDATE_STATISTICS_ASYNC
 
@@ -111,11 +111,11 @@ You can try to enable AUTO_UPDATE_STATISTICS_ASYNC by running the following quer
 ALTER DATABASE <DBNAME> SET AUTO_UPDATE_STATISTICS_ASYNC ON.
 {% endhighlight %}
 
-When you enable this feature, you're giving [SQL Server Query Optimizer](https://learn.microsoft.com/en-us/sql/relational-databases/query-processing-architecture-guide?view=sql-server-ver16) the green light to skip the wait for statistics updates. It immediately leaps into action, running your query with the freshest stats on hand. Meanwhile, behind the scenes, it still triggers a separate to update those statistics asynchronously.
+When you enable this feature, you're giving [SQL Server Query Optimizer](https://learn.microsoft.com/en-us/sql/relational-databases/query-processing-architecture-guide?view=sql-server-ver16) the green light to skip the wait for statistics updates. It immediately leaps into action, running your query with the freshest stats on hand. Meanwhile, behind the scenes, it still triggers a separate thread to update those statistics asynchronously.
 
 This has been suggested to us by Sitecore support with the disclaimer that it’s still being fully tested on Sitecore side and planned to be included in a future release (after Sitecore XP 10.3). But the performance improvements are dramatic. As you can see on the picture bellow, DTU usage dropped drastically after we activated this setting.
 
-![alt text](../files/2023/09/20/performance.jpg "xDB DTU Performance")
+![alt text](../files/2023/10/17/performance.jpg "xDB DTU Performance")
 
 
 ### Increase the number of shards
