@@ -57,7 +57,7 @@ You should have.
 
 ### Setup Rendering Host
 
-This is the default rendering host setting for the Headless SXA. The location of rendering host lies in Site Template in Settings node of the Site. The Default rendering host can be found on below location.
+This is the default rendering host setting for the Headless SXA. The location of the rendering host lies in the Site Template in the Settings node of the Site. The Default rendering host can be found on the below location.
 
 {% highlight ruby %}
 sitecore/system/Settings/Services/Rendering Hosts/Default 
