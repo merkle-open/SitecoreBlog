@@ -186,7 +186,7 @@ After updating the above path, please scroll down and find the config named <b> 
 
 ![alt text](../files/2023/12/01/24-Set-Sitecore-JSS-Editing-Secret-In-App-Config.png "Set Sitecore JSS Editing Secret In App Config")
 
-After updating the above file, please go to the adjacent file (demo-app.deploysecret.config for the above demo) for deployment secret and copy the same. Please go to .env file at the root of the project and paste the same to <b>JSS_EDITING_SECRET</b>. Copy the API key from Sitecore and paste it to <b>SITECORE_API_KEY</b>. After the above changes, your file will look like below.
+After updating the above file, please go to the adjacent file (demo-app.deploysecret.config for the above demo) for the deployment secret and copy the same. Please go to .env file at the root of the project and paste the same to <b>JSS_EDITING_SECRET</b>. Copy the API key from Sitecore and paste it to <b>SITECORE_API_KEY</b>. After the above changes, your file will look like below.
 
 ![alt text](../files/2023/12/01/25-Set-Environment-Variables.png "Set Environment Variables")
 
