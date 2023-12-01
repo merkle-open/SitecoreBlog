@@ -51,7 +51,7 @@ You should have.
 
 ![alt text](../files/2023/12/01/06-Headless-Site-Creation-Successful.png "Headless Site Creation Successful")
 
-- After your Site is created, you will see a new site node in the Tenant with all the created item structure like in non-headless SXA. 
+- After your Site is created, you will see a new site node in the Tenant with all the created item structures like in non-headless SXA. 
 
 ![alt text](../files/2023/12/01/07-New-Headless-SXA-Site.png "New Headless SXA Site")
 
