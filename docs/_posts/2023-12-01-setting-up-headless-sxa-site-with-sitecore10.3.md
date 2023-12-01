@@ -17,7 +17,7 @@ Photo by panumas nikhomkhai: https://www.pexels.com/@cookiecutter/
 
 
 ## Introduction
-With release of Sitecore 10.3, Sitecore also released headless version of existing SXA framework. This is based on existing Sitecore headless framework namely JSS. But the process of deployment a headless SXA site is different from normal JSS solution. In this article, we will deal with deployment of headless SXA site to Sitecore 10.3.
+With the release of Sitecore 10.3, Sitecore also released a headless version of the existing SXA framework. This is based on the existing Sitecore headless framework namely JSS. But the process of deploying a headless SXA site is different from the normal JSS solution. In this article, we will deal with the deployment of a headless SXA site to Sitecore 10.3.
 
 
 ### Prerequisite
