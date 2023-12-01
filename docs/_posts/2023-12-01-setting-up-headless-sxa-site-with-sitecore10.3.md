@@ -182,7 +182,7 @@ In the above config, update the sitecorePath with the path of your site in the h
 
 ![alt text](../files/2023/12/01/23-Set-Sitecore-Path-In-App-Config.png "Set Sitecore Path In App Config")
 
-After updating the above path, please scroll down and find the config named <b> JavaScriptServices.ViewEngine.Http.JssEditingSecret </b> and uncomment the same. please go to the adjacent file (demo-app.deploysecret.config for the above demo) for deployment secret and copy the same and update in in the above config. It will look like this below.
+After updating the above path, please scroll down and find the config named <b> JavaScriptServices.ViewEngine.Http.JssEditingSecret </b> and uncomment it. Please go to the adjacent file (demo-app.deploysecret.config for the above demo) for the deployment secret, copy the same, and update in the above config. It will look like this below.
 
 ![alt text](../files/2023/12/01/24-Set-Sitecore-JSS-Editing-Secret-In-App-Config.png "Set Sitecore JSS Editing Secret In App Config")
 
