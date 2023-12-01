@@ -39,7 +39,7 @@ You should have.
 
 ![alt text](../files/2023/12/01/03-Create-Headless-Site.png "Create Headless Site")
 
-- After clicking insert Headless Site, a popup will appear. In the <b>General Tab</b>, please enter the new Site Name and keep all the existing settings same. 
+- After clicking insert Headless Site, a pop-up will appear. In the <b>General Tab</b>, please enter the new Site Name and keep all the existing settings same. 
 
 ![alt text](../files/2023/12/01/04-Set-Headless-Site-General-Settings.png "Set Headless Site General Settings")
 
