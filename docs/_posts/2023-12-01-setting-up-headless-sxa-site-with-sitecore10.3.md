@@ -223,7 +223,7 @@ jss start:connected
 
 ![alt text](../files/2023/12/01/29-Running-JSS-App-First-Time.png "Running JSS App First Time")
 
-After this, your app will run and you need to open <b>localhost:3000</b>(if this port is not already being used) . There you will see a blank page.
+After this, your app will run and you need to open <b>localhost:3000</b> (if this port is not already being used). There you will see a blank page.
 
 ![alt text](../files/2023/12/01/30-Preview-Of-Running-JSS-App.png "Preview Of Running JSS App")
 
