@@ -47,7 +47,7 @@ You should have.
 
 ![alt text](../files/2023/12/01/05-Set-Headless-Site-Modules-Settings.png "Set Headless Site Modules Settings")
 
-- It will take some time to create the Site. It will show the below pop up after creation.
+- It will take some time to create the Site. It will show the below pop-up after creation.
 
 ![alt text](../files/2023/12/01/06-Headless-Site-Creation-Successful.png "Headless Site Creation Successful")
 
