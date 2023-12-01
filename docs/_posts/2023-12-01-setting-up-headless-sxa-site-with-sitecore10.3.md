@@ -82,7 +82,7 @@ We need to create an API key for our headless application. Please navigate to th
 
 ![alt text](../files/2023/12/01/10-Create-JSS-API-Key.png "Create JSS API Key")
 
-Set the Value of <b>CORS Origin</b> and <b>Allowed Controllers</b> to <b>*</b> We will use the ID of this item as API Key in our JSS application setup later. 
+Set the Value of <b>CORS Origin</b> and <b>Allowed Controllers</b> to <b>*</b>. We will use the ID of this item as API Key in our JSS application setup later. 
 
 ![alt text](../files/2023/12/01/11-Set-JSS-API-Key-Settings.png "Set JSS API Key Settings")
 
