@@ -10,7 +10,7 @@ tags:
 - DevOps
 author: ryilmaz
 ---
-![alt text](../files/2023/12/04/header.jpg "Header")
+![alt text](../files/2023/12/06/header.jpg "Header")
 
 Photo by <a href="https://www.pexels.com/@pixabay/">Pixabay</a> on <a href="https://www.pexels.com/photo/abstract-bright-close-up-color-268460">Pexels</a>
 
@@ -19,6 +19,8 @@ Since we occasionally had the case that some pages no longer looked quite as the
 
 ## Usage of BackstopJS
 BackstopJS runs through a predefined list of pages on a website, takes screenshots, and compares these screenshots to highlight any changes. It can be run locally and can be easily integrated into a pipeline.
+
+# Local usage
 
 ## Installation
 Open a command prompt and type the following command, to install BackstopJS globally:
@@ -161,8 +163,155 @@ After the test has been run, the ```index.html``` from ```.\backstop_data\html_r
 ![alt text](../files/2023/12/06/02-diff.png "Diff")
 The magenta colored areas show the difference between the screenshots. In this case, the dots were slightly shifted and can be ignored.
 
-## Integration to Azure Pipelines
-TODO
+# Integration to Azure DevOps Pipeline
+
+## Prerequisites
+
+### Include configs in your repository
+Before you change the pipeline, you must check in the config files created and customized by BackstopJS in the repository.
+
+### Set tokens to replace later
+If you have several environments that are to be tested, it makes sense to use a configuration file in which the URL is defined as a token that can be replaced in different stages. Here we defined ```$(Target.WebsiteUrl)``` that will be replaced by ```https://www.merkle.com/```.
+
+{% highlight ruby %}
+"scenarios": [
+    {
+      "label": "Merkle DACH Homepage en",
+      "cookiePath": "backstop_data/engine_scripts/cookies.json",
+      "url": "$(Target.WebsiteUrl)/dach/en",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "",
+      "delay": 300,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "postInteractionWait": 0,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
+    },
+{% endhighlight %}
+
+### Create a storage
+In order to store the test results somewhere, a storage must first be created, e.g. an Azure Blob Storage can be used for this.
+
+## Steps on Azure DevOps
+
+### Set variable CurrentDateTime
+Unfortunately, there is no variable like a timestamp that we could use to add to the file name when we archive the backstop data. Therefore, we added a variable called CurrentDateTime which we set on the step "Set-DeploymentVariables.ps1". If there is not already a defined step that sets deployment variables, you can define a new step dedicated to this. It could look like the following:
+
+Unfortunately, there is no variable like a timestamp that we could use to add to the file name when we archive the backstop data. Therefore, we added a variable called ```CurrentDateTime```, which we set in the ```Set CurrentDateTime``` step. The script looks as follows:
+
+{% highlight yaml %}
+steps:
+- powershell: |
+   $dateStr = (Get-Date).ToString('yyyy-MM-dd-hh-mm-ss')
+   Write-Output "##vso[task.setvariable variable=CurrentDateTime;]$dateStr"
+    
+  displayName: 'Set CurrentDateTime'
+{% endhighlight %}
+
+### Define BackstopConfig path
+Add a variable with the name ``BackstopConfig`` and set it to the path of the checked-in file ```backstop.json```.
+
+### Replace tokens
+Use the task [Replace token](https://github.com/colindembovsky/cols-agent-tasks/tree/main/Tasks/ReplaceTokens) to replace the website URL. In this case, ```Target.WebsiteUrl`` is a variable defined in the pipeline. The step could look like this:
+
+{% highlight yaml %}
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
+  displayName: 'Replace tokens in Backstop config'
+  inputs:
+    sourcePath: '$(System.DefaultWorkingDirectory)/_WebsiteFiles'
+    filePattern: backstop.json
+    tokenRegex: '\$\((.+)\)'
+{% endhighlight %}
+
+### Install NodeJS
+Use the [Node.js tool installer](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/node-tool-v0?view=azure-pipelines) and install version 14.x
+
+{% highlight yaml %}
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: 14.x
+{% endhighlight %}
+
+### Install BackstopJS
+Install BackstopJS using the [Command line task](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/cmd-line-v2?view=azure-pipelines&viewFallbackFrom=azure-devops)
+
+{% highlight yaml %}
+steps:
+- script: 'npm install -g backstopjs'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/_WebsiteFiles'
+  displayName: 'Install BackstopJS'
+{% endhighlight %}
+
+### Init BackstopJS
+Use again the Command line task and run the following command
+
+{% highlight yaml %}
+call backstop test --config="$(BackstopConfig)"
+call backstop approve
+{% endhighlight %}
+
+### Deploy your app
+Now you have to deploy your web app and warm up your cd instance.
+
+### Test BackstopJS
+Run the test and make sure that a failed test does not cause the pipeline to stop. Since BackstopJS will most likely return some false positives, this could lead to an unwanted stop of the pipeline. Set ```continueOnError: true``.
+
+{% highlight yaml %}
+variables:
+  BackstopConfig: '"$(System.DefaultWorkingDirectory)/_WebsiteFiles/backstop.json"'
+ 
+steps:
+- script: 'call backstop test --config="$(BackstopConfig)"'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/_WebsiteFiles'
+  displayName: 'Test BackstopJS'
+  continueOnError: true
+{% endhighlight %}
+
+{% highlight yaml %}
+
+### Archive Backstop Data
+You can archive the entire ```backstop_data``` folder so that you can upload it to a storage such as Azure Blob Storage.
+
+{% highlight yaml %}
+steps:
+- task: ArchiveFiles@2
+  displayName: 'Archive Backstop Data'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/_WebsiteFiles/backstop_data'
+    archiveFile: '$(System.DefaultWorkingDirectory)/_WebsiteFiles/backstop_data_$(CurrentDateTime).zip'
+  condition: succeededOrFailed()
+{% endhighlight %}
+
+### Upload it to Azure
+You can use [Azure File Copy](https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/AzureFileCopyV1/README.md) to upload the archive to storage on Azure
+
+{% highlight yaml %}
+steps:
+- task: AzureFileCopy@3
+  displayName: 'Upload Backstop Data to Azure'
+  inputs:
+    SourcePath: '$(System.DefaultWorkingDirectory)/_WebsiteFiles/backstop_data_$(CurrentDateTime).zip'
+    azureSubscription: 'YOUR_SUBSCRIPTION'
+    Destination: AzureBlob
+    storage: yourstorage
+    ContainerName: BackstopTestingResults
+    BlobPrefix: 'ENVIRONMENT $(Build.BuildNumber)'
+    sasTokenTimeOutInMinutes: 240
+  condition: succeededOrFailed()
+{% endhighlight %}
+
+### Check your logs and test results
+After each deployment, the developers can look specifically at the BackstopJS logs from the pipeline and see if there are any failed tests. If this is the case, the test results can be downloaded as a zip file, unpacked and analyzed.
 
 ## Conclusion
 In our experience, there are often false positives, so the tool should not be used as a 100% reliable test tool. Nevertheless, it saves a lot of testing effort if several dozen pages are checked automatically and only those from the error messages need to be checked manually.
