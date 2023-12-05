@@ -1,6 +1,6 @@
 ---
 title:  "UI Testing Sitecore pages with BackstopJS"
-date:   2023-12-04 08:00:00 +0100
+date:   2023-12-06 08:00:00 +0100
 categories:
 - Sitecore
 - DevOps
@@ -15,7 +15,7 @@ author: ryilmaz
 Photo by <a href="https://www.pexels.com/@pixabay/">Pixabay</a> on <a href="https://www.pexels.com/photo/abstract-bright-close-up-color-268460">Pexels</a>
 
 ## Introduction
-Since we occasionally had the case that some pages no longer looked quite as they should after deployment, we looked for a solution that would help us recognize such errors at an early stage. This is how we came across BackstopJS, which saves us a lot of time and effort.
+Are you bored/annoyed by unrecognized UI changes? Are you still wasting time making sure your changes are not crashing something? Use BackstopJS as an option to improve your regression testing process locally and in your CI/CD process. We tried it out and developed this application that now makes our lives easier.
 
 ## Usage of BackstopJS
 BackstopJS runs through a predefined list of pages on a website, takes screenshots, and compares these screenshots to highlight any changes. It can be run locally and can be easily integrated into a pipeline.
@@ -154,12 +154,12 @@ After the test has been run, the ```index.html``` from ```.\backstop_data\html_r
 
 ![alt text](../files/2023/12/06/01-test-results.png "Test Results")
 
-1) 4 tests passed
-2) 2 tests have failed
-3) First defined entry "Merkle DACH Homepage en" with "phone" resolution
-4) Green bar for passed tests
-5) Red bar for failed tests
-6) Diff with errors marked (click on it)
+1.  4 tests passed
+2.  2 tests have failed
+3.  First defined entry "Merkle DACH Homepage en" with "phone" resolution
+4.  Green bar for passed tests
+5.  Red bar for failed tests
+6.  Diff with errors marked (click on it)
 
 ![alt text](../files/2023/12/06/02-diff.png "Diff")
 
@@ -204,8 +204,6 @@ In order to store the test results somewhere, a storage must first be created, e
 ## Steps on Azure DevOps
 
 ### Set variable CurrentDateTime
-Unfortunately, there is no variable like a timestamp that we could use to add to the file name when we archive the backstop data. Therefore, we added a variable called CurrentDateTime which we set on the step "Set-DeploymentVariables.ps1". If there is not already a defined step that sets deployment variables, you can define a new step dedicated to this. It could look like the following:
-
 Unfortunately, there is no variable like a timestamp that we could use to add to the file name when we archive the backstop data. Therefore, we added a variable called ```CurrentDateTime```, which we set in the ```Set CurrentDateTime``` step. The script looks as follows:
 
 {% highlight yaml %}
