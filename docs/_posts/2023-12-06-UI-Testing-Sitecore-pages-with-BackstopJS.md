@@ -1,6 +1,6 @@
 ---
 title:  "UI Testing Sitecore pages with BackstopJS"
-date:   2023-12-04 16:00:00 +0100
+date:   2023-12-04 08:00:00 +0100
 categories:
 - Sitecore
 - DevOps
@@ -278,8 +278,6 @@ steps:
   displayName: 'Test BackstopJS'
   continueOnError: true
 {% endhighlight %}
-
-{% highlight yaml %}
 
 ### Archive Backstop Data
 You can archive the entire ```backstop_data``` folder so that you can upload it to a storage such as Azure Blob Storage.
