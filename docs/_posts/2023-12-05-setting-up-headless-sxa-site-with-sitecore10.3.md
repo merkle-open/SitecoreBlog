@@ -1,6 +1,6 @@
 ---
 title:  "Setting up Headless SXA on Sitecore 10.3"
-date:   2023-12-01 12:05:33 +0100
+date:   2023-12-05 12:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -10,7 +10,7 @@ tags:
 author: gsingla
 ---
 ---
-![alt text](../files/2023/12/01/header.jpg "Header")
+![alt text](../files/2023/12/05/header.jpg "Header")
 
 Photo by panumas nikhomkhai: https://www.pexels.com/@cookiecutter/ 
   
@@ -29,31 +29,31 @@ You should have.
 ### Setting up Headless Site
 -	Open the Sitecore Content Editor and right click on the <b>Content Node</b>, you will see an insert option for a Headless Tenant. Please create a new <b>Headless Tenant</b>.
 
-![alt text](../files/2023/12/01/01-Create-Headless-Tenant.png "Create Headless Tenant")
+![alt text](../files/2023/12/05/01-Create-Headless-Tenant.png "Create Headless Tenant")
 
 - After clicking insert new Headless Tenant, a new popup will appear. Please enter a name for the Tenant and select all the modules if unselected. After clicking <b>Ok</b>, it will take some time and create a new Headless Tenant. 
 
-![alt text](../files/2023/12/01/02-Set-Headless-Tenant-Settings.png "Set Headless Tenant Settings")
+![alt text](../files/2023/12/05/02-Set-Headless-Tenant-Settings.png "Set Headless Tenant Settings")
 
 - After creating a new Headless Tenant, we need to create a new Headless Site. For creating the new Headless Site, please right click on the recently created Headless Tenant and insert a new <b>Headless Site</b>.
 
-![alt text](../files/2023/12/01/03-Create-Headless-Site.png "Create Headless Site")
+![alt text](../files/2023/12/05/03-Create-Headless-Site.png "Create Headless Site")
 
 - After clicking insert Headless Site, a pop-up will appear. In the <b>General Tab</b>, please enter the new Site Name and keep all the existing settings same. 
 
-![alt text](../files/2023/12/01/04-Set-Headless-Site-General-Settings.png "Set Headless Site General Settings")
+![alt text](../files/2023/12/05/04-Set-Headless-Site-General-Settings.png "Set Headless Site General Settings")
 
 - After that, go to <b>Modules tab</b> and click on the Select All and click on the Ok. We don’t need to make any changes in the Site Settings tab.
 
-![alt text](../files/2023/12/01/05-Set-Headless-Site-Modules-Settings.png "Set Headless Site Modules Settings")
+![alt text](../files/2023/12/05/05-Set-Headless-Site-Modules-Settings.png "Set Headless Site Modules Settings")
 
 - It will take some time to create the Site. It will show the below pop-up after creation.
 
-![alt text](../files/2023/12/01/06-Headless-Site-Creation-Successful.png "Headless Site Creation Successful")
+![alt text](../files/2023/12/05/06-Headless-Site-Creation-Successful.png "Headless Site Creation Successful")
 
 - After your Site is created, you will see a new site node in the Tenant with all the created item structures like in non-headless SXA. 
 
-![alt text](../files/2023/12/01/07-New-Headless-SXA-Site.png "New Headless SXA Site")
+![alt text](../files/2023/12/05/07-New-Headless-SXA-Site.png "New Headless SXA Site")
 
 ### Setup Rendering Host
 
@@ -63,14 +63,14 @@ This is the default rendering host setting for the Headless SXA. The location of
 sitecore/system/Settings/Services/Rendering Hosts/Default 
 {% endhighlight %}
 
-![alt text](../files/2023/12/01/08-Headless-SXA-Rendering-Host.png "Headless SXA Rendering Host")
+![alt text](../files/2023/12/05/08-Headless-SXA-Rendering-Host.png "Headless SXA Rendering Host")
 
 Please update the values of the fields for the Default Host as below:
 -	Set Server-side rendering engine endpoint URL to - http://localhost:3000/api/editing/render
 -	Set Server-side rendering engine application URL to -  http://localhost:3000
 -	Set Application name same as your Next.JS app name - demo-app (this is my app name)
 
-![alt text](../files/2023/12/01/09-Headless-SXA-Rendering-Host-Settings.png "Headless SXA Rendering Host Settings")
+![alt text](../files/2023/12/05/09-Headless-SXA-Rendering-Host-Settings.png "Headless SXA Rendering Host Settings")
 
 ### Create JSS API Key
 
@@ -80,11 +80,11 @@ We need to create an API key for our headless application. Please navigate to th
 /sitecore/system/Settings/Services/API Keys
 {% endhighlight %}
 
-![alt text](../files/2023/12/01/10-Create-JSS-API-Key.png "Create JSS API Key")
+![alt text](../files/2023/12/05/10-Create-JSS-API-Key.png "Create JSS API Key")
 
 Set the Value of <b>CORS Origin</b> and <b>Allowed Controllers</b> to <b>*</b>. We will use the ID of this item as API Key in our JSS application setup later. 
 
-![alt text](../files/2023/12/01/11-Set-JSS-API-Key-Settings.png "Set JSS API Key Settings")
+![alt text](../files/2023/12/05/11-Set-JSS-API-Key-Settings.png "Set JSS API Key Settings")
 
 ### Creating JSS Application
 
@@ -112,16 +112,16 @@ After running the above command, it will ask several questions, as written below
 ###### Where would you like your new app created? 
 It will show the default path on the right side as in screenshot below. You can simple press enter to install on the default path or can provide a new path for creating an app.
 
-![alt text](../files/2023/12/01/12-Set-Path-For-New-NextJs-Application.png "Set Path For New NextJs Application")
+![alt text](../files/2023/12/05/12-Set-Path-For-New-NextJs-Application.png "Set Path For New NextJs Application")
 
 ###### How would you like to prerender your application?
 In this question, it will ask to choose prerendering technique whether to choose Static Site Generation (SSG) or Server Side Rendering (SSR). Please choose as per your need.
 
-![alt text](../files/2023/12/01/13-Set-Prerender-Settings-For-New-NextJs-Application.png "Set Prerender Settings For New NextJs Application")
+![alt text](../files/2023/12/05/13-Set-Prerender-Settings-For-New-NextJs-Application.png "Set Prerender Settings For New NextJs Application")
 
 After the above question, it will start installing the npm packages and your app will be created.
 
-![alt text](../files/2023/12/01/14-New-NextJs-Application-Created-Successfully.png "New NextJs Application Created Successfully")
+![alt text](../files/2023/12/05/14-New-NextJs-Application-Created-Successfully.png "New NextJs Application Created Successfully")
 
 ### Setting up JSS Application
 
@@ -135,33 +135,33 @@ After running the above command, it will ask you several questions as below:
 ######  Is your Sitecore instance on this machine or accessible via network share?
 In this question, it’s asking if Sitecore instance is installed on your machine or not. Please press y in this case.
 
-![alt text](../files/2023/12/01/15-Is-Sitecore-Instance-Accessible.png "Is Sitecore Instance Accessible")
+![alt text](../files/2023/12/05/15-Is-Sitecore-Instance-Accessible.png "Is Sitecore Instance Accessible")
 
 ######  Path to the Sitecore folder (e.g. c:\inetpub\wwwroot\my.siteco.re):
 In this question, please provide the path of web root of your Sitecore instance.
 
-![alt text](../files/2023/12/01/16-Webroot-Of-Sitecore-Instance.png "Webroot Of Sitecore Instance")
+![alt text](../files/2023/12/05/16-Webroot-Of-Sitecore-Instance.png "Webroot Of Sitecore Instance")
 
 Sitecore hostname (e.g. http://myapp.local.siteco.re; see /sitecore/config; ensure added to hosts):
 In this question, please provide the hostname of your Sitecore instance.
 
-![alt text](../files/2023/12/01/17-Set-Sitecore-Hostname.png "Set Sitecore Hostname")
+![alt text](../files/2023/12/05/17-Set-Sitecore-Hostname.png "Set Sitecore Hostname")
 
 ######  Sitecore import service URL [https://sxa1030sc.dev.local/sitecore/api/jss/import]:
 In this question, it will show you default url for import service based on the hostname you provided earlier. Please don’t make any changes and press enter.
 
-![alt text](../files/2023/12/01/18-Set-Sitecore-Import-Service-Url.png "Set Sitecore Import Service Url")
+![alt text](../files/2023/12/05/18-Set-Sitecore-Import-Service-Url.png "Set Sitecore Import Service Url")
 
 ######  Sitecore API Key (ID of API key item):
 In this question, please enter the ID of the API Key we created earlier in Sitecore at below location.
 /sitecore/system/Settings/Services/API Keys/API Key
 
-![alt text](../files/2023/12/01/19-Set-Sitecore-API-Key.png "Set Sitecore API Key")
+![alt text](../files/2023/12/05/19-Set-Sitecore-API-Key.png "Set Sitecore API Key")
 
 ######  Please enter your deployment secret (32+ random chars; or press enter to generate one):
 In this question, please enter the 32+ random characters deployment secret for your application or you can simply press enter and it will create one for you. I simply pressed enter. This was the last step of the setup process.
 
-![alt text](../files/2023/12/01/20-Set-Deployment-Secret.png "Set Deployment Secret")
+![alt text](../files/2023/12/05/20-Set-Deployment-Secret.png "Set Deployment Secret")
 
 After the above steps, we need to do some manual configs. Please follow the same as below
 
@@ -172,29 +172,29 @@ We need to remove default site need from the config file located at the below lo
 /demo-app/sitecore/config/demo-app.config
 {% endhighlight %}
 
-![alt text](../files/2023/12/01/21-Remove-Site-Node.png "Remove Site Node")
+![alt text](../files/2023/12/05/21-Remove-Site-Node.png "Remove Site Node")
 
 Scroll down the same file and verify the app registration urls.
 
-![alt text](../files/2023/12/01/22-App-Config.png "App Config")
+![alt text](../files/2023/12/05/22-App-Config.png "App Config")
 
 In the above config, update the sitecorePath with the path of your site in the headless tenant. For the above demo, the url is below and it will look like below screenshot.
 
-![alt text](../files/2023/12/01/23-Set-Sitecore-Path-In-App-Config.png "Set Sitecore Path In App Config")
+![alt text](../files/2023/12/05/23-Set-Sitecore-Path-In-App-Config.png "Set Sitecore Path In App Config")
 
 After updating the above path, please scroll down and find the config named <b> JavaScriptServices.ViewEngine.Http.JssEditingSecret </b> and uncomment it. Please go to the adjacent file (demo-app.deploysecret.config for the above demo) for the deployment secret, copy the same, and update in the above config. It will look like this below.
 
-![alt text](../files/2023/12/01/24-Set-Sitecore-JSS-Editing-Secret-In-App-Config.png "Set Sitecore JSS Editing Secret In App Config")
+![alt text](../files/2023/12/05/24-Set-Sitecore-JSS-Editing-Secret-In-App-Config.png "Set Sitecore JSS Editing Secret In App Config")
 
 After updating the above file, please go to the adjacent file (demo-app.deploysecret.config for the above demo) for the deployment secret and copy the same. Please go to .env file at the root of the project and paste the same to <b>JSS_EDITING_SECRET</b>. Copy the API key from Sitecore and paste it to <b>SITECORE_API_KEY</b>. After the above changes, your file will look like below.
 
-![alt text](../files/2023/12/01/25-Set-Environment-Variables.png "Set Environment Variables")
+![alt text](../files/2023/12/05/25-Set-Environment-Variables.png "Set Environment Variables")
 
 #### Setting Dictionary
 
 Please go to /src/lib/dictionary-service-factory.ts and create a new property named <b>rootItemId</b> at the below location mentioned in the screenshot. The value of rootItemId is the ID of the Home Page of your site in Sitecore. For this particular demo, the path of item is <b>/sitecore/content/DemoHeadlessTenant/DemoSite/Home</b> and it’s ID is <b>{FAF645CE-1A7F-4059-B6FD-1D5E67486D37}</b>
 
-![alt text](../files/2023/12/01/26-Set-Dictionary-Settings.png "Set Dictionary Settings")
+![alt text](../files/2023/12/05/26-Set-Dictionary-Settings.png "Set Dictionary Settings")
 
 #### Deploy the config
 
@@ -204,14 +204,14 @@ After making all the above changes, we need to deploy our changes to the Sitecor
  jss deploy config  
 {% endhighlight %}
 
-![alt text](../files/2023/12/01/27-Deploy-JSS-Settings.png "Deploy JSS Settings")
+![alt text](../files/2023/12/05/27-Deploy-JSS-Settings.png "Deploy JSS Settings")
 
 The changes will be deployed to below path at your Sitecore Instance.
 <b>C:\inetpub\wwwroot\sxa1030sc.dev.local\App_Config\Include\zzz</b>
 
 <b>Note:</b> Sometimes after deployment of config, changes are not reflected, please do an IIS Reset after the deployment and verify your changes in <b>/sitecore/admin/showconfig.aspx</b> and look for the setting named <b>JavaScriptServices.ViewEngine.Http.JssEditingSecret</b>.
 
-![alt text](../files/2023/12/01/28-Verify-JSS-Settings-In-Sitecore-Instance.png "Verify JSS Settings In Sitecore Instance")
+![alt text](../files/2023/12/05/28-Verify-JSS-Settings-In-Sitecore-Instance.png "Verify JSS Settings In Sitecore Instance")
 
 ### Running the App for First Time
 
@@ -221,15 +221,15 @@ After the deployment of the config files, our app is ready to run for the first 
 jss start:connected
 {% endhighlight %}
 
-![alt text](../files/2023/12/01/29-Running-JSS-App-First-Time.png "Running JSS App First Time")
+![alt text](../files/2023/12/05/29-Running-JSS-App-First-Time.png "Running JSS App First Time")
 
 After this, your app will run and you need to open <b>localhost:3000</b> (if this port is not already being used). There you will see a blank page.
 
-![alt text](../files/2023/12/01/30-Preview-Of-Running-JSS-App.png "Preview Of Running JSS App")
+![alt text](../files/2023/12/05/30-Preview-Of-Running-JSS-App.png "Preview Of Running JSS App")
 
 We will go to the content editor and open the Home Page in Experience Editor and will make some changes. I’ll show you my home page after changes.
 
-![alt text](../files/2023/12/01/31-Preview-Of-Running-JSS-App-After-Changes.png "Preview Of Running JSS App After Changes")
+![alt text](../files/2023/12/05/31-Preview-Of-Running-JSS-App-After-Changes.png "Preview Of Running JSS App After Changes")
 
 ### Common Errors
 
@@ -243,7 +243,7 @@ npm config set legacy-peer-deps true
 
 #### TypeError:fetch failed:
 
-![alt text](../files/2023/12/01/32-Error-Fetch-Failed.png "Error Fetch Failed")
+![alt text](../files/2023/12/05/32-Error-Fetch-Failed.png "Error Fetch Failed")
 
 To fix this error, please run the below command before running <b>jss start:connected</b>
 
@@ -253,6 +253,6 @@ $env:NODE_TLS_REJECT_UNAUTHORIZED=0
 
 #### Unable to verify the first certificate
 
-![alt text](../files/2023/12/01/33-Error-Unable-to-Verify-First-Certificate.png "Unable to Verify First Certificate")
+![alt text](../files/2023/12/05/33-Error-Unable-to-Verify-First-Certificate.png "Unable to Verify First Certificate")
 
 Please follow the article with link [here](https://doc.sitecore.com/xp/en/developers/hd/21/sitecore-headless-development/walkthrough--configuring-sitecore-ca-certificates-for-node-js.html) for the above fixes.
