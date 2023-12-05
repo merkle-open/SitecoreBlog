@@ -33,6 +33,7 @@ After installing, you have to close your command prompt and reopen it, so you ca
 
 ## Initialization
 First, you have to initialize Backstop. This command will create all the files you need for the test run later.
+
 {% highlight ruby %}
 backstop init
 {% endhighlight %}
@@ -161,7 +162,8 @@ After the test has been run, the ```index.html``` from ```.\backstop_data\html_r
 6) Diff with errors marked (click on it)
 
 ![alt text](../files/2023/12/06/02-diff.png "Diff")
-The magenta colored areas show the difference between the screenshots. In this case, the dots were slightly shifted and can be ignored.
+
+The magenta colored areas show the difference between the screenshots. In this case, the dots were slightly shifted and can be ignored. You can slide the vertical line to see the difference between the reference and test image.
 
 # Integration to Azure DevOps Pipeline
 
@@ -171,7 +173,7 @@ The magenta colored areas show the difference between the screenshots. In this c
 Before you change the pipeline, you must check in the config files created and customized by BackstopJS in the repository.
 
 ### Set tokens to replace later
-If you have several environments that are to be tested, it makes sense to use a configuration file in which the URL is defined as a token that can be replaced in different stages. Here we defined ```$(Target.WebsiteUrl)``` that will be replaced by ```https://www.merkle.com/```.
+If you have several environments that are to be tested, it makes sense to use a configuration file in which the URL is defined as a token that can be replaced for different stages. Here we defined ```$(Target.WebsiteUrl)``` that will be replaced by ```https://www.merkle.com/```, but it could also be something like ```https://www.dev.merkle.com```.
 
 {% highlight ruby %}
 "scenarios": [
@@ -216,10 +218,10 @@ steps:
 {% endhighlight %}
 
 ### Define BackstopConfig path
-Add a variable with the name ``BackstopConfig`` and set it to the path of the checked-in file ```backstop.json```.
+Add a variable with the name ```BackstopConfig``` and set it to the path of the checked-in file ```backstop.json```.
 
 ### Replace tokens
-Use the task [Replace token](https://github.com/colindembovsky/cols-agent-tasks/tree/main/Tasks/ReplaceTokens) to replace the website URL. In this case, ```Target.WebsiteUrl`` is a variable defined in the pipeline. The step could look like this:
+Use the task [Replace token](https://github.com/colindembovsky/cols-agent-tasks/tree/main/Tasks/ReplaceTokens) to replace the website URL. In this case, ```Target.WebsiteUrl``` is a variable defined in the pipeline. The step could look like this:
 
 {% highlight yaml %}
 steps:
@@ -264,7 +266,7 @@ call backstop approve
 Now you have to deploy your web app and warm up your cd instance.
 
 ### Test BackstopJS
-Run the test and make sure that a failed test does not cause the pipeline to stop. Since BackstopJS will most likely return some false positives, this could lead to an unwanted stop of the pipeline. Set ```continueOnError: true``.
+Run the test and make sure that a failed test does not cause the pipeline to stop. Since BackstopJS will most likely return some false positives, this could lead to an unwanted stop of the pipeline. Set ```continueOnError: true```.
 
 {% highlight yaml %}
 variables:
