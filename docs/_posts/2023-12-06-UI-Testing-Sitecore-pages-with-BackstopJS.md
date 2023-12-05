@@ -154,12 +154,12 @@ After the test has been run, the ```index.html``` from ```.\backstop_data\html_r
 
 ![alt text](../files/2023/12/06/01-test-results.png "Test Results")
 
-1) 4 tests passed
-2) 2 tests have failed
-3) First defined entry "Merkle DACH Homepage en" with "phone" resolution
-4) Green bar for passed tests
-5) Red bar for failed tests
-6) Diff with errors marked (click on it)
+1.  4 tests passed
+2.  2 tests have failed
+3.  First defined entry "Merkle DACH Homepage en" with "phone" resolution
+4.  Green bar for passed tests
+5.  Red bar for failed tests
+6.  Diff with errors marked (click on it)
 
 ![alt text](../files/2023/12/06/02-diff.png "Diff")
 
@@ -204,8 +204,6 @@ In order to store the test results somewhere, a storage must first be created, e
 ## Steps on Azure DevOps
 
 ### Set variable CurrentDateTime
-Unfortunately, there is no variable like a timestamp that we could use to add to the file name when we archive the backstop data. Therefore, we added a variable called CurrentDateTime which we set on the step "Set-DeploymentVariables.ps1". If there is not already a defined step that sets deployment variables, you can define a new step dedicated to this. It could look like the following:
-
 Unfortunately, there is no variable like a timestamp that we could use to add to the file name when we archive the backstop data. Therefore, we added a variable called ```CurrentDateTime```, which we set in the ```Set CurrentDateTime``` step. The script looks as follows:
 
 {% highlight yaml %}
