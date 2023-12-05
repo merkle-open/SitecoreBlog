@@ -1,3 +1,17 @@
+---
+title: "Setting workflow on item creation in sitecore"
+date: 2023-12-5 00:00:00 +0100
+categories:
+- Sitecore
+tags:
+- Sitecore
+- Sitecore XP
+- workflow
+- events
+- headless
+- jss
+author: akahn
+---
 # **SETTING WORKFLOW ON ITEM CREATION IN SITECORE** 
 
 ## **The Problem** 
