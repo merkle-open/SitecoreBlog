@@ -15,7 +15,7 @@ author: ryilmaz
 Photo by <a href="https://www.pexels.com/@pixabay/">Pixabay</a> on <a href="https://www.pexels.com/photo/abstract-bright-close-up-color-268460">Pexels</a>
 
 ## Introduction
-Since we occasionally had the case that some pages no longer looked quite as they should after deployment, we looked for a solution that would help us recognize such errors at an early stage. This is how we came across BackstopJS, which saves us a lot of time and effort.
+Are you bored/annoyed by unrecognized UI changes? Are you still wasting time making sure your changes are not crashing something? Use BackstopJS as an option to improve your regression testing process locally and in your CI/CD process. We tried it out and developed this application that now makes our lives easier.
 
 ## Usage of BackstopJS
 BackstopJS runs through a predefined list of pages on a website, takes screenshots, and compares these screenshots to highlight any changes. It can be run locally and can be easily integrated into a pipeline.
