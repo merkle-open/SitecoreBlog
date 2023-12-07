@@ -175,7 +175,7 @@ Before you change the pipeline, you must check in the config files created and c
 ### Set tokens to replace later
 If you have several environments that are to be tested, it makes sense to use a configuration file in which the URL is defined as a token that can be replaced for different stages. Here we defined ```$(Target.WebsiteUrl)``` that will be replaced by ```https://www.merkle.com/```, but it could also be something like ```https://www.dev.merkle.com```.
 
-{% highlight ruby %}
+{% highlight json %}
 "scenarios": [
     {
       "label": "Merkle DACH Homepage en",
@@ -195,7 +195,7 @@ If you have several environments that are to be tested, it makes sense to use a 
       "expect": 0,
       "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
-    },
+    }
 {% endhighlight %}
 
 ### Create a storage
