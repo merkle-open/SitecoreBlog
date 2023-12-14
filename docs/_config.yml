@@ -19,7 +19,7 @@ author: Merkle DACH
 description: >- # this means to ignore newlines until "baseurl:"
   Experience and knowledge about Sitecore
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://sitecore.namics.com" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://sitecore.merkle.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: MerkleDACH
 github_username:  merkle-open
 google_analytics: UA-127160-36
