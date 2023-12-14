@@ -70,7 +70,7 @@ $itemsToProcess = Get-ChildItem $startPath -Language en -Recurseif($itemsToProce
 $infoList | Format-Table 
 ```
 
-This script will retrieve the English version of the Image field for every item. If field has a value, it is written to the German version as well.
+This script will retrieve the English version of the Image field for every item. If the field has a value, it is written to the German version as well.
 
 This fixed my problem at least for all the items, that had an English version.
 
@@ -130,7 +130,7 @@ And with that, all images were back in their place :)
 
 ## Conclusion
 
-After all the fix was quite straightforward, but still took me almost two days to figure out all the neccessary steps. So maybe these scripts will save someone elses time in the future.
+Afterall the fix was quite straightforward, but still took me almost two days to figure out all the neccessary steps. So maybe these scripts will save someone elses time in the future.
 
 My takeaways:
 1. Even one checkbox can have a severe impact.
