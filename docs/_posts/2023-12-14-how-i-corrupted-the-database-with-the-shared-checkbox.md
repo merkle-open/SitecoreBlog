@@ -27,7 +27,9 @@ After some time we realized, that this had some unwanted side effects.
 1. Items, that had and English and a German version had kept the value, but only for the English version
 2. Items, that only had a German version had lost the value completely
 
-Luckiliy we are able to retrieve previous backups of the database but in the meantime authors have already created new campaigns and content so I wanted to avoid a complete rollback.
+This meant, that almost all images were gone from the website, because most items inherited their image field from said base template.
+
+Luckily we are able to retrieve previous backups of the database but in the meantime authors have already created new campaigns and content so I wanted to avoid a complete rollback.
 
 ## The solution
 
@@ -37,7 +39,7 @@ For the solution of my problems I mainly used the [Sitecore Powershell Extension
 
 This issue was rather easy to fix with one PSE script:
 
-```PS
+{% highlight powershell %}
 $startPath = "master:/sitecore/content"
 $infoList = [System.Collections.ArrayList]@()
 
@@ -68,7 +70,7 @@ $itemsToProcess = Get-ChildItem $startPath -Language en -Recurseif($itemsToProce
     }
 }Write-Host "Items changed:" $infoList.Count
 $infoList | Format-Table 
-```
+{% endhighlight %}
 
 This script will retrieve the English version of the Image field for every item. If the field has a value, it is written to the German version as well.
 
@@ -82,20 +84,20 @@ Here I had some hit and miss approaches but the following ended up doing the tri
 First my awesome DevOps colleague restored an older state of the Master database, that had not suffered yet from my unthoughtful actions.
 
 With MS SQL Server Management Studio I connected to the database and ran the following query to retrieve all values of the Image field and the ItemId, they belong to:
-```SQL
+{% highlight sql %}
 SELECT [ItemId]
 	  ,[FieldId]
       ,[Value]
   FROM [dbo].[SharedFields]
   WHERE FieldId='50ADDAD6-6568-4E46-BACE-B3500DBA5364'
-```
+{% endhighlight %}
 ![SQL query to retrieve shared field values of a certain field](../files/2023/12/14/sql-query.png "SQL query to retrieve shared field values of a certain field")
 
 Since the field was a shared field, the values were stored in the "SharedFields" table. 
 
 With these values, I was able to write a PSE script to set the Image value again for all the items.
 
-```PS
+{% highlight powershell %}
 $import = @(
   @{ ID = '{7D4EEB9E-01DC-4AA4-AC1B-EB1D219E4821}'; Image = '<image width="3360" ...'},
   @{ ID = '{95753419-3E20-48DD-A8E7-433E73F5507C}'; Image = '<image width="3360" ...'},
@@ -122,7 +124,7 @@ foreach($row in $import) {
 
 Write-Host "Items changed:" $infoList.Count
 $infoList | Format-Table
-```
+{% endhighlight %}
 
 This script goes through all rows of the ItemIds and Image values, retrieves the German version of the item and then sets the value for the Image field.
 
