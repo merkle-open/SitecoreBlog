@@ -11,7 +11,7 @@ author: dgashi
 ![Email Marketing](../files/2024/01/09/email-marketing.png "Email Marketing")
 
 
-## Scenario
+## Situation
 
 
 It is how its mostly is - marketing team putted all their efforts together to send out a very important press release to over 8000 receipients at a particular time and date :e-mail: - and during the dispatch - this regular campaign type paused and was set to queued without any information or indicatior about what went wrong to the marketing team.
@@ -34,27 +34,27 @@ This all happend on a Sitecore XP 9.1.1 CM instance, what at the end of this pos
 
 ## Troubleshooting
 
-{% highlight text %}
+```
 
-10776 10:35:21 ERROR Exception: System.NullReferenceException<br>
-Message: Object reference not set to an instance of an object.<br>
-Source: Sitecore.EmailCampaign<br>
-at Sitecore.Modules.EmailCampaign.Core.Dispatch.DispatchQueueItemDataReader.GetValue(Int32 i)<br>
-at System.Data.SqlClient.SqlBulkCopy.GetValueFromSourceRow(Int32 destRowIndex, Boolean& isSqlType, Boolean& isDataFeed, Boolean& isNull)<br>
-at System.Data.SqlClient.SqlBulkCopy.ReadWriteColumnValueAsync(Int32 col)<br>
-at System.Data.SqlClient.SqlBulkCopy.CopyColumnsAsync(Int32 col, TaskCompletionSource`1 source)<br>
-at System.Data.SqlClient.SqlBulkCopy.CopyRowsAsync(Int32 rowsSoFar, Int32 totalRows, CancellationToken cts, TaskCompletionSource`1 source)<br>
-at System.Data.SqlClient.SqlBulkCopy.CopyBatchesAsyncContinued(BulkCopySimpleResultSet internalResults, String updateBulkCommandText, CancellationToken cts, TaskCompletionSource`1 source)<br>
-at System.Data.SqlClient.SqlBulkCopy.CopyBatchesAsync(BulkCopySimpleResultSet internalResults, String updateBulkCommandText, CancellationToken cts, TaskCompletionSource`1 source)<br>
-at System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalRestContinuedAsync(BulkCopySimpleResultSet internalResults, CancellationToken cts, TaskCompletionSource`1 source)<br>
-at System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalRestAsync(CancellationToken cts, TaskCompletionSource`1 source)<br>
-at System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalAsync(CancellationToken ctoken)<br>
-at System.Data.SqlClient.SqlBulkCopy.WriteRowSourceToServerAsync(Int32 columnCount, CancellationToken ctoken)<br>
-at System.Data.SqlClient.SqlBulkCopy.WriteToServer(IDataReader reader)<br>
-at Sitecore.Modules.EmailCampaign.Core.Data.SqlDbEcmDataProvider.AddToDispatchQueue(Guid messageId, MessageType messageType, IEnumerable`1 recipients, Dictionary`2 customPersonTokens, Dictionary`2 customQueryStringParameters)<br>
+10776 10:35:21 ERROR Exception: System.NullReferenceException
+Message: Object reference not set to an instance of an object.
+Source: Sitecore.EmailCampaign
+at Sitecore.Modules.EmailCampaign.Core.Dispatch.DispatchQueueItemDataReader.GetValue(Int32 i)
+at System.Data.SqlClient.SqlBulkCopy.GetValueFromSourceRow(Int32 destRowIndex, Boolean& isSqlType, Boolean& isDataFeed, Boolean& isNull)
+at System.Data.SqlClient.SqlBulkCopy.ReadWriteColumnValueAsync(Int32 col)
+at System.Data.SqlClient.SqlBulkCopy.CopyColumnsAsync(Int32 col, TaskCompletionSource`1 source)
+at System.Data.SqlClient.SqlBulkCopy.CopyRowsAsync(Int32 rowsSoFar, Int32 totalRows, CancellationToken cts, TaskCompletionSource`1 source)
+at System.Data.SqlClient.SqlBulkCopy.CopyBatchesAsyncContinued(BulkCopySimpleResultSet internalResults, String updateBulkCommandText, CancellationToken cts, TaskCompletionSource`1 source)
+at System.Data.SqlClient.SqlBulkCopy.CopyBatchesAsync(BulkCopySimpleResultSet internalResults, String updateBulkCommandText, CancellationToken cts, TaskCompletionSource`1 source)
+at System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalRestContinuedAsync(BulkCopySimpleResultSet internalResults, CancellationToken cts, TaskCompletionSource`1 source)
+at System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalRestAsync(CancellationToken cts, TaskCompletionSource`1 source)
+at System.Data.SqlClient.SqlBulkCopy.WriteToServerInternalAsync(CancellationToken ctoken)
+at System.Data.SqlClient.SqlBulkCopy.WriteRowSourceToServerAsync(Int32 columnCount, CancellationToken ctoken)
+at System.Data.SqlClient.SqlBulkCopy.WriteToServer(IDataReader reader)
+at Sitecore.Modules.EmailCampaign.Core.Data.SqlDbEcmDataProvider.AddToDispatchQueue(Guid messageId, MessageType messageType, IEnumerable`1 recipients, Dictionary`2 customPersonTokens, Dictionary`2 customQueryStringParameters)
 at Sitecore.EmailCampaign.Cm.Dispatch.DispatchManager.Queue(Int32 threadIndex, IEntityBatchEnumerator`1 recipients, Int32 abTestRecipients, DispatchNewsletterArgs args, Int32 enqueueBatchSize)
 
-{% endhighlight %}
+```
 
 ## What we found out
 
@@ -76,7 +76,7 @@ Here you can see that these contacts have no identifiers and personal informatio
 
 ## Solution
 
-We checked all available rules and conditions to filter out these contacts without <b>Alias</b> identifier. 
+We checked all available rules and conditions to filter against these corrupt contacts without <b>Alias</b> identifier. 
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list-segmented.png "Segmented Contact List")
 
