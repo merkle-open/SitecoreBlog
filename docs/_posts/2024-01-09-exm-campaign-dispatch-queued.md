@@ -84,8 +84,7 @@ So, we checked all available segmentation rules and conditions to filter against
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list-segmented.png "Segmented Contact List")
 
-After these contacts where filtered out from the contact lists the campaing dispatch ran through and the send-out finished successfully.
-
+After these contacts where filtered out from the contact lists the campaing dispatch ran through and the send-out finished successfully :muscle: :muscle: :muscle: 
 
 #### A ray of hope - Sitecore 10
 On Sitecore 10.3 this issue will not occure anymore, we found out that these contacts with no Alias identifier do not appear anymore on the segmented list. Maybe this was already a known issue and has been fixed with the upgrade.<br>
