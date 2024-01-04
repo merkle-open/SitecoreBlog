@@ -1,5 +1,5 @@
 ---
-title:  "EXM campaing dispatch stops because of contacts missing the Alias identifier"
+title:  "EXM campaing dispatch stopped because of contacts missing the Alias identifier"
 date:   2024-01-09 08:00:00 +0100
 categories:
 - Sitecore
@@ -20,7 +20,7 @@ It is how its mostly is - marketing team putted all their efforts together to se
 
 ![Campaign Manager](../files/2024/01/09/exm-dispatch-campaign-manager.png "Campaign Manger")
 
-We saw the status is ==Queuing==, the columns *Sent to*, *Skipped*, *Unprocessed* and *Failed* showed all a 0 so we felt lucky and thougth that was just a hickup maybe because the huge amount of contacts and we resetted the status and why tried to send it out an another time - after some 2 or 3 minutes - same issue again. :unamused:
+We saw the status is <b>Queuing</b>, the columns *Sent to*, *Skipped*, *Unprocessed* and *Failed* showed all a 0 so we felt lucky and thougth that was just a hickup maybe because the huge amount of contacts and we resetted the status and why tried to send it out an another time - after some 2 or 3 minutes - same issue again. :unamused:
 
 #### Reporting mail
 
@@ -58,15 +58,18 @@ at Sitecore.EmailCampaign.Cm.Dispatch.DispatchManager.Queue(Int32 threadIndex, I
 
 ## What we found out
 
-https://sitecore.stackexchange.com/questions/33944/email-campaign-failing-to-initialize
+First we were not sure how this error message is related to the stop of the email campaign dispatch. 
 
-Sitecore support
+NullReferenceException - what could be missing? 
 
-We checked all included list about these contacts and we found what we were looking for:
+We continued with our investigation and involved Sitecore Support which told us to check if we have contacts in the included lists which have a missing Alias identifier. 
+
+So we checked all included contact list about these contacts and we found what we were looking for:
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list.png "Segmented Contact List")
 
 These contacts where displayed in the List Mangager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}
+*Therefore, if you see such contacts in your lists please do not ignore them.*
 
 With double-click on one of these, we entered the Experience Profile for this contact and with the contact ID we were able to check the identifiers directly in the XDB with utalizing the xdbsearch Role:
 
@@ -75,8 +78,9 @@ With double-click on one of these, we entered the Experience Profile for this co
 Here you can see that these contacts have no identifiers and personal information at all, how that came we still need to investigate but these seem to be very old contacts with no interactions since more then a year. :nerd_face:
 
 ## Solution
+Sitecore support have advised there is no supported way to programmatically add the Alias identifier and the best option is to manually delete and recreate these contacts. But we had no time now - the mail must go out now.
 
-We checked all available rules and conditions to filter against these corrupt contacts without <b>Alias</b> identifier. 
+So, we checked all available segmentation rules and conditions to filter against these corrupt contacts without <b>Alias</b> identifier. 
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list-segmented.png "Segmented Contact List")
 
