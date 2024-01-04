@@ -5,4 +5,6 @@ name: Tutku Can Yalcin
 function: Senior Software Engineer
 ---
 
+{% avatar tutkucan size=200 %}
+
 Experience with Sitecore since 2017.
