@@ -24,7 +24,7 @@ We saw the status is <b>Queuing</b>, the columns *Sent to*, *Skipped*, *Unproces
 
 #### Reporting mail
 
-After some time customer provides the recieved reporting mail:
+ Astonishment arose when the customer provided one of the recieved reporting mail:
 
 ![Reporting Mail](../files/2024/01/09/exm-dispatch-abort-mail.png "Reporting Mail")
 
@@ -68,7 +68,7 @@ So we checked all included contact list about these contacts and we found what w
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list.png "Segmented Contact List")
 
-These contacts where displayed in the List Mangager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}
+These contacts where displayed in the List Mangager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}<br>
 *Therefore, if you see such contacts in your lists please do not ignore them.*
 
 With double-click on one of these, we entered the Experience Profile for this contact and with the contact ID we were able to check the identifiers directly in the XDB with utalizing the xdbsearch Role:
