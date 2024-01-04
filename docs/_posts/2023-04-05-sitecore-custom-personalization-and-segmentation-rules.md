@@ -213,4 +213,3 @@ List Manager relies on data being available on the xDB index. For some facets su
 If we like to see the search results depending on PIISensitive data, we can follow the following documentation from Sitecore [link](https://doc.sitecore.com/xp/en/developers/91/sitecore-experience-platform/enable-indexing-of-pii-sensitive-data-in-the-xdb-index.html)
 
 Note that this setting is different in an on-premise environment. Also, rebuilding the xDB search index is needed.
-
