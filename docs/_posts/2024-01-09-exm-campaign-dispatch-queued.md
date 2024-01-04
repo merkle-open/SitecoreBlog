@@ -1,6 +1,6 @@
 ---
 title:  "EXM campaing dispatch stopped because of contacts missing the Alias identifier"
-date:   2024-01-09 08:00:00 +0100
+date:   2024-01-04 08:00:00 +0100
 categories:
 - Sitecore
 tags:
