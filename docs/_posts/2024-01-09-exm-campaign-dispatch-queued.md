@@ -1,6 +1,6 @@
 ---
-title:  "EXM campaing dispatch stopped because of contacts missing the Alias identifier"
-date:   2024-01-04 08:00:00 +0100
+title:  "EXM campaign dispatch stopped because of contacts missing the Alias identifier"
+date:   2024-01-09 08:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -14,23 +14,24 @@ author: dgashi
 ## Situation
 
 
-It is how its mostly is - marketing team putted all their efforts together to send out a very important press release to over 8000 receipients at a particular time and date - and during the dispatch - this regular campaign type paused and was set to queued without any information or indicatior about what went wrong to the marketing team.
+It is how its mostly is - marketing team putted all their efforts together to send out a very important press release to over 8000 recipients at a particular time and date - and during the dispatch - this regular campaign type paused and was set to queued without any information or indicator about what went wrong to the marketing team.
 
 #### Campaign Manager
 
 ![Campaign Manager](../files/2024/01/09/exm-dispatch-campaign-manager.png "Campaign Manger")
 
-We saw the status is <b>Queuing</b>, the columns *Sent to*, *Skipped*, *Unprocessed* and *Failed* showed all a 0 so we felt lucky and thougth that was just a hickup maybe because the huge amount of contacts and we resetted the status and why tried to send it out an another time - after some 2 or 3 minutes - same issue again.
+We saw the status is <b>Queuing</b>, the columns *Sent to*, *Skipped*, *Unprocessed* and *Failed* showed all a 0 so we felt lucky and thougth that this was just a hiccup maybe because of the huge amount of contacts and we resetted the status, tried to send it out an another time - after some 2 or 3 minutes - same issue again.
+
 
 #### Reporting mail
 
- Astonishment arose when the customer provided one of the recieved reporting mail:
+Astonishment arose when the customer provided one of the received reporting mail:
 
 ![Reporting Mail](../files/2024/01/09/exm-dispatch-abort-mail.png "Reporting Mail")
 
-O man, there are really contacts which already recieved these mailings, but the majority not.
+O man, there are really contacts which already received these mailings, but the majority not. So the numbers on the overview within the Campagne Manager are not true in this case.
 
-This all happend on a Sitecore XP 9.1.1 CM instance, what at the end of this post gets important again.
+This all happened on a Sitecore XP 9.1.1 CM instance, what at the end of this post gets important again.
 
 ## Troubleshooting
 
@@ -68,10 +69,10 @@ So we checked all included contact list about these contacts and we found what w
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list.png "Segmented Contact List")
 
-These contacts where displayed in the List Mangager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}<br>
+There was a included segmented list where contacts are displayed in the List Manager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}<br>
 *Therefore, if you see such contacts in your lists please do not ignore them.*
 
-With double-click on one of these, we entered the Experience Profile for this contact and with the contact ID we were able to check the identifiers directly in the XDB with utalizing the xdbsearch Role:
+With double-click on one of those, we entered the Experience Profile for this contact and with the contact ID we were able to check the identifiers directly in the XDB with utilizing the xdbsearch Role:
 
 ![Empyt contact identifiers](../files/2024/01/09/exm-dispatch-contact-data.png "Empty contact identifiers")
 
@@ -84,11 +85,11 @@ So, we checked all available segmentation rules and conditions to filter against
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list-segmented.png "Segmented Contact List")
 
-After these contacts where filtered out from the contact lists the campaing dispatch ran through and the send-out finished successfully
+After these contacts were filtered out from the contact lists the campaign dispatch ran through and the send-out finished successfully
 
 #### A ray of hope - Sitecore 10
-On Sitecore 10.3 this issue will not occure anymore, we found out that these contacts with no Alias identifier do not appear anymore on the segmented list. Maybe this was already a known issue and has been fixed with the upgrade.<br>
-For older versions I suggest to filter these contacts out in your segmented lists + delete or recreade these contacts afterwards
+On Sitecore 10.3 this issue will not occur anymore, we found out that these contacts with no Alias identifier do not appear anymore on the segmented list. Maybe this was already a known issue and has been fixed with the upgrade.<br>
+For older versions I suggest to filter these contacts out in your segmented lists + delete or recreate these contacts afterwards
 
 
 
