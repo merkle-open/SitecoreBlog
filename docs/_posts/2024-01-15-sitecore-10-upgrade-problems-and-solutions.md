@@ -127,7 +127,7 @@ After the upgrade, we realized there were many field values not showing on websi
 
 ## Solution
 
-We searched on glass mapper docus found this one:
+We searched on glass mapper documentation found this one:
 [glass mapper](http://www.glass.lu/Mapper/Releases.html) on version 5.3.17 which mentions:
 
 >ISSUE 370 The lazy object inceptor will now ignore class properties that don't have a setter or have the SitecoreIgnore attribute.
