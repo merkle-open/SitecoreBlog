@@ -14,7 +14,7 @@ author: tcanyalcin
 ![alt text](../files/2024/01/15/sitecore-10.png "Sitecore 10")
   
 
-Like many others after upgrading from Sitecore 9.1 to Sitecore 10.3, we faced with bugs and some features stopped working for us. In this post I will try to list some of them and explain how we fixed them.
+After upgrading from Sitecore 9.1 to Sitecore 10.3 like many people, we faced with bugs and some features stopped working for us. In this post I will try to list some of them and explain how we fixed them.
 
 ## Problem: Sitecore forms list fields stopped showing values of list items on local languages
 
@@ -106,7 +106,7 @@ For these 2 problems thank you for your support Arun Tiwari..
 After the upgrade, all of our forms were not showing css classes. Since they are added to the project for custom implementations, they were not changed by upgrade automatically.
 
 ## Solution
-In Sitecore 9, Model.CssClass for fields and Model.LabelCssClass for labels were used. These properties become obsolete in Sitecore, so we needed to use Model.CssClassSettings.CssClass and Model.LabelCssClassSettings.CssClass respectively. After these changes forms were rendering css classes again.
+In Sitecore 9, Model.CssClass for fields and Model.LabelCssClass for labels were used. These properties become obsolete in Sitecore, so we needed to use Model.CssClassSettings.CssClass and Model.LabelCssClassSettings.CssClass respectively. After these changes, forms were rendering css classes again.
 
 ## Similar Problem: Forms Editor not showing Styling section on custom form fields
 
@@ -127,7 +127,7 @@ After the upgrade, we realized there were many field values not showing on websi
 
 ## Solution
 
-We searched on glass mapper documentation found this one:
+We searched on glass mapper release documentation and found this one:
 [glass mapper](http://www.glass.lu/Mapper/Releases.html) on version 5.3.17 which mentions:
 
 >ISSUE 370 The lazy object inceptor will now ignore class properties that don't have a setter or have the SitecoreIgnore attribute.
@@ -148,7 +148,7 @@ After some investigation, we decided to rebuild all scripts on Powershell ISE. T
 
 >Cognifide.PowerShell.Client.Controls.ContentEditorRibbonPanel,Cognifide.PowerShell
 
-So after we start using updated type, scripts become clickable and icons are showing again.
+So after we start using the updated type, scripts become clickable and icons are showing again.
 
 ## Problem: Fast Queries Not Supported
 
