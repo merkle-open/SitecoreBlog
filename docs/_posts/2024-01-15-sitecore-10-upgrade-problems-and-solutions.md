@@ -162,7 +162,7 @@ We developed a custom SettingProvider and started using it instead of queries or
 
 After we switched to Sitecore 10 and started using the databases from production system, many developers in team experienced this exception. 
 
-Either cm was unhealty or after some time it was becoming unhealty. When we check logs on docker or inspect container, we would always see this error popping up. Also, the sitecore system was so slow to work on.
+Either cm was unhealty or after some time it was becoming unhealty. When we check logs on docker or inspect container, we would always see this error popping up. Also, Sitecore system was too slow to work on.
 
 ## Solution
 
