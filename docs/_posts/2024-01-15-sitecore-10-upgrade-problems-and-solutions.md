@@ -1,5 +1,5 @@
 ---
-title:  "Sitecore 10 Problems And Solutions"
+title:  "Sitecore 10 Upgrade Problems And Solutions"
 date:   2024-01-08 12:00:00 +0100
 categories:
 - Sitecore
@@ -27,7 +27,7 @@ As a workaround they suggested either not use fallback mechanism on form fields 
 
 We went with second option as we had many forms on many languages. So we patched Sitecore 9 ListDataSourceProvider over Sitecore 10:
 
-```C#
+{% highlight csharp %}
 public class ListDataSourceProvider : IListDataSourceProvider
     {
         private readonly IFormBuilderContext _formBuilderContext;
@@ -75,9 +75,10 @@ public class ListDataSourceProvider : IListDataSourceProvider
             return (IEnumerable<Item>)((obj != null ? obj.Children.ToList<Item>() : (List<Item>)null) ?? new List<Item>());
         }
     }
-```
+{% endhighlight %}
 
-```xml
+{% highlight xml %}
+
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/" xmlns:role="http://www.sitecore.net/xmlconfig/role/">
  <sitecore role:require="Standalone or ContentManagement or ContentDelivery">
@@ -86,15 +87,17 @@ public class ListDataSourceProvider : IListDataSourceProvider
   </services>
  </sitecore>
 </configuration>
-```
+
+{% endhighlight %}
 
 ## Similar Problem: Form submissions not working on local languages
-On our website, we use custom submit actions to make API requests. These API requests rely on datasource items selected on Sitecore. After some testing, we realized that some fields on these datasource items have empty values sent to API even though they were filled on main languages on Sitecore. So it was another fallback issue.
+On our website, we use custom submit actions to make API requests. These API requests rely on datasource items selected on Sitecore. After some testing, we realized that some fields on these datasource items have empty values sent to API even though they were filled on main languages on Sitecore. So Sitecore was not able to fill these values that are supposed to come from fallback language.
 
 ## Solution
 
-After opening another Sitecore support ticket, we realized that Enable item language fallback and Enable field language fallback checkboxes were not checked on site items. In Sitecore 9 version, there was no checkbox and we were using Other Properties field. That's why the problem occurred. 
-https://doc.sitecore.com/xp/en/developers/sxa/103/sitecore-experience-accelerator/enable-language-fallback-for-sxa-sites.html
+After opening another Sitecore support ticket, we realized that Enable item language fallback and Enable field language fallback checkboxes were not checked on site items. In Sitecore 9 version, there was no checkbox and we were using Other Properties field. That's why the problem occurred. You can check the following documentation from Sitecore here
+[link](https://doc.sitecore.com/xp/en/developers/sxa/103/sitecore-experience-accelerator/enable-language-fallback-for-sxa-sites.html)
+
 
 For these 2 problems thank you for your support Arun Tiwari..
 
@@ -103,54 +106,47 @@ For these 2 problems thank you for your support Arun Tiwari..
 After the upgrade, all of our forms were not showing css classes. Since they are added to the project for custom implementations, they were not changed by upgrade automatically.
 
 ## Solution
-In Sitecore 9, Model.CssClass for fields and Model.LabelCssClass for labels were used. These properties become obsolete in Sitecore, so we needed to use Model.CssClassSettings.CssClass and Model.LabelCssClassSettings.CssClass respectively. After these changes forms were using css classes.
+In Sitecore 9, Model.CssClass for fields and Model.LabelCssClass for labels were used. These properties become obsolete in Sitecore, so we needed to use Model.CssClassSettings.CssClass and Model.LabelCssClassSettings.CssClass respectively. After these changes forms were rendering css classes again.
 
 ## Similar Problem: Forms Editor not showing Styling section on custom form fields
 
 In Sitecore 10, there was another change for each form field on core database. Sitecore started using new CssClass and LabelCssClass items on Styling item:
 
-![alt text](../files/2024/01/15/sitecore-10-styling-item.png "Sitecore 10")
+![alt text](../files/2024/01/15/sitecore-10-styling-item-image.png "Sitecore 10 styling item")
 
 ## Solution
 
-Even though item names are same, it needs to be selected different items there. You can put the following ids on ControlDefinitions field on Sitecore 10, then we will be able to see css classes on Sitecore Forms Editor:
+Even though item names are same, there are different items selected in Sitecore 10. You can put the following ids on ControlDefinitions field on Sitecore for each of these custom fields, then we will be able to see css classes on Sitecore Forms Editor:
 
-```xml
-{98FB361E-3A7F-49F9–8789–8C169FB95B61}|{121B9875–2F7D-4D62-BD0F-35A7B909ECE8}
-```
+>{98FB361E-3A7F-49F9–8789–8C169FB95B61}|{121B9875–2F7D-4D62-BD0F-35A7B909ECE8}
+
 
 ## Problem: Missing field values after Glass mapper upgrade
 
-After upgrade, we realized there were many field values not showing on website. All of these fields had one thing in common. In their class entities on their properties, they did not have setters. But all of them were working fine before the upgrade.
+After the upgrade, we realized there were many field values not showing on website. All of these fields had one thing in common. Their properties did not have setters on class entities. But all of them were working fine before the upgrade.
 
 ## Solution
 
 We searched on glass mapper docus found this one:
-http://www.glass.lu/Mapper/Releases.html on version 5.3.17 which mentions:
+[glass mapper](http://www.glass.lu/Mapper/Releases.html) on version 5.3.17 which mentions:
 
-```xml
-ISSUE 370 The lazy object inceptor will now ignore class properties that don't have a setter or have the SitecoreIgnore attribute.
-```
+>ISSUE 370 The lazy object inceptor will now ignore class properties that don't have a setter or have the SitecoreIgnore attribute.
 
 So, after upgrading glass mapper, checking if every property mapped with glass mapper has a setter is crucial. Especially, if you use them for API calls or search functionality.
 
 ## Problem: Custom Powershell scripts on Toolbar not working
 
-In our project, we used powershell scripts to bulk edit workflow state, copy item version, reset field value and many more. We created these scripts and added them to Toolbar so our customer can use it too. But after upgrade to Sitecore 10, we have seen that all of them were not clickable, showing just script names and blank icons.
+In our project, we used powershell scripts to bulk edit workflow state, copy item version, reset field value and many more. We created these scripts and added them to Toolbar so our customer can use it too. But after the upgrade to Sitecore 10, we have seen that all of them were not clickable, showing just script names and blank icons.
 
 ## Solution 
 
 After some investigation, we decided to rebuild all scripts on Powershell ISE. This rebuild created some changes on items. But mainly on items that represent each script on core database had a different type now:
 
-```xml
-Spe.Client.Controls.ContentEditorRibbonPanel,Spe
-```
+>Spe.Client.Controls.ContentEditorRibbonPanel,Spe
 
-Before they had the following value on type field:
+*Before* they had the following value on type field:
 
-```xml
-Cognifide.PowerShell.Client.Controls.ContentEditorRibbonPanel,Cognifide.PowerShell
-```
+>Cognifide.PowerShell.Client.Controls.ContentEditorRibbonPanel,Cognifide.PowerShell
 
 So after we start using updated type, scripts become clickable and icons are showing again.
 
@@ -160,27 +156,25 @@ Fast queries are depricated in Sitecore 10. It's suggested to use search index. 
 
 ## Solution
 
-We developed a custom SettingProvider start using it instead of queries or search indexes.
+We developed a custom SettingProvider and started using it instead of queries or search indexes.
 
 ## Problem: System.OutOfMemory Exception
 
 After we switched to Sitecore 10 and started using the databases from production system, many developers in team experienced this exception. 
 
-Either cm was unhealty, or after some time it was becoming unhealty. When we check logs on docker or inspect container, we would always see this error popping up. Also, the sitecore system was so slow to work on.
+Either cm was unhealty or after some time it was becoming unhealty. When we check logs on docker or inspect container, we would always see this error popping up. Also, the sitecore system was so slow to work on.
 
 ## Solution
 
 We first checked how much which container consumes when docker is started with following command:
 
-```xml
-docker stats
-```
+>docker stats
 
 Thanks to this command, we were able to see SQL server is using way more than usual. We have seen values like 10–20 GB. We tried changing mem-limit for each container to find the combination that works but that was barely enough. Sitecore was again too slow to work. We also tried deleting the whole data on preview database, since it was not needed on our locals, but that was also not enough.
 
 Then we realized something golden. EventQueue and PublishQueue tables in master, web db had over 405k entries on them. So we started a cleanup using the following sql:
 
-```sql
+{% highlight sql %}
 USE [Sitecore.Core]
 DELETE FROM dbo.EventQueue
 DELETE FROM dbo.PublishQueue
@@ -190,7 +184,7 @@ DELETE FROM dbo.PublishQueue
 USE [Sitecore.Web]
 DELETE FROM dbo.EventQueue
 DELETE FROM dbo.PublishQueue
-```
+{% endhighlight %}
 
 After this cleanup docker become really fast, we got rid of the exception.
 
