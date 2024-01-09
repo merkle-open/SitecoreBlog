@@ -1,6 +1,6 @@
 ---
 title:  "Sitecore Search for beginners"
-date:   2024-01-16 12:00:00 +0100
+date:   2024-01-05 12:00:00 +0100
 categories:
 - Sitecore Search
 - Sitecore
