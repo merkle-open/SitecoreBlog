@@ -49,7 +49,7 @@ You can update the default `minima` theme: <https://github.com/jekyll/minima#cus
 
 #### Code snippets
 
-For embedding code in blog posts you have two possibilities. You can either use the Liquid-tag [`highlight`](https://jekyllrb.com/docs/liquid/tags/) which automatically converts code into a nicely highlighted HTML structure during build. The other possibility would be to embed a gist into the post by using the Liquid-tag [`gist`](https://github.com/jekyll/jekyll-gist). Gists are probably more suited to complex code which you want to maintain over a longer time period as they have a version history.
+For embedding code in blog posts you have two possibilities. You can either use the Liquid-tag [`highlight`](https://jekyllrb.com/docs/liquid/tags/) which automatically converts code into a nicely highlighted HTML structure during build. Here is also a [`list of supported languages for highlight`](https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers). The other possibility would be to embed a gist into the post by using the Liquid-tag [`gist`](https://github.com/jekyll/jekyll-gist). Gists are probably more suited to complex code which you want to maintain over a longer time period as they have a version history.
 
 ## How to create your own author page
 
