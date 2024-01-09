@@ -1,6 +1,6 @@
 ---
 title:  "Sitecore 10 Upgrade Problems And Solutions"
-date:   2024-01-08 12:00:00 +0100
+date:   2024-01-15 12:00:00 +0100
 categories:
 - Sitecore
 tags:
