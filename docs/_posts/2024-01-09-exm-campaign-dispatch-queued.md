@@ -14,22 +14,22 @@ author: dgashi
 ## Situation
 
 
-It is how its mostly is - marketing team putted all their efforts together to send out a very important press release to over 8000 recipients at a particular time and date - and during the dispatch - this regular campaign type paused and was set to queued without any information or indicator about what went wrong to the marketing team.
+It is how it mostly is - marketing team putted all their efforts together to send out a very important press release to over 8000 recipients at a particular time and date - and during the dispatch - this regular campaign type paused and was set to queued without any information or indicator about what went wrong to the marketing team.
 
 #### Campaign Manager
 
-![Campaign Manager](../files/2024/01/09/exm-dispatch-campaign-manager.png "Campaign Manger")
+![Campaign Manager](../files/2024/01/09/exm-dispatch-campaign-manager.png "Campaign Manager")
 
-We saw the status is <b>Queuing</b>, the columns *Sent to*, *Skipped*, *Unprocessed* and *Failed* showed all a 0 so we felt lucky and thougth that this was just a hiccup maybe because of the huge amount of contacts and we resetted the status, tried to send it out an another time - after some 2 or 3 minutes - same issue again.
+We saw the status is <b>Queuing</b>, the columns *Sent to*, *Skipped*, *Unprocessed* and *Failed* showed all a 0 so we felt lucky and thought that this was just a hiccup maybe because of the huge amount of contacts and we reset the status, tried to send it out an another time - after some 2 or 3 minutes - same issue again.
 
 
 #### Reporting mail
 
-Astonishment arose when the customer provided one of the received reporting mail:
+Astonishment arose when the customer provided one of the received reporting mails:
 
 ![Reporting Mail](../files/2024/01/09/exm-dispatch-abort-mail.png "Reporting Mail")
 
-O man, there are really contacts which already received these mailings, but the majority not. So the numbers on the overview within the Campagne Manager are not true in this case.
+O man, there are really contacts which already received these mailings, but the majority not. So, the numbers on the overview within the Campagne Manager are not true in this case.
 
 This all happened on a Sitecore XP 9.1.1 CM instance, what at the end of this post gets important again.
 
@@ -59,24 +59,24 @@ at Sitecore.EmailCampaign.Cm.Dispatch.DispatchManager.Queue(Int32 threadIndex, I
 
 ## What we found out
 
-First we were not sure how this error message is related to the stop of the email campaign dispatch. 
+First, we were not sure how this error message is related to the stop of the email campaign dispatch. 
 
 NullReferenceException - what could be missing? 
 
 We continued with our investigation and involved Sitecore Support which told us to check if we have contacts in the included lists which have a missing Alias identifier. 
 
-So we checked all included contact list about these contacts and we found what we were looking for:
+So, we checked all included contact list about these contacts and we found what we were looking for:
 
 ![Segmented contact list](../files/2024/01/09/exm-dispatch-contact-list.png "Segmented Contact List")
 
-There was a included segmented list where contacts are displayed in the List Manager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}<br>
+There was an included segmented list where contacts are displayed in the List Manager without *Email*, *First Name* and *Last Name* was outputted as {{LastName}}<br>
 *Therefore, if you see such contacts in your lists please do not ignore them.*
 
 With double-click on one of those, we entered the Experience Profile for this contact and with the contact ID we were able to check the identifiers directly in the XDB with utilizing the xdbsearch Role:
 
-![Empyt contact identifiers](../files/2024/01/09/exm-dispatch-contact-data.png "Empty contact identifiers")
+![Empty contact identifiers](../files/2024/01/09/exm-dispatch-contact-data.png "Empty contact identifiers")
 
-Here you can see that these contacts have no identifiers and personal information at all, how that came we still need to investigate but these seem to be very old contacts with no interactions since more then a year.
+Here you can see that these contacts have no identifiers and personal information at all, how that came we still need to investigate but these seem to be very old contacts with no interactions since more than a year.
 
 ## Solution
 Sitecore support have advised there is no supported way to programmatically add the Alias identifier and the best option is to manually delete and recreate these contacts. But we had no time now - the mail must go out now.
@@ -89,7 +89,7 @@ After these contacts were filtered out from the contact lists the campaign dispa
 
 #### A ray of hope - Sitecore 10
 On Sitecore 10.3 this issue will not occur anymore, we found out that these contacts with no Alias identifier do not appear anymore on the segmented list. Maybe this was already a known issue and has been fixed with the upgrade.<br>
-For older versions I suggest to filter these contacts out in your segmented lists + delete or recreate these contacts afterwards
+For older versions I suggest filtering these contacts out in your segmented lists + delete or recreate these contacts afterwards
 
 
 
