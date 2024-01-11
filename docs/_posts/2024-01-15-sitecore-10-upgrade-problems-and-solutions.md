@@ -119,7 +119,7 @@ In Sitecore 10, there was another change for each form field on the core databas
 
 Even though item names are the same, there are different items selected in Sitecore 10. You can put the following IDs on the ControlDefinitions field on Sitecore for each of these custom fields, then we will be able to see CSS classes on Sitecore Forms Editor:
 
-{% highlight ruby %}
+{% highlight yaml %}
 {98FB361E-3A7F-49F9–8789–8C169FB95B61}|{121B9875–2F7D-4D62-BD0F-35A7B909ECE8}
 {% endhighlight %}
 
@@ -131,7 +131,7 @@ After the upgrade, we realized there were many field values not showing on the w
 ## Solution
 
 We searched on Glass Mapper release documentation and found this one:
-[glass mapper](http://www.glass.lu/Mapper/Releases.html) on version 5.3.17 which mentions:
+[Glass Mapper](http://www.glass.lu/Mapper/Releases.html) on version 5.3.17 which mentions:
 
 >ISSUE 370 The lazy object inceptor will now ignore class properties that don't have a setter or have the SitecoreIgnore attribute.
 
@@ -163,9 +163,9 @@ We developed a custom SettingProvider and started using it instead of queries or
 
 ## Problem: System.OutOfMemory Exception
 
-After we switched to Sitecore 10 and started using the databases from the production system, many developers in the team experienced this exception. 
+After we switched to Sitecore 10 with Docker and imported the databases from the production system, several developers in the team experienced this exception. 
 
-Either cm was unhealthy, or after some time it was becoming unhealthy. When we check logs on the docker or inspect container, we would always see this error popping up. Also, the Sitecore system needed to be faster to work on.
+Either cm was unhealthy, or after some time it was becoming unhealthy. When we check logs on the docker or inspect the container, we would always see this error popping up. Also, the Sitecore system needed to be faster to work on.
 
 ## Solution
 
@@ -191,4 +191,4 @@ DELETE FROM dbo.PublishQueue
 
 After this cleanup docker became fast, and we got rid of the exception.
 
-Thanks to Fabian Geiger and Ramazan Yilmaz for their support..
+Thanks to Fabian Geiger and Ramazan Yilmaz for their support...
