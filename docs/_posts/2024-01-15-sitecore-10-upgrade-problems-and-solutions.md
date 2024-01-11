@@ -90,7 +90,7 @@ public class ListDataSourceProvider : IListDataSourceProvider
 
 {% endhighlight %}
 
-## Similar Problem: Form submissions not working in local languages
+## Similar Problem: Form submissions are not working in local languages
 On our website, we use custom submit actions to make API requests. These API requests rely on data source items selected on Sitecore. After testing, we realized that some fields on these data source items have empty values sent to API even though they were filled on the main languages on Sitecore. So Sitecore could not fill these values that are supposed to come from fallback language.
 
 ## Solution
@@ -101,7 +101,7 @@ After opening another Sitecore support ticket, we realized that Enable item lang
 
 For these 2 problems thank you for your support, Arun Tiwari...
 
-## Problem: Form field classes not rendered
+## Problem: Form field classes are not rendered
 
 After the upgrade, all of our forms were not showing CSS classes. Since they are added to the project for custom implementations, they were not changed by upgrade automatically.
 
@@ -109,7 +109,7 @@ After the upgrade, all of our forms were not showing CSS classes. Since they are
 
 In Sitecore 9, *Model.CssClass* for fields and *Model.LabelCssClass* for labels was used. These properties become obsolete in Sitecore, so we needed to use *Model.CssClassSettings.CssClass* and *Model.LabelCssClassSettings.CssClass* respectively. After these changes, forms were rendering CSS classes again.
 
-## Similar Problem: Forms Editor not showing Styling section on custom form fields
+## Similar Problem: Forms Editor is not showing the Styling section on custom form fields
 
 In Sitecore 10, there was another change for each form field on the core database. Sitecore started using new CssClass and LabelCssClass items on Styling item:
 
@@ -119,7 +119,7 @@ In Sitecore 10, there was another change for each form field on the core databas
 
 Even though item names are the same, there are different items selected in Sitecore 10. You can put the following IDs on the ControlDefinitions field on Sitecore for each of these custom fields, then we will be able to see CSS classes on Sitecore Forms Editor:
 
-{% highlight yaml %}
+{% highlight escape %}
 {98FB361E-3A7F-49F9–8789–8C169FB95B61}|{121B9875–2F7D-4D62-BD0F-35A7B909ECE8}
 {% endhighlight %}
 
@@ -137,7 +137,7 @@ We searched on Glass Mapper release documentation and found this one:
 
 So, after upgrading the Glass Mapper, checking if every property mapped with the Glass Mapper has a setter is crucial. Especially, if you use them for API calls or search functionality.
 
-## Problem: Custom Powershell scripts on Toolbar not working
+## Problem: Custom Powershell scripts on the Toolbar are not working
 
 In our project, we used Powershell scripts to bulk edit workflow state, copy item version, reset field value, and many more. We created these scripts and added them to the Toolbar so our customers can use them too. But after upgrading to Sitecore 10, we saw that all of them were not clickable, showing just script names and blank icons.
 
@@ -153,7 +153,7 @@ After some investigation, we rebuilt all Powershell ISE scripts. This rebuild cr
 
 So after we start using the updated type, scripts become clickable and icons are showing again.
 
-## Problem: Fast Queries Not Supported
+## Problem: Fast Queries are not supported
 
 Fast queries are deprecated in Sitecore 10. It's suggested to use a search index. In our case, we used a fast query to reach a setting item.
 
