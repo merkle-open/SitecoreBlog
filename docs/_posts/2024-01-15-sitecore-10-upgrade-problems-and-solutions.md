@@ -163,7 +163,7 @@ We developed a custom SettingProvider and started using it instead of queries or
 
 ## Problem: System.OutOfMemory Exception
 
-After we switched to Sitecore 10 with Docker and imported the databases from the production system, many developers in the team experienced this exception. 
+After we switched to Sitecore 10 with Docker and imported the databases from the production system, several developers in the team experienced this exception. 
 
 Either cm was unhealthy, or after some time it was becoming unhealthy. When we check logs on the docker or inspect the container, we would always see this error popping up. Also, the Sitecore system needed to be faster to work on.
 
