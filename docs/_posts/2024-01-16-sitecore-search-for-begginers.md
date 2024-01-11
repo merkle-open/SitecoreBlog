@@ -18,7 +18,7 @@ author: rcunha
 Foto from [Viarami](https://pixabay.com/users/viarami-13458823/) on [Unsplash](https://pixabay.com/photos/magnifying-glass-seek-detective-5232511/)
 
 ## What is Sitecore Search?
-Released during last quarter of 2022, Sitecore Search is one of the most recent products from [Sitecore DXP offering](https://www.sitecore.com/products){:target="_blank"}. With the newly Sitecore Search product we are able to deliver relevant and personalized content to the right audience at the right time. It's a fully SaaS-based solution composed by tree major pillars:
+Released during last quarter of 2022, Sitecore Search is one of the most recent products from [Sitecore DXP offering](https://www.sitecore.com/products){:target="_blank"}. With the newly Sitecore Search product we are able to deliver relevant and personalized content to the right audience at the right time. It's a fully SaaS-based solution composed by three major pillars:
 - **Customer Engagement Console (CEC)** - The Sitecore Search SaaS dashboard for search analytics, tests, configurations, and more.
 - **Search & recommendations service** - An AI-based REST API for performing search queries and receiving results.
 - **Event service** - A REST API for collecting visitor interactions which are key to optimizing the search experience.
@@ -32,8 +32,6 @@ The Customer Engagement Console (CEC) is Sitecore Search entry point, providing 
 </p>
 
 In current days, where companies are growing and improving their online presence, we are seeing data being fragmented across multiple systems. With Sitecore Search we are able to **integrate our website(s) or any online point of contact** to create engaging, and predictive **content search experiences across all our content sources**.
-
-In this post we explain how to start the Sitecore Search Journey, by exploring the following topics: 1) Setup the Sitecore Search environment, 2) Adding and configuring attributes, 3) Adding and configuring source, and 4) Configuring search features.
 
 ## Setup the Sitecore Search environment
 While working with Sitecore Search we will mainly go through three major phases:
@@ -53,18 +51,17 @@ Instead, we can see them as configuration items that will be used on our search 
 
 Widgets are a key concept on Sitecore Search, since it's from them that we can provide unique and custom experiences to our end users. For each widget we can configure different settings, such as pinning or blacklist results, choose which facets to display, boost certain indexed documents and much more.
 
-This article will guide us on how to start configuring all the basic settings such as:
-- Attributes configurations.
-- Sources creation and configurations.
-- Search feature configurations.
+In this blog post we will explain how to setup Sitecore Search environment, by exploring the following topics: 
+1. Adding and configuring attributes. 
+2. Adding and configuring sources. 
+3. Configuring search features.
 
 ## Adding and configuring attributes
 In Sitecore Search, attributes represent metadata of content items that we can use to generate suggestions, track metrics, filter search results, and so on.
 Depending on the sources from which we are extracting content, some attribute fields may or may not be populated. **Mandatory attributes are the only ones we must collect on all existing sources**. Sitecore Search will not be able to index documents on sources for which mandatory attribute fields are missing. 
 
-`By default, the Sitecore Search domain should come with some pre-built attributes such as: id, type, name, description, url or image_url.`
-
-The id attribute is a mandatory attribute since each index document requires a unique identifier.
+By default, Sitecore Search domain should come with some pre-built attributes such as: id, type, name, description, url or image_url.
+The **id attribute** is an example of a **mandatory** attribute since each index document requires a unique identifier.
 
 New attributes can be added under the **Administration → Domain Settings → Attributes** tab. On the attributes dashboard we just need to click on the "+ Add Attribute" button visible on the top right corner of the screen.
 <p align="center">
@@ -137,7 +134,7 @@ Even though configurations were added to the global widget, Sitecore Search give
 - Sitecore Search can provide customers with a **search experience that groups together content that is fragmented thought-out multiple sources** (global public website, shop website and APIs). With a single user query we can aggregate the results of all configured sources in a single data set that is returned to the user, enabling him to find content quickly and easily.
 - Sitecore Search provides developers with an **existing API to get search results, facet options, suggestions, sorting options etc.** No need to create custom APIs, it's all provided by Sitecore Search.
 - Sitecore provides a [Search JS SDK for react](https://www.npmjs.com/package/@sitecore-search/react){:target="_blank"} that we can use to accelerate the integration between Sitecore Search and your website.
-- Coding wise the effort needed to have this available in a website is mainly frontend code which can make use of existing [Sitecore Search rest APIs](https://doc.sitecore.com/search/en/developers/search-developer-guide/integrating-using-rest-apis.html){:target="_blank"} or using the new [Sitecore Search JS SDK](https://www.npmjs.com/package/@sitecore-search/react){:target="_blank"}.
+- Coding wise, the effort needed to have this available in a website is mainly frontend code which can make use of existing [Sitecore Search rest APIs](https://doc.sitecore.com/search/en/developers/search-developer-guide/integrating-using-rest-apis.html){:target="_blank"} or using the new [Sitecore Search JS SDK](https://www.npmjs.com/package/@sitecore-search/react){:target="_blank"}.
 - Currently there is **no way to access system logs**, meaning that whenever the crawler is not able to run the only option we have is to tweak existing configurations to see if it fixes the issue.
 - **Ingestion API allow us to manually add/remove/update indexed documents**, however currently there is no bulking option to update multiple documents at the same time. We need to do it one by one.
 
