@@ -119,7 +119,7 @@ In Sitecore 10, there was another change for each form field on the core databas
 
 Even though item names are the same, there are different items selected in Sitecore 10. You can put the following IDs on the ControlDefinitions field on Sitecore for each of these custom fields, then we will be able to see CSS classes on Sitecore Forms Editor:
 
-{% highlight ruby %}
+{% highlight escape %}
 {98FB361E-3A7F-49F9–8789–8C169FB95B61}|{121B9875–2F7D-4D62-BD0F-35A7B909ECE8}
 {% endhighlight %}
 
