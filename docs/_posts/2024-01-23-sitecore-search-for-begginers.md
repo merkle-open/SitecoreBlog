@@ -13,7 +13,7 @@ tags:
 author: rcunha
 ---
 
-![alt text](../files/2024/01/16/01-magnifying-glass-hero.jpg "Search with magnifying glass")
+![alt text](../files/2024/01/23/01-magnifying-glass-hero.jpg "Search with magnifying glass")
 
 Foto from [Viarami](https://pixabay.com/users/viarami-13458823/) on [Unsplash](https://pixabay.com/photos/magnifying-glass-seek-detective-5232511/)
 
@@ -23,12 +23,12 @@ Released during last quarter of 2022, Sitecore Search is one of the most recent 
 - **Search & recommendations service** - An AI-based REST API for performing search queries and receiving results.
 - **Event service** - A REST API for collecting visitor interactions which are key to optimizing the search experience.
 <p align="center">
-    <img src="../files/2024/01/16/02-Sitecore-Search-Pillars.png" alt= "Sitecore Search pillars, CEC and APIs" width="640">
+    <img src="../files/2024/01/23/02-Sitecore-Search-Pillars.png" alt= "Sitecore Search pillars, CEC and APIs" width="640">
 </p>
 
 The Customer Engagement Console (CEC) is Sitecore Search entry point, providing us with the right tools to manage, configure and analyze our search experiences. With CEC, we can create Sources, Widgets, rules, A/B tests, track analytics, test integrations and much more.
 <p align="center">
-    <img src="../files/2024/01/16/03-CEC-Homepage.png" alt= "Sitecore Search CEC homepage">
+    <img src="../files/2024/01/23/03-CEC-Homepage.png" alt= "Sitecore Search CEC homepage">
 </p>
 
 In current days, where companies are growing and improving their online presence, we are seeing data being fragmented across multiple systems. With Sitecore Search we are able to **integrate our website(s) or any online point of contact** to create engaging, and predictive **content search experiences across all our content sources**.
@@ -43,7 +43,7 @@ While working with Sitecore Search we will mainly go through three major phases:
 **3. Configure** - During the configuration step we should start configuring all website search features we would like to provide to our customers. It's during this phase that we start configuring facets, sorting options, recommendations and widgets.
 
 <p align="center">
-    <img src="../files/2024/01/16/04-Sitecore-Search-Flow.png" alt= "Sitecore Search flow">
+    <img src="../files/2024/01/23/04-Sitecore-Search-Flow.png" alt= "Sitecore Search flow">
 </p>
 
 On Sitecore Search, each search experience provided to our customers is attached to a Widget which is represented in Sitecore Search as a unique ID named rfkid. Note that in Sitecore Search, widgets are not coupled with any visual representation. 
@@ -65,7 +65,7 @@ The **id attribute** is an example of a **mandatory** attribute since each index
 
 New attributes can be added under the **Administration → Domain Settings → Attributes** tab. On the attributes dashboard we just need to click on the "+ Add Attribute" button visible on the top right corner of the screen.
 <p align="center">
-    <img src="../files/2024/01/16/05-Sitecore-Search-Attributes.png" alt= "Sitecore Search attributes">
+    <img src="../files/2024/01/23/05-Sitecore-Search-Attributes.png" alt= "Sitecore Search attributes">
 </p>
 An important part of editing or adding an attribute is to configure the "Use for feature" options. In this menu of options we can decide which features of Sitecore Search the attribute can be used for.
 For example, by selecting the "Suggestions Blocks" option the attribute field could be used to provide suggestions to end users.
@@ -97,7 +97,7 @@ Currently when creating a source we can choose one of the following connectors:
 To create a new source, we must go to Sources page and click on the "+ Add Source" button.
 After that, we should give it a name, a description and choose which type of connector (from the ones described above) is most suitable for the newly created source.
 <p align="center">
-    <img src="../files/2024/01/16/06-Sitecore-Search-Add-Source.png" alt= "Sitecore Search add sources">
+    <img src="../files/2024/01/23/06-Sitecore-Search-Add-Source.png" alt= "Sitecore Search add sources">
 </p> 
  
 ### Configure Source
@@ -120,7 +120,7 @@ While configuring attributes we can set to which Sitecore Search features they c
 
 In order to enable search features such as facets, sort options or suggestion, we need to navigate to the Feature Configuration panel located at: **Administration → Domain Settings → Feature Configurations**.
 <p align="center">
-    <img src="../files/2024/01/16/07-Sitecore-Search-Features-Configurations.png" alt= "Sitecore Search features configurations">
+    <img src="../files/2024/01/23/07-Sitecore-Search-Features-Configurations.png" alt= "Sitecore Search features configurations">
 </p> 
 
 An example on how to configure search features like textual relevance, suggestions and sorting options can be seen in [this page](https://doc.sitecore.com/search/en/developers/search-developer-guide/walkthrough--configuring-search-features.html){:target="_blank"}.
