@@ -15,14 +15,14 @@ Foto [Bryson Hammer](https://unsplash.com/de/@trhammerhead?utm_content=creditCop
 
 Have you ever tried to extend the general link in Sitecore to serve additional needs? Lucky you ;)
 
-If you need to, this quick-step-tutorial may help you to get this done. It might be helpfull to extend other fieldtypes as well ([see also](/cheatsheetfieldtypes/)).
+If you need to, this quick-step-tutorial may help you to get this done. It might be helpful to extend other fieldtypes as well ([see also](/cheatsheetfieldtypes/)).
 
 This tutorial will be based on the external link of the general link and could be easily mapped to the internal link.
 
 ## Setup
 
 This tutorial is build in a project with Sitecore XP 10.3, TDS and Glass-Mapper. \
-It might be possible that you have to change some of the steps to you lokal setup (I know that TDS is not very common).
+It might be possible that you have to change some of the steps to you local setup (I know that TDS is not very common).
 
 ## Short form (without further explanation and screenshots)
 
@@ -40,7 +40,7 @@ It might be possible that you have to change some of the steps to you lokal setu
 
 ## Detailed version
 
-The mechanics to fullfill the job are way more difficult that I thought in the beginning. And yes it took me a bit more time to get the story done.
+The mechanics to fulfill the job are way more difficult that I thought in the beginning. And yes it took me a bit more time to get the story done.
 
 Provided sourcecode is mostly sonarqube-validated. So it may differ from decompiled or original sources.
 
@@ -90,7 +90,7 @@ namespace Place.your.own.Namespace
 
 ### Register Messagehandler
 
-Create a .config file with a simular content:
+Create a .config file with a similar content:
 
 ```XML
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
@@ -106,7 +106,7 @@ Now can Sitecore handle the new message-type but doesn't know what kind of contr
 
 ### Create new Model (Serializable)
 
-Before we create the new control we need a model, which can store our additional informations.
+Before we create the new control we need a model, which can store our additional information.
 
 ```c#
 using System;
@@ -127,7 +127,7 @@ namespace Place.your.own.Namespace.Models
 }
 ```
 
-You may now get what we inteded to extend at the link.
+You may now get what we intended to extend at the link.
 
 **Important**: the model has to be serializable.
 
@@ -193,13 +193,13 @@ namespace Place.your.own.Namespace.FieldTypes
 
 ### Create FormDialog (XML)
 
-Now it is getting wierd. Telerik. Nothing to do with items. Doesn't Sitecore tell us everything is an item? \
+Now it is getting weird. Telerik. Nothing to do with items. Doesn't Sitecore tell us everything is an item? \
 Anyway.
 
 As source look into your Sitecore instance at this path: \
 *\sitecore\shell\Applications\Dialogs\ExternalLink*
 
-Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.xml`. Now change some namespaces and add the additional informations like:
+Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.xml`. Now change some namespaces and add the additional information like:
 
 ```XML
 <?xml version="1.0" encoding="utf-8" ?>
@@ -237,7 +237,7 @@ Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.x
         <Label for="Title" GridPanel.NoWrap="true"><Literal Text="Alternate text:"/></Label>
         <Edit ID="Title" Width="100%" />
 
-        <Literal Text="Tracking Informations:" GridPanel.Colspan="2"/>
+        <Literal Text="Tracking Information:" GridPanel.Colspan="2"/>
 
         <Label for="EventCategory"><Literal Text="Event Category:"/></Label>
         <Edit ID="EventCategory" Width="100%" />
@@ -376,7 +376,7 @@ namespace Place.your.own.Namespace
 
 **Important**: keep the name `link` for the XML-nodes to ensure compatibility to existing links.
 
-Compile, publish and you are able to change every link in your instance with additional tracking informations. \
+Compile, publish and you are able to change every link in your instance with additional tracking information. \
 You can edit any kind of general link and have a raw-value like this: \
 `<link text="Homepage with Tracking" linktype="internal" querystring="" target="_blank" EventCategory="Category" EventAction="Action" EventLabel="Label" id="{819BFAC1-A563-49DA-9C2C-E88D0B397619}" />`
 
@@ -384,7 +384,7 @@ But it can't be used yet.
 
 ### Change OR-Mapper/Code-Generator
 
-Within TDS there are usualy T4-templates. Within the *glassv3item.tt* edit the Method `GetGlassFieldType`:
+Within TDS there are usually T4-templates. Within the *glassv3item.tt* edit the Method `GetGlassFieldType`:
 
 ```T4
 case "general link":
@@ -396,7 +396,7 @@ Generate your models. And depending on your use of the Link-feature the will be 
 ### Create DataMapper for Glass
 
 Now we have to tell Glass what it has to do with the model. This is done by a custom datamapper. \
-In our case we need somthing like this:
+In our case we need something like this:
 
 ```c#
 using System;
@@ -421,7 +421,7 @@ namespace Place.your.own.Namespace.DataMapper
     /// <summary>
     /// Class LinkWithTrackingMapper
     /// Source: https://github.com/mikeedwards83/Glass.Mapper/blob/master/Source/Glass.Mapper.Sc/DataMappers/SitecoreFieldLinkMapper.cs
-    /// Edited to fit the additional tracking informations and the code-quality standards of the projekt.
+    /// Edited to fit the additional tracking information and the code-quality standards of the project.
     /// </summary>
     public class LinkWithTrackingMapper : AbstractSitecoreFieldMapper
     {
@@ -786,7 +786,7 @@ namespace Place.your.own.Namespace.DataMapper
 }
 ```
 
-Most of the code is copied from the glass-github-project to make sure it has nearly the same funktionality. And afterward SonarQube gets into contact and made me change some of the codestyle.
+Most of the code is copied from the glass-github-project to make sure it has nearly the same functionality. And afterward SonarQube gets into contact and made me change some of the codestyle.
 
 ### Register DataMapper
 
@@ -847,26 +847,26 @@ public class GlassHtmlOverride : GlassHtml
 }
 ```
 
-Here you can see, what we are doing with the additional Informations: we add an attribute with json data. This can be handled by the tracking components in the frontend. \
+Here you can see, what we are doing with the additional information: we add an attribute with json data. This can be handled by the tracking components in the frontend. \
 And how can we use it in the Views: you can use any kind of `RenderLink` or `BeginRenderLink` for any kind of LinkWithTracking-field to render.
 
 ## the end?
 
-And then the customes complains about Experience Editor ... As usual we forget about this. Right?
+And then the customer complains about Experience Editor ... As usual we forget about this. Right?
 
 Now it is getting nearly as complex as before. We haven#t done it yet, but you may follow the last link in the [Linkcollection](#linkcollection) to get it done.
 
 ## Conclusion
 
-Many steps on an unsual way to customize Sitecore XP but it is getting the job done in the end. \
+Many steps on an unusual way to customize Sitecore XP but it is getting the job done in the end. \
 An my customer is fine with the link-tracking configuration in the Content Editor. :D
 
 ## Linkcollection
 
 This links helped me to get the job done.
 
-- [How to #1 to cutomize the general link](https://sitecorejunkie.com/2015/10/10/add-a-custom-attribute-to-the-general-link-field-in-sitecore/)
-- [How to #2 to cutomize the general link](https://assurex.co/sitecore/extending-general-link-field-in-sitecore/)
+- [How to #1 to customize the general link](https://sitecorejunkie.com/2015/10/10/add-a-custom-attribute-to-the-general-link-field-in-sitecore/)
+- [How to #2 to customize the general link](https://assurex.co/sitecore/extending-general-link-field-in-sitecore/)
 - [How to create a glass-mapper and the rendering](https://sitecore.stackexchange.com/questions/7663/how-do-i-render-custom-attributes-on-a-general-link-using-the-latest-version-of)
 - [Original LinkMapper from Glass](https://github.com/mikeedwards83/Glass.Mapper/blob/master/Source/Glass.Mapper.Sc/DataMappers/SitecoreFieldLinkMapper.cs)
 - [Extending general link for Experience Editor](https://blogs.perficient.com/2024/02/07/extending-general-link-for-experience-editor-mode/)
