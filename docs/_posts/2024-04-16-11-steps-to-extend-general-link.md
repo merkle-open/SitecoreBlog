@@ -803,7 +803,7 @@ Now we are good to go.
 Lets do the final part: get the data into the source-code. \
 This could be done bei overriding `GlassHtml` like this:
 
-```c#
+{% highlight csharp %}
 public class GlassHtmlOverride : GlassHtml
 {
     public GlassHtmlOverride(ISitecoreService sitecoreService) : base(sitecoreService)
@@ -840,12 +840,12 @@ public class GlassHtmlOverride : GlassHtml
             {
                 nameValueCollection = new NameValueCollection();
             }
-            nameValueCollection.Add("data-clickevent", $"{{'eventCategory': '{linkWithTracking.EventCategory}', 'eventAction': '{linkWithTracking.EventAction}', 'eventLabel': '{linkWithTracking.EventLabel}'}}");
+            nameValueCollection.Add("data-clickevent", $"`{`{'eventCategory': '{linkWithTracking.EventCategory}', 'eventAction': '{linkWithTracking.EventAction}', 'eventLabel': '{linkWithTracking.EventLabel}'`}`}");
         }
         return parameters;
     }
 }
-```
+{% endhighlight %}
 
 Here you can see, what we are doing with the additional information: we add an attribute with json data. This can be handled by the tracking components in the frontend. \
 And how can we use it in the Views: you can use any kind of `RenderLink` or `BeginRenderLink` for any kind of LinkWithTracking-field to render.
