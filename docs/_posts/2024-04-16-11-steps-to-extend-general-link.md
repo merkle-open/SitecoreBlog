@@ -13,16 +13,16 @@ author: hlueneburg
 
 Foto [Bryson Hammer](https://unsplash.com/de/@trhammerhead?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/de/fotos/selektives-fokusfoto-von-grauen-metallketten-JZ8AHFr2aEg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
 
-Have you ever tried to extend the general link in Sitecore to serve additional needs? Lucky you ;)
+Have you ever tried to extend the general link in Sitecore to serve additional needs? No? Lucky you ;)
 
 If you need to, this quick-step-tutorial may help you to get this done. It might be helpful to extend other fieldtypes as well ([see also](/cheatsheetfieldtypes/)).
 
-This tutorial will be based on the external link of the general link and could be easily mapped to the internal link.
+This tutorial is based on the external link of the general link and can be easily mapped to the internal link.
 
 ## Setup
 
-This tutorial is build in a project with Sitecore XP 10.3, TDS and Glass-Mapper. \
-It might be possible that you have to change some of the steps to you local setup (I know that TDS is not very common).
+This tutorial is built in a project with Sitecore XP 10.3, TDS and Glass-Mapper. \
+It might be necessary to adjust some of the steps to your local setup (I know that TDS is not very common).
 
 ## Short form (without further explanation and screenshots)
 
@@ -40,7 +40,7 @@ It might be possible that you have to change some of the steps to you local setu
 
 ## Detailed version
 
-The mechanics to fulfill the job are way more difficult that I thought in the beginning. And yes it took me a bit more time to get the story done.
+The mechanics to fulfill the job are way more difficult than I thought at the beginning. And yes it took me a bit more time to get the story done.
 
 Provided sourcecode is mostly sonarqube-validated. So it may differ from decompiled or original sources.
 
@@ -51,11 +51,11 @@ Log into Sitecore, get to the Desktop, switch to the core-DB and open the Conten
 
 Change the field-content of Message from `contentlink:externallink(id=$Target)` to something like `contentlink:externallinkwithtracking(id=$Target)`.
 
-After the change sync this item into you project. Yo want to keep it in source control right?
+After the change sync this item into your project. You want to keep it in source control right?
 
 ### Create Massagehandler
 
-The next step is to create a messagehandler, who can handle the new messagetype. This could be done like this:
+The next step is to create a messagehandler, that can handle the new messagetype. This can be done like this:
 
 ```c#
 using Sitecore;
@@ -90,7 +90,7 @@ namespace Place.your.own.Namespace
 
 ### Register Messagehandler
 
-Create a .config file with a similar content:
+Create a .config file with similar content:
 
 ```XML
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
@@ -102,7 +102,7 @@ Create a .config file with a similar content:
 </configuration>
 ```
 
-Now can Sitecore handle the new message-type but doesn't know what kind of control *ExternalLinkWithTracking* might be.
+Now Sitecore can handle the new message-type but doesn't know what kind of control *ExternalLinkWithTracking* might be.
 
 ### Create new Model (Serializable)
 
@@ -127,7 +127,7 @@ namespace Place.your.own.Namespace.Models
 }
 ```
 
-You may now get what we intended to extend at the link.
+Now you should see what we intend to do with the added properties.
 
 **Important**: the model has to be serializable.
 
@@ -193,10 +193,10 @@ namespace Place.your.own.Namespace.FieldTypes
 
 ### Create FormDialog (XML)
 
-Now it is getting weird. Telerik. Nothing to do with items. Doesn't Sitecore tell us everything is an item? \
+Now it gets weird. Telerik. Nothing to do with items. Doesn't Sitecore tell us everything is an item? \
 Anyway.
 
-As source look into your Sitecore instance at this path: \
+For reference look into your Sitecore instance at this path: \
 *\sitecore\shell\Applications\Dialogs\ExternalLink*
 
 Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.xml`. Now change some namespaces and add the additional information like:
@@ -256,7 +256,7 @@ Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.x
 
 ### Create Code-Behind Class
 
-And the part of the CodeBeside-part:
+And add code for the CodeBeside-part:
 
 ```c#
 using Sitecore;
@@ -391,7 +391,7 @@ case "general link":
     return "LinkWithTracking";
 ```
 
-Generate your models. And depending on your use of the Link-feature the will be a change of every Link-property to a LinkWithTracking-property.
+Generate your models. Depending on your use of the Link-feature there will be a change of every Link-property to a LinkWithTracking-property.
 
 ### Create DataMapper for Glass
 
@@ -786,7 +786,7 @@ namespace Place.your.own.Namespace.DataMapper
 }
 ```
 
-Most of the code is copied from the glass-github-project to make sure it has nearly the same functionality. And afterward SonarQube gets into contact and made me change some of the codestyle.
+Most of the code is copied from the glass-github-project to make sure it has nearly the same functionality with only a few changes to codestyle suggested by SonarQube.
 
 ### Register DataMapper
 
@@ -854,16 +854,16 @@ And how can we use it in the Views: you can use any kind of `RenderLink` or `Beg
 
 And then the customer complains about Experience Editor ... As usual we forget about this. Right?
 
-Now it is getting nearly as complex as before. We haven#t done it yet, but you may follow the last link in the [Linkcollection](#linkcollection) to get it done.
+Now it gets almost as complex as before. We haven't done it yet, but you may follow the last link in the [Linkcollection](#linkcollection) to get it done.
 
 ## Conclusion
 
 Many steps on an unusual way to customize Sitecore XP but it is getting the job done in the end. \
-An my customer is fine with the link-tracking configuration in the Content Editor. :D
+And my customer is fine with the link-tracking configuration in the Content Editor. :D
 
 ## Linkcollection
 
-This links helped me to get the job done.
+These links helped me to get the job done.
 
 - [How to #1 to customize the general link](https://sitecorejunkie.com/2015/10/10/add-a-custom-attribute-to-the-general-link-field-in-sitecore/)
 - [How to #2 to customize the general link](https://assurex.co/sitecore/extending-general-link-field-in-sitecore/)
