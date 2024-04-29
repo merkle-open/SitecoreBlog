@@ -9,7 +9,7 @@ tags:
 - Sitecore XP
 author: hlueneburg
 ---
-![alt text](../files/2024/04/16/bryson-hammer-JZ8AHFr2aEg-unsplash.jpg "two connected links")
+![alt text](../files/2024/04/29/bryson-hammer-JZ8AHFr2aEg-unsplash.jpg "two connected links")
 
 Foto [Bryson Hammer](https://unsplash.com/de/@trhammerhead?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/de/fotos/selektives-fokusfoto-von-grauen-metallketten-JZ8AHFr2aEg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
 
@@ -237,6 +237,7 @@ Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.x
         <Label for="Title" GridPanel.NoWrap="true"><Literal Text="Alternate text:"/></Label>
         <Edit ID="Title" Width="100%" />
 
+        <!-- custom code start -->
         <Literal Text="Tracking Information:" GridPanel.Colspan="2"/>
 
         <Label for="EventCategory"><Literal Text="Event Category:"/></Label>
@@ -247,6 +248,7 @@ Create a copy of `ExternalLink.xml` and name it like `ExternalLinkWithTracking.x
 
         <Label for="EventLabel"><Literal Text="Event Label:"/></Label>
         <Edit ID="EventLabel" Width="100%" />
+        <!-- custom code end -->
       </GridPanel>
       
     </FormDialog>
@@ -868,5 +870,5 @@ These links helped me to get the job done.
 - [How to #1 to customize the general link](https://sitecorejunkie.com/2015/10/10/add-a-custom-attribute-to-the-general-link-field-in-sitecore/)
 - [How to #2 to customize the general link](https://assurex.co/sitecore/extending-general-link-field-in-sitecore/)
 - [How to create a glass-mapper and the rendering](https://sitecore.stackexchange.com/questions/7663/how-do-i-render-custom-attributes-on-a-general-link-using-the-latest-version-of)
-- [Original LinkMapper from Glass](https://github.com/mikeedwards83/Glass.Mapper/blob/master/Source/Glass.Mapper.Sc/DataMappers/SitecoreFieldLinkMapper.cs)
+- [Glass](https://github.com/mikeedwards83/Glass.Mapper)
 - [Extending general link for Experience Editor](https://blogs.perficient.com/2024/02/07/extending-general-link-for-experience-editor-mode/)
