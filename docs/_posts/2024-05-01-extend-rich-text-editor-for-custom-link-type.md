@@ -125,7 +125,7 @@ namespace Your.own.namespace
 					&& !string.IsNullOrWhiteSpace(EventAction.Value)
 					&& !string.IsNullOrWhiteSpace(EventLabel.Value))
 				{
-					result.Append($" data-clickevent=\\'{{\"eventCategory\": \"{EventCategory.Value}\", \"eventAction\": \"{EventAction.Value}\", \"eventLabel\": \"{EventLabel.Value}\"}}\\'");
+					result.Append($" data-clickevent=\\'{ {\"eventCategory\": \"{EventCategory.Value}\", \"eventAction\": \"{EventAction.Value}\", \"eventLabel\": \"{EventLabel.Value}\"} }\\'");
 				}
 
 				SheerResponse.Eval($"scClose('{result}')");
