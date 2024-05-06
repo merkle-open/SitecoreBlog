@@ -1,6 +1,6 @@
 ---
 title: "Extend rich text editor for custom link type"
-date: 2024-05-01 09:00:00 +0100
+date: 2024-05-06 06:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -11,22 +11,22 @@ tags:
 - Sitecore richt text editor
 author: rjung
 ---
-![alt text](../files/2024/05/link-with-tracking.png "Rich text editor with custom link")
+![alt text](../files/2024/05/06/link-with-tracking.png "Rich text editor with custom link")
 
-Based on the previous blog post about ([extenting Sitecore's general link](/11-steps-to-extend-general-link//)), you may also want to enhance the content editing experience for your editors by extending the rich text editor with your newly created link.
+Based on the previous blog post about ([extenting Sitecore's general link](/11-steps-to-extend-general-link)), you may also want to enhance the content editing experience for your editors by extending the rich text editor with your newly created link.
 
 In this tutorial, I’ll guide you through the steps to create a custom dialog for Sitecore’s rich text editor. To achieve this, follow the specified steps:
 
 ## 1. Create your custom DialogForm class
 
-The first thing you need to do is create your custom DialogForm. It should derive from DialogForm, and you’ll need to override OnCancel and OnOK methods.
+The first thing you need to do is create your custom DialogForm. It should derive from DialogForm, and you’ll need to override `OnCancel` and `OnOK` methods.
 
 For example: Extending General Link Fields with Tracking Data
 
 As in our example, you want to enhance the general link fields in your custom dialog by adding tracking data, specifically the fields EventCategory, EventAction, and EventLabel. You can follow these steps:
 
-* Create your custom DialogForm class, inheriting from the base DialogForm.
-* Override the OnCancel and OnOK methods to handle the dialog behavior.
+* Create your custom `DialogForm` class, inheriting from the base `DialogForm`.
+* Override the `OnCancel` and `OnOK` methods to handle the dialog behavior.
 * In the OnOK method, retrieve the values from your custom fields (e.g., EventCategory, EventAction, and EventLabel).
 * Append these values to the result or perform any other necessary actions based on the user’s input.
 
@@ -155,11 +155,11 @@ namespace Your.own.namespace
 
 Remark:
 * Each line of code except the custom field part originates from the decompiled source of the Sitecore's code.
-* It is recommended to place the file in ...\sitecore\shell\Controls\Rich Text Editor\... where all the general controls for the rich text editor of Sitecore are placed.
+* It is recommended to place the file in "...\sitecore\shell\Controls\Rich Text Editor\..." where all the general controls for the rich text editor of Sitecore are placed.
 
 ## 2. Create the XML for your custom dialog
 The next step is to create the visual presentation of the dialog. Therefore, you have to create an XML file which contains the control definition for the dialog.
-In the example you can find the tree new fields (EventCategory, EventAction and EventLabel) for our custom tracking link. Additionally, the CodeBeside links to our previous created class.
+In the example you can find the tree new fields (EventCategory, EventAction and EventLabel) for our custom tracking link. Additionally, the `CodeBeside` links to our previous created class.
 
 ```XML
 <?xml version="1.0" encoding="utf-8" ?>
@@ -210,7 +210,7 @@ In the example you can find the tree new fields (EventCategory, EventAction and 
 ```
 
 ## 3. Add your custom control to the rich text commands
-In the third step, you need to extend the out-of-the-box JavaScript file that calls your dialog. Therefore, you can copy the default "RichText Commands.js"file from Sitecore and extend it with your newly created control.
+In the third step, you need to extend the out-of-the-box JavaScript file that calls your dialog. Therefore, you can copy the default "RichText Commands.js"file from Sitecore and extend it with your newly created control. It is recommended to also place the file in "...\sitecore\shell\Controls\Rich Text Editor\...".
 
 For our example, we added the following code snippet:
 
@@ -257,15 +257,15 @@ Last but not least a button needs to be placed on the rich text so that the dial
 Therefore follow these steps:
 * Switch the database in Sitecore to the core database and navigate to the following path: "/sitecore/system/Settings/Html Editor Profiles". Here, you’ll find various rich text editor profiles that you can customize.
 * Select the profile you want to extend. For example, let’s say you choose the “Rich Text Full” profile.
-* Add a "Html Editor Button" to the toolbar. In our example we added the button to "Toolbar 1".
-* Customize the button’s properties. In the Data section add your Click-Event to the field Click. In our example "InsertLinkWithTracking".
+* Add a `Html Editor Button` to the toolbar. In our example we added the button to "Toolbar 1".
+* Customize the button’s properties. In the Data section add your Click-Event to the field Click. In our example `InsertLinkWithTracking`.
 * To make your button easily identifiable, add a meaningful icon.
 
 
 ## 5. Test your implementation
 Now everything is implemented and you can test your custom dialog in the rich text editor by clicking the buton in the rich text toolbar.
 
-<img src="../files/2024/05/richtext-toolbar.png" alt= "Customized richtext toolbar">
+<img src="../files/2024/05/06/richtext-toolbar.png" alt= "Customized richtext toolbar">
 
 If all fields are filled out, the output for our link with tracking will be as follows:
 
@@ -273,7 +273,7 @@ If all fields are filled out, the output for our link with tracking will be as f
 <a href="/test" title="Link with tracking" data-clickevent="{'eventCategory': 'Test Category', 'eventAction': 'Test Action', 'eventLabel': 'Test Label'}">Custom link with tracking</a>
 ```
 
-Remark: If the dialog shows an error message, clear your cache and reload the page.
+Remark: If the dialog shows an error message or doesn't load correctly, clear your cache and reload the page.
 
 ## Conclusion
 Let’s wrap it up by summarizing the steps to extend the default rich text editor with your custom button:
@@ -281,3 +281,6 @@ Let’s wrap it up by summarizing the steps to extend the default rich text edit
 * Create the control for your custom dialog
 * Extend the JavaScript file with your control
 * Add a "Html Editor Button" to the toolbar in the core database
+
+As you can see, customizing the rich text editor with your own dialog is relatively straightforward and for your content editor, it is an important step to enhance the content editing experience.
+
