@@ -161,7 +161,8 @@ Remark:
 The next step is to create the visual presentation of the dialog. Therefore, you have to create an XML file which contains the control definition for the dialog.
 In the example you can find the tree new fields (EventCategory, EventAction and EventLabel) for our custom tracking link. Additionally, the `CodeBeside` links to our previous created class.
 
-```XML
+{% highlight xml %}
+
 <?xml version="1.0" encoding="utf-8" ?>
 <control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
 	<RichText.InsertLinkWithTracking>
@@ -207,7 +208,8 @@ In the example you can find the tree new fields (EventCategory, EventAction and 
 		</FormDialog>
 	</RichText.InsertLinkWithTracking>
 </control>
-```
+
+{% endhighlight %}
 
 ## 3. Add your custom control to the rich text commands
 In the third step, you need to extend the out-of-the-box JavaScript file that calls your dialog. Therefore, you can copy the default "RichText Commands.js"file from Sitecore and extend it with your newly created control. It is recommended to also place the file in "...\sitecore\shell\Controls\Rich Text Editor\...".
