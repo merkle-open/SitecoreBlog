@@ -1,6 +1,6 @@
 ---
 title:  "EXM campaign dispatch stopped because CM instance crashed"
-date:   2024-09-02 08:00:00 +0100
+date:   2024-08-29 08:00:00 +0100
 categories:
 - Sitecore
 tags:
