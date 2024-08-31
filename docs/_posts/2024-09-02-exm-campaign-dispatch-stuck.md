@@ -46,7 +46,7 @@ So manually modifying the related message status in the EXM.Master DB helps.
 
 Here is the SQL script we used:
 
-~~~~sql
+{% highlight sql %}
 USE [Sitecore.Exm.master]
 GO
 
@@ -54,7 +54,7 @@ UPDATE [dbo].[Campaigns]
 SET [Status] = 'Paused'
 WHERE MessageID = 'Your campaign id'
 GO
-~~~~
+{% endhighlight %}
 
 By setting the status to <b>Paused</b> we were able to resume the campaing by clicking <b>Resume</b> in the Delivery tab of the campaign. 
 
