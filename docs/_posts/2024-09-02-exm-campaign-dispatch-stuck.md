@@ -57,6 +57,7 @@ GO
 ~~~~
 
 By setting the status to <b>Paused</b> we were able to resume the campaing by clicking <b>Resume</b> in the Delivery tab of the campaign. 
+
 You need also to find the campaign in the Content Editor by searching with the campaign ID, unprotect the item, and set the status again there to <b>Draft</b> to be able to send the Mail through the UI. That worked out.
 
 After the successful send-out of this campaign, the last one with the Status <b>Queuing</b> remains in that state. Sitecore does not get the information to continue with the next campaign. That needs to be considered.
