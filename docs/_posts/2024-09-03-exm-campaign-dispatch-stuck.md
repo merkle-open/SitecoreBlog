@@ -1,6 +1,6 @@
 ---
 title:  "EXM campaign dispatch stopped because CM instance crashed"
-date:   2024-08-29 08:00:00 +0100
+date:   2024-09-02 09:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -8,7 +8,7 @@ tags:
 author: dgashi
 ---
 
-![Email Marketing](../files/2024/09/02/email.jpg "Email Marketing")
+![Email Marketing](../files/2024/09/03/email.jpg "Email Marketing")
 
 
 ## Introduction
@@ -36,7 +36,7 @@ Our options included resending the emails that were stuck or pausing the campaig
 
 Since the campaign with the status "Sending" stopped with a progress of 40%, we wanted to be sure and reach out to the Sitecore Support team to find the best technical solution. 
 
-![EXM Master](../files/2024/09/02/exm-campaign-status.png "Database snippet")
+![EXM Master](../files/2024/09/03/exm-campaign-status.png "Database snippet")
 
 
 In this case, we need to manually change the states. Pausing and resuming the campaign was not possible in our case. Clicking the Button in the Delivery tab of the campaign did not change anything.
