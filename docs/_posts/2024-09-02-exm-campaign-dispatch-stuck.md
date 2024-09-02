@@ -38,7 +38,6 @@ Since the campaign with the status "Sending" stopped with a progress of 40%, we 
 
 ![EXM Master](../files/2024/09/02/exm-campaign-status.png "Database snippet")
 
-In this cases we need to manually change the states. Pausing and Resuming of the campaings was not possible in our case. Clicking the Button in the Delivery tab of the campaings did not change anything.
 
 In this case, we need to manually change the states. Pausing and resuming the campaign was not possible in our case. Clicking the Button in the Delivery tab of the campaign did not change anything.
 
