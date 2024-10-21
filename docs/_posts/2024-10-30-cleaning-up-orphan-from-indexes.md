@@ -11,7 +11,8 @@ author: tcanyalcin
 ![alt text](../files/2024/10/30/sitecore-orphan.png "Sitecore [orphan]")
   
 
-Recently on our live website, indexes stopped working while showing data from a particular page type. Also on these pages, most components were missing. Everything was working fine on the master database. In the logs, we found the following error:
+Recently on our live website, indexes stopped working while showing data from a particular page type. Also on these pages, most components were missing. 
+Everything was working fine on the master database. In the logs, we found the following error:
 
 ```
 Message: Could not map index document field to property "Paths" on type App.Foundation.Search.SearchResultItem : Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx). Actual value: [orphan]
