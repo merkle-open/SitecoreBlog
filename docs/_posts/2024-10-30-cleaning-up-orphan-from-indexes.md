@@ -1,6 +1,6 @@
 ---
 title:  "Cleaning up [orphan] from indexes"
-date:   2024-10-30 12:00:00 +0100
+date:   2024-10-28 12:00:00 +0100
 categories:
 - Sitecore
 tags:
