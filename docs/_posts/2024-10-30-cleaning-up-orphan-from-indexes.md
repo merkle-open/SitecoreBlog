@@ -36,7 +36,9 @@ Source: Sitecore.XA.Foundation.LocalDatasources
 
 So we had 2 different problems that might be connected.
 
-With these clues in hand, we checked indexes for these page types. Then, found out that there were many cases with [orphan] assigned to the *_path* field. 
+With these clues in hand, we checked indexes for these page types. Then, found out that there were many cases with [orphan] assigned to the *_path* field:
+
+![alt text](../files/2024/10/30/solr_orphan.png "Solr Orphan in Path")
 
 We tried rebuilding databases but it didn't help and [orphan]s stayed. 
 
