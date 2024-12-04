@@ -25,8 +25,14 @@ OpenLens is a GUI tool to manage Kubernetes clusters, without the need of extens
 
 https://github.com/MuhammedKalkan/OpenLens/releases
 
-### Extension
+### Pod Menu Extension 
+With version 6.3.0, the Node / Pod Menu with the useful functionalities attach, shell and logs were removed from OpenLens.
 
+![MissingPodMenu](../files/2024/12/09/missing-pod-menu.png "Missing pod menu")
+
+To bring it back, you can add the POD Menu Extension from [this repository](https://github.com/alebcay/openlens-node-pod-menu).
+
+![PodMenu](../files/2024/12/09/pod-menu.png "Pod menu")
 
 ## Alternatives
 Currently OpenLens is the tool I use, but since the project is no longer being maintained, there are alternative open source tools that I may use in the future. They are very similar, free, open source and actively in development, here are some examples:
