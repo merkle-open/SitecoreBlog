@@ -48,6 +48,17 @@ To connect an AKS Cluster from your local machine, first close your OpenLens ins
 
 On the right side of the browser, a menu will open. Select Azure CLI and follow the instruction.
 
+### Config file
+Adding the cluster via Azure CLI will edit your Kubernetes config file on your machine. Usually, it's located on **C:\Users\USERNAME\.kube**
+
+You may need to add the Kubernetes folder to OpenLens via menu, File, Preferences:
+
+![FilePreferences](../files/2024/12/09/file-preferences.png "File - Preferences")
+
+Go to Kubernetes (1), press Sync folder (2) and add the folder where the Kubeconfig file is stored C:\Users\USERNAME\.kube
+
+![SyncFolder](../files/2024/12/09/sync-folder.png "Sync folder")
+
 
 Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       
