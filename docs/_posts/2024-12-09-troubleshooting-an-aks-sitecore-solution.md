@@ -60,5 +60,21 @@ Go to Kubernetes (1), press Sync folder (2) and add the folder where the Kubecon
 ![SyncFolder](../files/2024/12/09/sync-folder.png "Sync folder")
 
 
+## Clusters in OpenLens
+
+
+## Basic operations
+
+
+## Namespace filter
+
+
+## Copy files from a container to your computer
+
+
+## Copy files from your computer to a container
+
+
+
 Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       
