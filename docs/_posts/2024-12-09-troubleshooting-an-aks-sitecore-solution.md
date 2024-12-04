@@ -41,6 +41,12 @@ Currently OpenLens is the tool I use, but since the project is no longer being m
 * [Jet Pilot](https://github.com/unxsist/jet-pilot)
 * [Seabird](https://github.com/getseabird/seabird)
 
+## Connection to Azure
+To connect an AKS Cluster from your local machine, first close your OpenLens instance, go to the [Azure Portal](https://portal.azure.com), find your **AKS Cluster (1)**, go to **Overview (2)** and press **Connect (3)**.
+
+![ConnectionToAzure](../files/2024/12/09/connection-to-azure.png "Connection to Azure")
+
+On the right side of the browser, a menu will open. Select Azure CLI and follow the instruction.
 
 
 Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
