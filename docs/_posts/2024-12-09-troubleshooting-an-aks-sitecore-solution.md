@@ -59,17 +59,25 @@ Go to Kubernetes (1), press Sync folder (2) and add the folder where the Kubecon
 
 ![SyncFolder](../files/2024/12/09/sync-folder.png "Sync folder")
 
-
 ## Clusters in OpenLens
+After adding the clusters, in the Catalog (1) select Clusters (2) and you will see all the added clusters (3) in the overview.
 
+![ClustersOverview](../files/2024/12/09/clusters-overview.png "Clusters overview")
+
+## Namespace filter
+When you open the Pods menu (1), and see only one pod (2), it's possible that the selected namespace (3) is not the one you want. You can op the namespace dropdown menu (4) and select the one you want.
+
+![NamespaceFilter](../files/2024/12/09/namespace-filter.png "Namespace filter")
 
 ## Basic operations
 
+### Restart a deployment
+Go to Workloads (1) - Deployments (2) select the deployment (3) you want to restart, press the restart button (4) and  confirm.
 
-## Namespace filter
+![RestartDeployment](../files/2024/12/09/restart-deployment.png "Restart a deployment")
 
 
-## Copy files from a container to your computer
+### Copy files from a container to your computer
 
 
 ## Copy files from your computer to a container
