@@ -13,6 +13,7 @@ author: ryilmaz
 ---
 
 ![Kubernetes](../files/2024/12/20/kubernetes.jpg "Kubernetes")
+Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 
 # Introduction
 With a Kubernetes solution such as AKS, it is easier to scale the application according to your needs and simpler to deploy. However, troubleshooting is more difficult and requires different tools than with an app service solution.
@@ -20,9 +21,7 @@ With a Kubernetes solution such as AKS, it is easier to scale the application ac
 # Tooling
 
 ## OpenLens
-OpenLens is a GUI tool to manage Kubernetes clusters, without the need of extensive command line usage.
-
-https://github.com/MuhammedKalkan/OpenLens/releases
+OpenLens is a GUI tool to manage Kubernetes clusters, without the need of extensive command line usage. It can be downloaded [here](https://github.com/MuhammedKalkan/OpenLens/releases).
 
 ### Pod Menu Extension 
 With version 6.3.0, the Node / Pod Menu with the useful functionalities attach, shell and logs were removed from OpenLens.
@@ -112,11 +111,8 @@ kubectl cp -n NAMESPACE sitecore-cd-YOUR-POD:PATH_TO_REMOTE.DLL .\LOCAL_PATH.DLL
 Copying a local file to the remote container is based on the same principle:
 
 {% highlight console %}
-kubectl cp .\localwebsite.dll -n sitecore sitecore-cd-abcd123456-foo12:\inetpub\wwwroot\bin\.website.dll
+kubectl cp .\localwebsite.dll -n sitecore sitecore-cd-abcd123456-foo12:\inetpub\wwwroot\bin\website.dll
 {% endhighlight %}
 
 # Conclusion
 Troubleshooting an AKS solution can be a challenge, but with the right tools it can be easily managed. On the other hand, many things, such as deploying individual services without downtime, are much easier. We have been using OpenLens for a long time, it is a pity that the open source development has been discontinued, but there are many alternatives.
-
-Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      
