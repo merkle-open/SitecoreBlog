@@ -19,7 +19,6 @@ With a Kubernetes solution such as AKS, it is easier to scale the application ac
 
 # Tooling
 
-
 ## OpenLens
 OpenLens is a GUI tool to manage Kubernetes clusters, without the need of extensive command line usage.
 
@@ -117,7 +116,7 @@ kubectl cp .\localwebsite.dll -n sitecore sitecore-cd-abcd123456-foo12:\inetpub\
 {% endhighlight %}
 
 # Conclusion
-
+Troubleshooting an AKS solution can be a challenge, but with the right tools it can be easily managed. On the other hand, many things, such as deploying individual services without downtime, are much easier. We have been using OpenLens for a long time, it is a pity that the open source development has been discontinued, but there are many alternatives.
 
 Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
       
