@@ -71,6 +71,18 @@ When you open the Pods menu (1), and see only one pod (2), it's possible that th
 
 ## Basic operations
 
+### View and download logs
+To view the live logs of a Pod, go to Workloads (1), then Pods (2), select the Pod (3), press Pod logs (4) from the pod menu extension, select the container (5) and the logs will shown in the terminal below (6).
+
+![ShowLogs](../files/2024/12/09/show-logs.png "Show logs")
+
+To download all logs, click on the Download button (1) and choose between All logs (2).
+
+![DownloadAllLogs](../files/2024/12/09/download-all-logs.png "Download all logs")
+
+### Pod Shell
+
+
 ### Restart a deployment
 Go to Workloads (1) - Deployments (2) select the deployment (3) you want to restart, press the restart button (4) and  confirm.
 
@@ -80,8 +92,7 @@ Go to Workloads (1) - Deployments (2) select the deployment (3) you want to rest
 ### Copy files from a container to your computer
 
 
-## Copy files from your computer to a container
-
+### Copy files from your computer to a container
 
 
 Photo by <a href="https://unsplash.com/@growtika?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Growtika</a> on <a href="https://unsplash.com/photos/a-group-of-blue-boxes-ZfVyuV8l7WU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
