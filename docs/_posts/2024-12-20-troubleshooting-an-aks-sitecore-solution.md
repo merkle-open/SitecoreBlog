@@ -85,7 +85,10 @@ You can use the pod shell to use shell commands for example on the CM. Go to Wor
 
 ### Restart a deployment
 
-Go to Workloads (1) - Deployments (2) select the deployment (3) you want to restart, press the restart button (4) and  confirm.
+1. Go to Workloads
+2. Deployments
+3. Select the deployment you want to restart
+4. Press the restart button and confirm
 
 ![RestartDeployment](../files/2024/12/20/restart-deployment.png "Restart a deployment")
 
