@@ -68,8 +68,8 @@ While looking for the cause of this issue I learned about Protobuf, which is the
 So next I check for any misconfigurations and look at that, these filePaths look suspicious:
 
 {% highlight xml %}
-<protobufItems type="Sitecore.Data.DataProviders.ReadOnly.Protobuf.ProtobufDataProvider, Sitecore.Kernel" patch:source="CommerzReal.Project.ChubConnector.config">
-<filePaths hint="list" patch:source="CommerzReal.Project.ChubConnector.config">
+<protobufItems type="Sitecore.Data.DataProviders.ReadOnly.Protobuf.ProtobufDataProvider, Sitecore.Kernel" patch:source="Customer.Project.ChubConnector.config">
+<filePaths hint="list" patch:source="Customer.Project.ChubConnector.config">
 <filePath>/App_Data/items/$(id)</filePath>
 <modulesFilePath>/sitecore modules/items/$(id)</modulesFilePath>
 </filePaths>
