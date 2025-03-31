@@ -1,6 +1,6 @@
 ---
 title:  "The challenges when upgrading Sitecore Connect for Content Hub from 5.0 to 5.2 on docker."
-date:   2025-03-26 12:00:00 +0100
+date:   2025-03-31 08:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -11,7 +11,7 @@ tags:
 author: shauck
 ---
 
-![Hurdles](../files/2025/03/26/hurdles.jpg "Hurdles")
+![Hurdles](../files/2025/03/31/hurdles.jpg "Hurdles")
 
 ## Introduction
 **Sitecore Connect for Content Hub (SCCH)** is a bridge between Sitecore Experience Platform and Sitecore Content Hub to synchronize data between the two platforms. It allows editors and marketers to work seamlessly with content created in Sitecore Content Hub. This integration helps maintain consistency and efficiency across different platforms.
@@ -52,7 +52,7 @@ I start to further investigate on “Items as resources.”
 
 First, I confirm that the files are properly copied to the CM container, no issue here.
 
-![Items as resources](../files/2025/03/26/items-as-resources.png "Items as resources")
+![Items as resources](../files/2025/03/31/items-as-resources.png "Items as resources")
 
 But when I check the logs, I find entries from the “Resource merger”, where I see, that it works generally, only the files from “sitecore modules” are ignored:
 
@@ -103,7 +103,7 @@ This turns out to be a change introduced with version 5.1 and you can also find 
 
 But I had to clear out one last hurdle, because the config change just would not apply, no matter what I tried and eventually I found a mistake in our dockerfile, where the transformations from the SCCH module are done after our custom transformations and the module contains a transformation itself, that explicitly sets the values to false.
 
-![Reorder dockerfile instructions](../files/2025/03/26/reorder-dockerfile.png "Reorder dockerfile instructions")
+![Reorder dockerfile instructions](../files/2025/03/31/reorder-dockerfile.png "Reorder dockerfile instructions")
 > This must run last.
 
 After reordering the transformation steps, the settings finally changed to “yes” and I could see, that all configs were correctly applied – including the supposedly missing resource paths, as I described earlier, which I thought was a bug and all is fine and working.
