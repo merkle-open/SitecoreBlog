@@ -1,6 +1,6 @@
 ---
 title: "SUGCON Europe 2025 - Recap"
-date: 2025-04-30 12:00:00 +0100
+date: 2025-05-05 08:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -9,13 +9,13 @@ tags:
 author: shauck
 ---
 
-![SUGCON venue - a room with a zoo](../files/2025/04/30/a-room-with-a-zoo.jpg "SUGCON venue - a room with a zoo")
+![SUGCON venue - a room with a zoo](../files/2025/05/05/a-room-with-a-zoo.jpg "SUGCON venue - a room with a zoo")
 
 On April 3-4, the 10th Sitecore User Group Conference took place in Antwerp, Belgium. For one and a half days, community members from all over the world could meet and exchange ideas at the incredible venue "A Room with a Zoo".
 
 I had already attended a Symposium in the past as well as multiple [Sitecore User Group Germany](https://www.sitecore-usergroup.de/) meetups. But this was the first time I could visit SUGCON, and I was excited to learn about the latest product developments, get inspiration from other Sitecore developers, and meet new and old friends.
 
-![Simon at SUGCON](../files/2025/04/30/simon-at-sugcon.jpg "Simon at SUGCON")
+![Simon at SUGCON](../files/2025/05/05/simon-at-sugcon.jpg "Simon at SUGCON")
 
 As you would expect, the dominating topics were AI and especially Sitecore Stream, and XM Cloud. But I enjoyed seeing innovative solutions from other community members and hearing about new and planned features from the Sitecore product teams.
 
