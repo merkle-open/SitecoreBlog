@@ -863,6 +863,48 @@ Now it gets almost as complex as before. We haven't done it yet, but you may fol
 Many steps on an unusual way to customize Sitecore XP but it is getting the job done in the end. \
 And my customer is fine with the link-tracking configuration in the Content Editor. :D
 
+## Update 13.11.2025
+
+I got the feedback, that the provided steps were incomplete. Due to the fact that the code was added to other existing customizations I forgot to mention two further steps:
+
+1. Add CustomGlassHtmlFactory
+2. Register CustomGlassHtmlFactory
+
+### Add CustomGlassHtmlFactory
+
+Add a new class to your solution. This factory will provide your `GlassHtmlOverride` to Glass in the following step:
+
+```c#
+using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.IoC;
+
+namespace Place.your.own.Namespace.Glass
+{
+    public class CustomGlassHtmlFactory : IGlassHtmlFactory
+    {
+        protected IDependencyResolver DependencyResolver { get; }
+
+        public CustomGlassHtmlFactory(IDependencyResolver dependencyResolver)
+        {
+            DependencyResolver = dependencyResolver;
+        }
+
+        public IGlassHtml GetGlassHtml(ISitecoreService sitecoreService)
+        {
+            return new GlassHtmlOverride(sitecoreService);
+        }
+    }
+}
+```
+
+### Register CustomGlassHtmlFactory
+
+This is made within `App_Start/GlassMapperScCustom.cs`. Define your HtmlFactory in the method `CreateResolver()`:
+
+```c#
+dependencyResolver.GlassHtmlFactory = new CustomGlassHtmlFactory(dependencyResolver);
+```
+
 ## Linkcollection
 
 These links helped me to get the job done.
