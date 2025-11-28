@@ -20,10 +20,10 @@ After migrating from Sitecore XP to SitecoreAI/XM Cloud, one of my clients was f
 
 Sitecore XP as well as SitecoreAI already support [restricting content publication to certain time windows](https://doc.sitecore.com/sai/en/users/sitecoreai/schedule-availability-for-a-content-item.html#make-a-version-unavailable-for-publication) but this is only to __mark content as being publishable__. When the time comes and the item can be published, it still requires someone actively hitting the publish button for that item.
 
-Now I was tasked to implement a scheduled publishing, that should be as close as possible to the old solution to make it as easy as possible for content editors to transition. Requirements were as follows:
+Now I was tasked to implement a scheduled publishing, which should be as close as possible to the old solution to make it as easy as possible for content editors to transition. Requirements were as follows:
  - Content authors can schedule content publications by configuring the out of the box publishing restrictions.
- - It is not required, that scheduled content publishing is exact to the second and some delay is acceptable.
- - At this point scheduled depublishing is not a requirement
+ - It was not required, that scheduled content publishing is exact to the second and some few minutes delay was acceptable.
+ - At this point scheduled de-publishing was not a requirement
 
 ## Solution
 
@@ -31,7 +31,7 @@ The solution is based on two [Sitecore Powershell Extensions](https://doc.siteco
 
 ### Filling up the queue
 
-For the schedule items we create one new template 'Publishing schedule' like this:
+For the schedule items we create a new template 'Publishing schedule' like this:
 
 ![Configuration of Publishing schedule template with three fields: Target item as Single-Line Text, Publishing Time as Datetime and Status as Single-Line Text](../files/2025/11/12/publishing-schedule-template.png)
 
@@ -116,15 +116,15 @@ foreach($contentDirectory in $contentDirectories) {
 
 ```
 
-This script goes through a list of items, that we can configure and their child items and compares the field __Vaild from to the current date and time. If the field value is greater than the current datetime (i.e. the item is scheduled for a future time) we create a new item item based on our previously created item an put it into a folder, that serves as our publishign queue.
+This script goes through a list of items, that we can configure and their child items and compares the field __Vaild from to the current date and time. If the field value is greater than the current datetime (i.e. the item is scheduled for a future time) we create a new item based on our previously created item an put it into a folder, that serves as our publishing queue.
 
-Via a scheduled task, we configure this script to run once every 24 hours. So the publishing queue is filled once a day.
+Via a scheduled task, we configure this script to run once every 24 hours. So, the publishing queue is filled once a day.
 
 ![Configuration of a scheduled task in Sitecore to run the 'Schedule item publications' script once every 24 hours](../files/2025/11/12/task-schedule-future-publishing.png)
 
-### Running scheduled publshes
+### Running scheduled publishes
 
-The second script we build will go through the publishing queue and publish items, as soon as their target date is reached. Items, that get published also have their Status set from 'Pending' to 'Published' so they are only considered once for publishing and when the queue is refilled the next time, it will not reappear, because the date lies in the past then.
+The second script we build will go through the publishing queue and publish items as soon as their target date is reached. Items, that get published also have their Status set from 'Pending' to 'Published' so they are only considered once for publishing and when the queue is refilled the next time, it will not reappear, because the date lies in the past then.
 
 ```powershell
 $scheduleFolderPath = '/sitecore/system/settings/Feature/Scheduled Publishing/Publishing schedules/'
@@ -164,20 +164,22 @@ foreach($publishingSchedule in $publishingSchedules) {
 }
 ```
 
-Again we create a scheduled task to run this script once every 10 minutes. As mentioned above it was not necessary to have the item go live at an exact time. This way, we have a maximum delay of 10 minutes to the configured time.
+Again, we create a scheduled task to run this script once every 10 minutes. As mentioned above it was not necessary to have the item go live at an exact time. This way, we have a maximum delay of 10 minutes to the configured time.
 
 ![Configuration of a scheduled task in Sitecore to run the 'Run scheduled publishing' script once every 10 minutes](../files/2025/11/12/task-run-scheduled-publishing.png)
 
-These two script fulfilled all requirements as agreed on with the customer and increased the editors day to day working experience by a far, because they could simply configure publishign restrictions for their items and be assured, that their content goes live without additional steps.
+These two scripts fulfilled all requirements as agreed on with the customer and increased the editors’ day-to-day working experience by a far, because they could simply configure publishing restrictions for their items and be assured, that their content goes live without additional steps.
 
 ## Considerations
 
-This may not be the most elegant solution and we considered a more efficient solution including webhooks and only triggering the schedule job, when an item is saved, so it is not necessary to evaluate all content over and over again.
+This may not be the most elegant solution, and we considered a more efficient solution including webhooks and only triggering the schedule job, when an item is saved, so it is not necessary to evaluate all content repeatedly.
 
-But at this point, we decided to not introduce an additional external service that would be needed to handle the webhook and performance also looked fine with the current amount of content. The script to schedule the item publications ran for ~3 minutes with a volume of 30.000 items, that were evaluated.
+But at this point, we decided to not introduce an additional external service that would be needed to handle the webhook and performance also looked fine with the current amount of content. The script to schedule the item publications ran for ~3 minutes with a volume of 30.000 items, which were evaluated.
 
-Also I mentioned in the beginning, that depublishing is not considered at this point, because the customer is not utilizing the "Valid to" configuration at the moment. The script could be easily extended to cover that requirement as well, but for the sake of simplicity I left it out in this blog post.
+Also, I mentioned in the beginning, that de-publishing is not considered at this point, because the customer is not utilizing the "Valid to" configuration now. The script could be easily extended to cover that requirement as well, but for the sake of simplicity I left it out in this blog post.
 
 I hope this will serve helpful to someone else looking for this common requirement and happy to hear about your solutions, how you solved this problem.
 
 Head image was created via Copilot
+
+
