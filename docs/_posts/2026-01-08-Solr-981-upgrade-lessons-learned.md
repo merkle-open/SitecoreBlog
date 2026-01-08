@@ -1,6 +1,6 @@
 ---
 title: "Solr 9.8.1 Upgrade – Lessons Learned"
-date: 2026-01-05 10:00:00 +0100
+date: 2026-01-08 10:00:00 +0100
 categories:
 - Sitecore
 tags:
