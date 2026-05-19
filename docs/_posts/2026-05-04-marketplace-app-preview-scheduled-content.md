@@ -40,13 +40,16 @@ The panel includes:
 - A tab, where you can directly change the publishing restrictions of content items related to the page
 - A tab with technical details, which gives you detailed feedback on which versions are currently visible in the preview frame
 
-<video controls width="100%">
-  <source src="/docs/files/2026/05/05/how-to-use-preview-app.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe 
+    src="https://www.youtube.com/embed/o-xH6IpOr7Q"
+    frameborder="0"
+    allowfullscreen
+    style="position: absolute; top:0; left:0; width:100%; height:100%;">
+  </iframe>
+</div>
+
 <figcaption>This video shows the capabilities of the Preview Marketplace App in action.</figcaption>
-
-
 
 ## How to configure the app
 
