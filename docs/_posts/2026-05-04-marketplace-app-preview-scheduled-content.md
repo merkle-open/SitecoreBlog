@@ -45,7 +45,8 @@ The panel includes:
     src="https://www.youtube.com/embed/o-xH6IpOr7Q"
     frameborder="0"
     allowfullscreen
-    style="position: absolute; top:0; left:0; width:100%; height:100%;">
+    style="position: absolute; top:0; left:0; width:100%; height:100%;"
+    referrerpolicy="strict-origin-when-cross-origin">
   </iframe>
 </div>
 
