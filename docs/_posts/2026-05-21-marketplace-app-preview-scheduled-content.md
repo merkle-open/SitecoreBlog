@@ -1,6 +1,6 @@
 ---
 title: "Preview scheduled content changes with SitecoreAI Marketplace App"
-date: 2026-05-13 08:00:00 +0100
+date: 2026-05-21 08:00:00 +0100
 categories:
 - Sitecore
 tags:
@@ -13,7 +13,7 @@ tags:
 author: shauck
 ---
 
-![Comic-style illustration of a person relaxing on a beach, holding a drink and checking a smartphone displaying “CAMPAIGN LIVE,” symbolizing a scheduled campaign that successfully went live without issues.](../files/2026/05/05/scheduled-preview-hero-image.png)
+![Comic-style illustration of a person relaxing on a beach, holding a drink and checking a smartphone displaying “CAMPAIGN LIVE,” symbolizing a scheduled campaign that successfully went live without issues.](../files/2026/05/21/scheduled-preview-hero-image.png)
 
 *Relaxing while a campaign goes live — thanks to previewing scheduled content in advance, authors can confidently verify that everything will appear exactly as intended when it matters most.*
 
@@ -23,7 +23,7 @@ In this blog post I introduce a marketplace app I have recently been working on.
 
 In the past, this was easily possible within the Experience Editor by changing the Preview Date and Time.
 
-![Datepicker in Sitecore Experience Editor](../files/2026/05/05/experience-editor-preview-date.png)
+![Datepicker in Sitecore Experience Editor](../files/2026/05/21/experience-editor-preview-date.png)
 
 Unfortunately this functionality is no longer available in SitecoreAI Pages Editor and content authors are left to guess whether their scheduled content will display correctly.
 
@@ -60,7 +60,7 @@ The app can be hosted on any platform that can run Next.js apps. During implemen
 
 When you configure the app in 'App Studio', make sure to set the Route URL to / and grant API access to 'SitecoreAI APIs'.
 
-![Configuration of the marketplace app in App Studio](../files/2026/05/05/marketplace-app-configuration.png)
+![Configuration of the marketplace app in App Studio](../files/2026/05/21/marketplace-app-configuration.png)
 
 In order to connect the preview to your rendering host, you need to add two configurations - editing secret and rendering endpoint.
 
@@ -71,7 +71,7 @@ This can be done either directly in the env variables of your marketplace app wi
 
 Or if you intend to use the app across multiple environments, a config item can be added to the settings folder of your site with values EditingSecret and RenderingEndpoint.
 
-![Configuration item for editing secret and rendering endpoints in Sitecore](../files/2026/05/05/preview-rendering-host-settings.png)
+![Configuration item for editing secret and rendering endpoints in Sitecore](../files/2026/05/21/preview-rendering-host-settings.png)
 
 ## Technical details
 
