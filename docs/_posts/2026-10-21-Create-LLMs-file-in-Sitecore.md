@@ -1,6 +1,6 @@
 ---
 title:  "Create LLMs file in Sitecore"
-date:   2026-10-19 12:00:00 +0100
+date:   2026-10-21 08:00:00 +0100
 categories:
 - Sitecore
 - GEO
